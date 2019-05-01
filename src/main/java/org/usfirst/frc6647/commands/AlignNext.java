@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6647.subsystems.NavX;
 import org.usfirst.lib6647.util.Direction;
 
+/**
+ * Command for changing the Gyro alignment to the next desired angle.
+ */
 public class AlignNext extends Command {
 
 	private Direction direction;
@@ -18,6 +21,11 @@ public class AlignNext extends Command {
 
 	private NavX navX = NavX.getInstance();
 
+	/**
+	 * Constructor for the command.
+	 * 
+	 * @param direction
+	 */
 	public AlignNext(Direction direction) {
 		this.direction = direction;
 	}

@@ -7,10 +7,20 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+/**
+ * Helper class for initializing joysticks.
+ */
 public class Controller extends Joystick {
 
 	public HashMap<String, Button> buttons;
 
+	/**
+	 * Constructor for the controller.
+	 * 
+	 * Initializes each and every button, axisButton, and axisAngleButton.
+	 * 
+	 * @param port
+	 */
 	public Controller(int port) {
 		super(port);
 
@@ -33,6 +43,13 @@ public class Controller extends Joystick {
 		}
 	}
 
+	/**
+	 * Creates a new button for the specified POV.
+	 * 
+	 * @param controller
+	 * @param pov
+	 * @return povButton
+	 */
 	private Button buttonFromPOV(GenericHID controller, int pov) {
 		return new Button() {
 			@Override
@@ -42,6 +59,14 @@ public class Controller extends Joystick {
 		};
 	}
 
+	/**
+	 * Creates a new button for the specified POV and angle.
+	 * 
+	 * @param controller
+	 * @param pov
+	 * @param angle
+	 * @return povAngleButton
+	 */
 	private Button buttonFromPOV(GenericHID controller, int pov, int angle) {
 		return new Button() {
 			@Override
@@ -51,6 +76,13 @@ public class Controller extends Joystick {
 		};
 	}
 
+	/**
+	 * Creates a new button for the specified axis.
+	 * 
+	 * @param controller
+	 * @param axis
+	 * @return axisButton
+	 */
 	private Button buttonFromAxis(GenericHID controller, int axis) {
 		return new Button() {
 			@Override
@@ -60,6 +92,14 @@ public class Controller extends Joystick {
 		};
 	}
 
+	/**
+	 * Creates a new button for the specified axis and angle.
+	 * 
+	 * @param controller
+	 * @param axis
+	 * @param angle
+	 * @return axisAngleButton
+	 */
 	private Button buttonFromAxis(GenericHID controller, int axis, int angle) {
 		return new Button() {
 			@Override
@@ -69,19 +109,49 @@ public class Controller extends Joystick {
 		};
 	}
 
+	/**
+	 * Functional interface for Joystick mapping.
+	 */
+	public interface MapDoubleT {
+		/**
+		 * Abstract method for Joystick mapping.
+		 * 
+		 * @param rawAxis
+		 * @param in_min
+		 * @param in_max
+		 * @param out_min
+		 * @param out_max
+		 * @return mapDoubleT
+		 */
+		abstract double mapDoubleT(double rawAxis, double in_min, double in_max, double out_min, double out_max);
+	}
+
+	/**
+	 * Functional interface for getting a button.
+	 */
 	public interface OIButton {
+		/**
+		 * Abstract method for getting a button.
+		 * 
+		 * @param joystick
+		 * @param button
+		 * @return Button
+		 */
 		abstract Button get(int joystick, int button);
 	}
 
-	public interface OIAxisButton {
-		abstract Button get(int joystick, int axis);
-	}
-
+	/**
+	 * Functional interface for getting a button with an angle.
+	 */
 	public interface OIAngleButton {
+		/**
+		 * Abstract method for getting a button at a specific angle.
+		 * 
+		 * @param joystick
+		 * @param axis
+		 * @param angle
+		 * @return Button
+		 */
 		abstract Button get(int joystick, int axis, int angle);
-	}
-
-	public interface MapDoubleT {
-		abstract double mapDoubleT(double x, double in_min, double in_max, double out_min, double out_max);
 	}
 }
