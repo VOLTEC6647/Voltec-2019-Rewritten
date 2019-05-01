@@ -14,12 +14,20 @@ import org.usfirst.frc6647.subsystems.NavX;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * Command for Robot alignment.
+ */
 public class GyroAlign extends Command {
 
 	private Chassis chassis = Chassis.getInstance();
 	private OI oi = OI.getInstance();
 	private NavX navX = NavX.getInstance();
 
+	/**
+	 * Constructor for the command.
+	 * 
+	 * Aligns the robot to the closest desired angle.
+	 */
 	public GyroAlign() {
 		requires(chassis);
 		requires(navX);
@@ -45,6 +53,13 @@ public class GyroAlign extends Command {
 			navX.setSetpoint(180);
 	}
 
+	/**
+	 * Constructor for the command.
+	 * 
+	 * Aligns the robot to the specified angle.
+	 * 
+	 * @param angle
+	 */
 	public GyroAlign(double angle) {
 		requires(chassis);
 		requires(navX);
