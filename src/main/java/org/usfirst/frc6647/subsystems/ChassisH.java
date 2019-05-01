@@ -16,7 +16,7 @@ import org.usfirst.lib6647.util.TalonBuilder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * Subsystem for the chassis' midwheel.
+ * Subsystem for the midwheel.
  */
 public class ChassisH extends Subsystem {
 
@@ -30,10 +30,18 @@ public class ChassisH extends Subsystem {
 
 	private static ChassisH m_instance = null;
 
+	/**
+	 * Creates static ChassisH instance.
+	 */
 	public static void createInstance() {
 		m_instance = new ChassisH();
 	}
 
+	/**
+	 * Gets static ChassisH instance. If there is none, creates one.
+	 * 
+	 * @return static ChassisH instance
+	 */
 	public static ChassisH getInstance() {
 		if (m_instance == null) {
 			createInstance();
@@ -41,6 +49,12 @@ public class ChassisH extends Subsystem {
 		return m_instance;
 	}
 
+	/**
+	 * Constructor for the subsystem.
+	 * 
+	 * Initializes the midwheel's talon with the values defined at the top of this
+	 * class.
+	 */
 	public ChassisH() {
 		hWheel = new TalonBuilder(TALON_HWHEEL_PORT, NeutralMode.Brake, true, RAMPDRIVE, LOOP,
 				FeedbackDevice.QuadEncoder, fpidIdx, ftimeoutMs, phase, sensorPos, pidIdx, timeoutMs, slotIdx, p, i, d,
@@ -51,10 +65,17 @@ public class ChassisH extends Subsystem {
 	public void initDefaultCommand() {
 	}
 
+	/**
+	 * Sets the midwheel to the given speed, in PercentOutput.
+	 * @param speed
+	 */
 	public void moveHWheel(double speed) {
 		hWheel.set(ControlMode.PercentOutput, speed);
 	}
 
+	/**
+	 * Stops the midwheel dead in its tracks.
+	 */
 	public void stopHWheel() {
 		moveHWheel(0);
 	}
