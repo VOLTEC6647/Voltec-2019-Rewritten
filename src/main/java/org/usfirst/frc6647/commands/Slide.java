@@ -8,23 +8,29 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.robot.OI;
-import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.ChassisH;
 import org.usfirst.lib6647.util.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Command for horizontal movement of the robot.
+ */
 public class Slide extends Command {
 
 	private Direction direction;
 	private double analogLT, analogRT;
 
 	private OI oi = OI.getInstance();
-	private Chassis chassis = Chassis.getInstance();
 	private ChassisH chassisH = ChassisH.getInstance();
 
+	/**
+	 * Constructor for the command. Requires the chassisH subsystem.
+	 * 
+	 * @param direction
+	 */
 	public Slide(Direction direction) {
-		requires(chassis);
+		requires(chassisH);
 		this.direction = direction;
 	}
 

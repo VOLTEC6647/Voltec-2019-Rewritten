@@ -27,10 +27,18 @@ public class NavX extends PIDSubsystem {
 
 	private static NavX m_instance = null;
 
+	/**
+	 * Creates static NavX instance.
+	 */
 	public static void createInstance() {
 		m_instance = new NavX();
 	}
 
+	/**
+	 * Gets static NavX instance. If there is none, creates one.
+	 * 
+	 * @return static NavX instance
+	 */
 	public static NavX getInstance() {
 		if (m_instance == null) {
 			createInstance();
@@ -38,6 +46,11 @@ public class NavX extends PIDSubsystem {
 		return m_instance;
 	}
 
+	/**
+	 * Constructor for the subsystem.
+	 * 
+	 * Initializes PID subsystem and resets navX sensor.
+	 */
 	public NavX() {
 		super("NavX", 0, 0, 0);
 
@@ -58,11 +71,19 @@ public class NavX extends PIDSubsystem {
 	public void initDefaultCommand() {
 	}
 
+	/**
+	 * Gets input for PID.
+	 * 
+	 * @return pidInput
+	 */
 	@Override
 	protected double returnPIDInput() {
-		return ahrs.getYaw();
+		return getYaw();
 	}
 
+	/**
+	 * Adds or substracts calculated speed to its respective talon.
+	 */
 	@Override
 	protected void usePIDOutput(double output) {
 		int angle = OI.getInstance().joysticks.get(1).getPOV(0);
@@ -76,16 +97,27 @@ public class NavX extends PIDSubsystem {
 			Chassis.getInstance().setBothTalons(output, -output);
 	}
 
+	/**
+	 * Gets current yaw from navX.
+	 * 
+	 * @return currentYaw
+	 */
 	public double getYaw() {
 		return ahrs.getYaw();
 	}
 
+	/**
+	 * Method to display PID values in the SmartDashboard.
+	 */
 	public void outputPIDValues() {
 		SmartDashboard.putNumber("gyroP", p);
 		SmartDashboard.putNumber("gyroI", i);
 		SmartDashboard.putNumber("gyroD", d);
 	}
 
+	/**
+	 * Method to update PID values from the SmartDashboard.
+	 */
 	public void updatePIDValues() {
 		p = SmartDashboard.getNumber("gyroP", p);
 		i = SmartDashboard.getNumber("gyroI", i);
