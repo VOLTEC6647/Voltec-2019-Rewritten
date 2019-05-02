@@ -125,33 +125,4 @@ public class Controller extends Joystick {
 		 */
 		abstract double mapDoubleT(double rawAxis, double in_min, double in_max, double out_min, double out_max);
 	}
-
-	/**
-	 * Functional interface for getting a button.
-	 */
-	public interface OIButton {
-		/**
-		 * Abstract method for getting a button.
-		 * 
-		 * @param joystick
-		 * @param button
-		 * @return Button
-		 */
-		abstract Button get(int joystick, int button);
-	}
-
-	/**
-	 * Functional interface for getting a button with an angle.
-	 */
-	public interface OIAngleButton {
-		/**
-		 * Abstract method for getting a button at a specific angle.
-		 * 
-		 * @param joystick
-		 * @param axis
-		 * @param angle
-		 * @return Button
-		 */
-		abstract Button get(int joystick, int axis, int angle);
-	}
 }
