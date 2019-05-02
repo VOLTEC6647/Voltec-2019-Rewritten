@@ -7,8 +7,6 @@
 
 package org.usfirst.frc6647.robot;
 
-import java.util.ArrayList;
-
 import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.GyroAlign;
 import org.usfirst.frc6647.commands.Slide;
@@ -20,7 +18,6 @@ import org.usfirst.lib6647.util.Direction;
  * Class for registering driver input.
  */
 public class OI extends ButtonHelper {
-	public ArrayList<Controller> joysticks;
 
 	private static OI m_instance = null;
 
@@ -47,7 +44,8 @@ public class OI extends ButtonHelper {
 	 * Constructor for the class.
 	 * 
 	 * Add joysticks and button inputs here. See lambda declarations in
-	 * org.usfirst.lib6647.oi.ButtonHelper for examples.
+	 * org.usfirst.lib6647.oi.ButtonHelper for examples on how to assign commands to
+	 * buttons.
 	 */
 	public OI() {
 		joysticks.add(new Controller(0));

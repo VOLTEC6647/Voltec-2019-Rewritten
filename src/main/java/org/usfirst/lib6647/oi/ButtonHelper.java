@@ -1,6 +1,6 @@
 package org.usfirst.lib6647.oi;
 
-import org.usfirst.frc6647.robot.OI;
+import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 
@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.buttons.Button;
  * Helper class for getting buttons.
  */
 public class ButtonHelper {
+
+	public ArrayList<Controller> joysticks;
 
 	/**
 	 * Functional interface for getting a button.
@@ -43,23 +45,21 @@ public class ButtonHelper {
 	 * 
 	 * e.g. oiButton.get(1, 7) gets button 7 from joystick 1.
 	 */
-	public OIButton oiButton = (joystick, button) -> OI.getInstance().joysticks.get(joystick).buttons
-			.get("Button" + button);
+	public OIButton oiButton = (joystick, button) -> joysticks.get(joystick).buttons.get("Button" + button);
 
 	/**
 	 * Lambda declaration for getting a joystick axis button at any angle.
 	 * 
 	 * e.g. oiAxisButton.get(1, 2) gets button for axis 2 from joystick 1.
 	 */
-	public OIButton oiAxisButton = (joystick, axis) -> OI.getInstance().joysticks.get(joystick).buttons
-			.get("Axis" + axis);
+	public OIButton oiAxisButton = (joystick, axis) -> joysticks.get(joystick).buttons.get("Axis" + axis);
 
 	/**
 	 * Lambda declaration for getting a joystick POV button at any angle.
 	 * 
 	 * e.g. oiPOVButton.get(1, 2) gets button for POV 2 from joystick 1.
 	 */
-	public OIButton oiPOVButton = (joystick, pov) -> OI.getInstance().joysticks.get(joystick).buttons.get("POV" + pov);
+	public OIButton oiPOVButton = (joystick, pov) -> joysticks.get(joystick).buttons.get("POV" + pov);
 
 	/**
 	 * Lambda declaration for getting a joystick axis button at a specific angle.
@@ -67,7 +67,7 @@ public class ButtonHelper {
 	 * 
 	 * e.g. oiAxis.get(1, 2, 90) gets angle 90 button from axis 2 from joystick 1.
 	 */
-	public OIAngleButton oiAxis = (joystick, axis, angle) -> OI.getInstance().joysticks.get(joystick).buttons
+	public OIAngleButton oiAxis = (joystick, axis, angle) -> joysticks.get(joystick).buttons
 			.get("Axis" + axis + "_" + angle);
 
 	/**
@@ -76,6 +76,6 @@ public class ButtonHelper {
 	 * 
 	 * e.g. oiPOV.get(1, 2, 45) gets angle 45 button from POV 2 from joystick 1.
 	 */
-	public OIAngleButton oiPOV = (joystick, pov, angle) -> OI.getInstance().joysticks.get(joystick).buttons
+	public OIAngleButton oiPOV = (joystick, pov, angle) -> joysticks.get(joystick).buttons
 			.get("POV" + pov + "_" + angle);
 }
