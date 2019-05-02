@@ -16,7 +16,8 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 	- [ ] Intake.
 	- [ ] Climb.
 	- [ ] Pneumatics.
-- [X] Everything commented (and keep it that way!).
+	- [ ] Vision (RIP).
+- [X] Everything commented (keep it that way!).
 - [ ] Test everything.
 
 ## License
