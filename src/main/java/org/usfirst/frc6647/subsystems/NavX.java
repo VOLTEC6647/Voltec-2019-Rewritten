@@ -59,12 +59,20 @@ public class NavX extends PIDSubsystem {
 
 		setInputRange(-180, 180);
 		setOutputRange(-0.70, 0.70);
-		setAbsoluteTolerance(1);
+		setAbsoluteTolerance(0.5);
 
 		ahrs = new AHRS(SPI.Port.kMXP);
 		ahrs.reset();
 
 		outputPIDValues();
+	}
+
+	/**
+	 * Runs every time Scheduler.getInstance().run() is called.
+	 */
+	@Override
+	public void periodic() {
+		updatePIDValues();
 	}
 
 	@Override

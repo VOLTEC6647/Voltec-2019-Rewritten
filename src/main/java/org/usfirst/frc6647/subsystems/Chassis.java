@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import org.usfirst.frc6647.robot.OI;
-import org.usfirst.lib6647.oi.Controller.MapDoubleT;
 import org.usfirst.lib6647.util.TalonBuilder;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -73,7 +72,7 @@ public class Chassis extends Subsystem {
 	}
 
 	/**
-	 * Code run every time Scheduler.getInstance().run() is called.
+	 * Runs every time Scheduler.getInstance().run() is called.
 	 */
 	@Override
 	public void periodic() {
@@ -145,9 +144,26 @@ public class Chassis extends Subsystem {
 	}
 
 	/**
+	 * Functional interface for Joystick mapping.
+	 */
+	private interface MapDoubleT {
+		/**
+		 * Abstract method for Joystick mapping.
+		 * 
+		 * @param rawAxis
+		 * @param in_min
+		 * @param in_max
+		 * @param out_min
+		 * @param out_max
+		 * @return mapDoubleT
+		 */
+		double mapDoubleT(double rawAxis, double in_min, double in_max, double out_min, double out_max);
+	}
+
+	/**
 	 * Lambda declaration for mapping joystick input.
 	 */
-	MapDoubleT joystickMap = (x, in_min, in_max, out_min, out_max) -> Math.abs(x) < TOLERANCE ? 0
+	private MapDoubleT joystickMap = (x, in_min, in_max, out_min, out_max) -> Math.abs(x) < in_min ? 0
 			: x < 0 ? (x + in_min) * (-out_max + out_min) / (-in_max + in_min) - out_min
 					: (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }

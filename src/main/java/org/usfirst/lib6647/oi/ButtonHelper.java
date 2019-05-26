@@ -1,81 +1,81 @@
 package org.usfirst.lib6647.oi;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 
 /**
- * Helper class for getting buttons.
+ * Helper class for registering button input.
  */
 public class ButtonHelper {
-
-	public ArrayList<Controller> joysticks;
+	public ArrayList<JController> joysticks;
 
 	/**
-	 * Functional interface for getting a button.
+	 * Method for getting a button with a JSON name from a given joystick. Returns
+	 * null if no button is found.
+	 * 
+	 * @param joystick
+	 * @param buttonName
+	 * @return button from the given joystick
 	 */
-	public interface OIButton {
-		/**
-		 * Abstract method for getting a button.
-		 * 
-		 * @param joystick
-		 * @param button
-		 * @return Button
-		 */
-		abstract Button get(int joystick, int button);
+	public Button oiButton(int joystick, String buttonName) throws NullPointerException {
+		JSONParser parser = new JSONParser();
+
+		try (Reader file = new FileReader("src\\main\\java\\org\\usfirst\\lib6647\\oi\\ControllerProfiles.json")) {
+			JSONObject profiles = (JSONObject) parser.parse(file);
+			String key = (String) profiles.get(joysticks.get(joystick).getName() + "." + buttonName);
+			return joysticks.get(joystick).buttons.get(key);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
-	 * Functional interface for getting a button with an angle.
+	 * Method for getting a button from a given joystick.
+	 * 
+	 * @param joystick
+	 * @param button
+	 * @return button from the given joystick
 	 */
-	public interface OIAngleButton {
-		/**
-		 * Abstract method for getting a button at a specific angle.
-		 * 
-		 * @param joystick
-		 * @param axis
-		 * @param angle
-		 * @return Button
-		 */
-		abstract Button get(int joystick, int axis, int angle);
+	public Button oiButton(int joystick, int button) {
+		return joysticks.get(joystick).buttons.get("Button" + button);
 	}
 
 	/**
-	 * Lambda declaration for getting a joystick button.
+	 * Method for getting an axisButton from a given joystick.
 	 * 
-	 * e.g. oiButton.get(1, 7) gets button 7 from joystick 1.
+	 * @param joystick
+	 * @param type
+	 * @param axis
+	 * @return axisButton from the given joystick, for the given axis
 	 */
-	public OIButton oiButton = (joystick, button) -> joysticks.get(joystick).buttons.get("Button" + button);
+	public Button oiButton(int joystick, String type, int axis) {
+		return joysticks.get(joystick).buttons.get(type + axis);
+	}
 
 	/**
-	 * Lambda declaration for getting a joystick axis button at any angle.
+	 * Method for getting an axisButton from a given joystick, at a specific angle.
 	 * 
-	 * e.g. oiAxisButton.get(1, 2) gets button for axis 2 from joystick 1.
+	 * @param joystick
+	 * @param type
+	 * @param axis
+	 * @param angle
+	 * @return axisButton from the given joystick, for the given axis, for the given
+	 *         angle
 	 */
-	public OIButton oiAxisButton = (joystick, axis) -> joysticks.get(joystick).buttons.get("Axis" + axis);
-
-	/**
-	 * Lambda declaration for getting a joystick POV button at any angle.
-	 * 
-	 * e.g. oiPOVButton.get(1, 2) gets button for POV 2 from joystick 1.
-	 */
-	public OIButton oiPOVButton = (joystick, pov) -> joysticks.get(joystick).buttons.get("POV" + pov);
-
-	/**
-	 * Lambda declaration for getting a joystick axis button at a specific angle.
-	 * (Only angles 0, 90, 180, and 270 exist).
-	 * 
-	 * e.g. oiAxis.get(1, 2, 90) gets angle 90 button from axis 2 from joystick 1.
-	 */
-	public OIAngleButton oiAxis = (joystick, axis, angle) -> joysticks.get(joystick).buttons
-			.get("Axis" + axis + "_" + angle);
-
-	/**
-	 * Lambda declaration for getting a joystick POV button at a specific angle.
-	 * (Only angles 0, 45, 90, 135, 180, 225, 270, and 315 exist).
-	 * 
-	 * e.g. oiPOV.get(1, 2, 45) gets angle 45 button from POV 2 from joystick 1.
-	 */
-	public OIAngleButton oiPOV = (joystick, pov, angle) -> joysticks.get(joystick).buttons
-			.get("POV" + pov + "_" + angle);
+	public Button oiButton(int joystick, String type, int axis, int angle) {
+		return joysticks.get(joystick).buttons.get(type + axis + "_" + angle);
+	}
 }
