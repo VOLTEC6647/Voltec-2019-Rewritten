@@ -67,6 +67,7 @@ public class ChassisH extends Subsystem {
 
 	/**
 	 * Sets the midwheel to the given speed, in PercentOutput.
+	 * 
 	 * @param speed
 	 */
 	public void moveHWheel(double speed) {

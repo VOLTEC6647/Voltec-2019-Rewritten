@@ -11,7 +11,7 @@ import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.GyroAlign;
 import org.usfirst.frc6647.commands.Slide;
 import org.usfirst.lib6647.oi.ButtonHelper;
-import org.usfirst.lib6647.oi.Controller;
+import org.usfirst.lib6647.oi.JController;
 import org.usfirst.lib6647.util.Direction;
 
 /**
@@ -43,18 +43,16 @@ public class OI extends ButtonHelper {
 	/**
 	 * Constructor for the class.
 	 * 
-	 * Add joysticks and button inputs here. See lambda declarations in
-	 * org.usfirst.lib6647.oi.ButtonHelper for examples on how to assign commands to
-	 * buttons.
+	 * Add joysticks and button inputs here.
 	 */
 	public OI() {
-		joysticks.add(new Controller(0));
+		joysticks.add(new JController(0));
 
-		oiButton.get(1, 7).whileHeld(new Slide(Direction.LEFT));
-		oiButton.get(1, 8).whileHeld(new Slide(Direction.RIGHT));
-		oiButton.get(1, 14).whileHeld(new GyroAlign());
+		oiButton(1, "LBumper").whileHeld(new Slide(Direction.LEFT));
+		oiButton(1, "RBumper").whileHeld(new Slide(Direction.RIGHT));
+		oiButton(1, 14).whileHeld(new GyroAlign());
 
-		oiPOV.get(1, 1, 270).whileHeld(new AlignNext(Direction.LEFT));
-		oiPOV.get(1, 1, 90).whileHeld(new AlignNext(Direction.RIGHT));
+		oiButton(1, "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
+		oiButton(1, "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
 	}
 }
