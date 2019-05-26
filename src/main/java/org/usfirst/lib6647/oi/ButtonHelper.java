@@ -25,7 +25,7 @@ public class ButtonHelper {
 	 * @param buttonName
 	 * @return button from the given joystick
 	 */
-	public Button oiButton(int joystick, String buttonName) throws NullPointerException {
+	public Button oiButton(int joystick, String buttonName) {
 		JSONParser parser = new JSONParser();
 
 		try (Reader file = new FileReader("src\\main\\java\\org\\usfirst\\lib6647\\oi\\ControllerProfiles.json")) {
