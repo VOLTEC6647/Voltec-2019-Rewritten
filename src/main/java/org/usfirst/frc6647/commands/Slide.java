@@ -42,8 +42,8 @@ public class Slide extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		analogLT = (oi.joysticks.get(1).getRawAxis(3) + 1) / 2;
-		analogRT = (oi.joysticks.get(1).getRawAxis(4) + 1) / 2;
+		analogLT = (oi.joysticks.get(0).getRawAxis(3) + 1) / 2;
+		analogRT = (oi.joysticks.get(0).getRawAxis(4) + 1) / 2;
 
 		switch (direction) {
 		case LEFT:

@@ -21,9 +21,10 @@ public class TalonBuilder extends WPI_TalonSRX {
 	private WPI_VictorSPX victor;
 
 	/**
-	 * Creates and initializes a talon with the given values.
+	 * Creates and initializes a Talon with the given values.
 	 * 
 	 * @param port
+	 * @param talonName
 	 * @param neutralMode
 	 * @param inverted
 	 * @param RAMPDRIVE
@@ -41,20 +42,22 @@ public class TalonBuilder extends WPI_TalonSRX {
 	 * @param d
 	 * @param f
 	 */
-	public TalonBuilder(int port, NeutralMode neutralMode, boolean inverted, double RAMPDRIVE, int LOOP,
-			FeedbackDevice feedbackDevice, int fpidIdx, int ftimeoutMs, boolean phase, int sensorPos, int pidIdx,
-			int timeoutMs, int slotIdx, double p, double i, double d, double f) {
+	public TalonBuilder(int port, String talonName, NeutralMode neutralMode, boolean inverted, double RAMPDRIVE,
+			int LOOP, FeedbackDevice feedbackDevice, int fpidIdx, int ftimeoutMs, boolean phase, int sensorPos,
+			int pidIdx, int timeoutMs, int slotIdx, float p, float i, float d, float f) {
 		super(port);
 
-		createTalon(neutralMode, inverted, RAMPDRIVE, LOOP, feedbackDevice, fpidIdx, ftimeoutMs, phase, sensorPos,
-				pidIdx, timeoutMs, slotIdx, p, i, d, f);
+		createTalon(talonName, neutralMode, inverted, RAMPDRIVE, LOOP, feedbackDevice, fpidIdx, ftimeoutMs, phase,
+				sensorPos, pidIdx, timeoutMs, slotIdx, p, i, d, f);
 	}
 
 	/**
-	 * Creates and initializes a victor and a follower talon with the given values.
+	 * Creates and initializes a Talon and a follower Victor with the given values.
 	 * 
 	 * @param talonPort
+	 * @param talonName
 	 * @param victorPort
+	 * @param victorName
 	 * @param neutralMode
 	 * @param inverted
 	 * @param RAMPDRIVE
@@ -72,23 +75,25 @@ public class TalonBuilder extends WPI_TalonSRX {
 	 * @param d
 	 * @param f
 	 */
-	public TalonBuilder(int talonPort, int victorPort, NeutralMode neutralMode, boolean inverted, double RAMPDRIVE,
-			int LOOP, FeedbackDevice feedbackDevice, int fpidIdx, int ftimeoutMs, boolean phase, int sensorPos,
-			int pidIdx, int timeoutMs, int slotIdx, double p, double i, double d, double f) {
+	public TalonBuilder(int talonPort, String talonName, int victorPort, String victorName, NeutralMode neutralMode,
+			boolean inverted, double RAMPDRIVE, int LOOP, FeedbackDevice feedbackDevice, int fpidIdx, int ftimeoutMs,
+			boolean phase, int sensorPos, int pidIdx, int timeoutMs, int slotIdx, float p, float i, float d, float f) {
 		super(talonPort);
 
-		createTalon(neutralMode, inverted, RAMPDRIVE, LOOP, feedbackDevice, fpidIdx, ftimeoutMs, phase, sensorPos,
-				pidIdx, timeoutMs, slotIdx, p, i, d, f);
+		createTalon(talonName, neutralMode, inverted, RAMPDRIVE, LOOP, feedbackDevice, fpidIdx, ftimeoutMs, phase,
+				sensorPos, pidIdx, timeoutMs, slotIdx, p, i, d, f);
 
 		victor = new WPI_VictorSPX(victorPort);
+		victor.setName(victorName);
 		victor.setInverted(inverted);
 		victor.setNeutralMode(neutralMode);
 		victor.follow(this);
 	}
 
 	/**
-	 * Initializes talon with the given values.
+	 * Method to initialize a Talon with the given values.
 	 * 
+	 * @param talonName
 	 * @param neutralMode
 	 * @param inverted
 	 * @param RAMPDRIVE
@@ -106,9 +111,10 @@ public class TalonBuilder extends WPI_TalonSRX {
 	 * @param d
 	 * @param f
 	 */
-	private void createTalon(NeutralMode neutralMode, boolean inverted, double RAMPDRIVE, int LOOP,
+	private void createTalon(String talonName, NeutralMode neutralMode, boolean inverted, double RAMPDRIVE, int LOOP,
 			FeedbackDevice feedbackDevice, int fpidIdx, int ftimeoutMs, boolean phase, int sensorPos, int pidIdx,
-			int timeoutMs, int slotIdx, double p, double i, double d, double f) {
+			int timeoutMs, int slotIdx, float p, float i, float d, float f) {
+		setName(talonName);
 		setNeutralMode(neutralMode);
 		setInverted(inverted);
 
@@ -120,7 +126,7 @@ public class TalonBuilder extends WPI_TalonSRX {
 	}
 
 	/**
-	 * Configures talon loops.
+	 * Method to configure Talon loops.
 	 * 
 	 * @param RAMPDRIVE
 	 * @param LOOP
@@ -131,7 +137,7 @@ public class TalonBuilder extends WPI_TalonSRX {
 	}
 
 	/**
-	 * Configures talon sensors.
+	 * Method to configure Talon sensors.
 	 * 
 	 * @param feedbackDevice
 	 * @param fpidIdx
@@ -149,7 +155,7 @@ public class TalonBuilder extends WPI_TalonSRX {
 	}
 
 	/**
-	 * Sets talon PIDF values to the given values, for the given slot.
+	 * Method to configure Talon PID values.
 	 * 
 	 * @param slotIdx
 	 * @param p
@@ -157,7 +163,7 @@ public class TalonBuilder extends WPI_TalonSRX {
 	 * @param d
 	 * @param f
 	 */
-	private void configPIDs(int slotIdx, double p, double i, double d, double f) {
+	private void configPIDs(int slotIdx, float p, float i, float d, float f) {
 		config_kP(slotIdx, p);
 		config_kI(slotIdx, i);
 		config_kD(slotIdx, d);
@@ -165,7 +171,9 @@ public class TalonBuilder extends WPI_TalonSRX {
 	}
 
 	/**
-	 * @return Victor follower.
+	 * Returns follower Victor.
+	 * 
+	 * @return WPI_VictorSPX follower
 	 */
 	public WPI_VictorSPX getFollower() {
 		return victor;

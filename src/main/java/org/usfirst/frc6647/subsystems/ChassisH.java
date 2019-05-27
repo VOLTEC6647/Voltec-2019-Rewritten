@@ -8,25 +8,14 @@
 package org.usfirst.frc6647.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-import org.usfirst.lib6647.util.TalonBuilder;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.lib6647.subsystem.SuperSubsystem;
+import org.usfirst.lib6647.subsystem.SuperTalon;
 
 /**
  * Subsystem for the midwheel.
  */
-public class ChassisH extends Subsystem {
-
-	private final int TALON_HWHEEL_PORT = 3;
-	private TalonBuilder hWheel;
-
-	private final double RAMPDRIVE = 0.2;
-	private final int LOOP = 1000, fpidIdx = 0, ftimeoutMs = 0, sensorPos = 0, pidIdx = 0, timeoutMs = 0, slotIdx = 0;
-	private final boolean phase = true;
-	private double p = 0.0, i = 0.0, d = 0.0, f = 0.0;
+public class ChassisH extends SuperSubsystem implements SuperTalon {
 
 	private static ChassisH m_instance = null;
 
@@ -34,7 +23,7 @@ public class ChassisH extends Subsystem {
 	 * Creates static ChassisH instance.
 	 */
 	public static void createInstance() {
-		m_instance = new ChassisH();
+		m_instance = new ChassisH("chassisH");
 	}
 
 	/**
@@ -50,15 +39,14 @@ public class ChassisH extends Subsystem {
 	}
 
 	/**
-	 * Constructor for the subsystem.
+	 * Constructor for the subsystem. Initializes talons.
 	 * 
-	 * Initializes the midwheel's talon with the values defined at the top of this
-	 * class.
+	 * @param name
 	 */
-	public ChassisH() {
-		hWheel = new TalonBuilder(TALON_HWHEEL_PORT, NeutralMode.Brake, true, RAMPDRIVE, LOOP,
-				FeedbackDevice.QuadEncoder, fpidIdx, ftimeoutMs, phase, sensorPos, pidIdx, timeoutMs, slotIdx, p, i, d,
-				f);
+	public ChassisH(String name) {
+		super(name, "src\\main\\java\\org\\usfirst\\frc6647\\robot\\RobotMap.json");
+
+		initTalons(robotMap, getName());
 	}
 
 	@Override
@@ -71,7 +59,7 @@ public class ChassisH extends Subsystem {
 	 * @param speed
 	 */
 	public void moveHWheel(double speed) {
-		hWheel.set(ControlMode.PercentOutput, speed);
+		talons.get("hWheel").set(ControlMode.PercentOutput, speed);
 	}
 
 	/**
