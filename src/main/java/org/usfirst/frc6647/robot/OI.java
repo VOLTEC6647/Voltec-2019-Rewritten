@@ -48,11 +48,11 @@ public class OI extends ButtonHelper {
 	public OI() {
 		joysticks.add(new JController(0));
 
-		oiButton(1, "LBumper").whileHeld(new Slide(Direction.LEFT));
-		oiButton(1, "RBumper").whileHeld(new Slide(Direction.RIGHT));
-		oiButton(1, 14).whileHeld(new GyroAlign());
+		oiButton(0, "LBumper").whileHeld(new Slide(Direction.LEFT));
+		oiButton(0, "RBumper").whileHeld(new Slide(Direction.RIGHT));
+		oiButton(0, 14).whileHeld(new GyroAlign());
 
-		oiButton(1, "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
-		oiButton(1, "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
+		oiButton(0, "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
+		oiButton(0, "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
 	}
 }

@@ -8,28 +8,18 @@
 package org.usfirst.frc6647.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import org.usfirst.frc6647.robot.OI;
+import org.usfirst.lib6647.subsystem.SuperSubsystem;
+import org.usfirst.lib6647.subsystem.SuperTalon;
 import org.usfirst.lib6647.util.TalonBuilder;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Subsystem for the chassis.
  */
-public class Chassis extends Subsystem {
-
-	private final int TALON_FRONT_LEFT_PORT = 4, TALON_FRONT_RIGHT_PORT = 8, VICTOR_BACK_LEFT_PORT = 2,
-			VICTOR_BACK_RIGHT_PORT = 7;
-	private TalonBuilder frontLeft, frontRight;
-
-	private final double RAMPDRIVE = 0.2;
-	private final int LOOP = 20, fpidIdx = 0, ftimeoutMs = 0, sensorPos = 0, pidIdx = 0, timeoutMs = 0, slotIdx = 0;
-	private final boolean phase = true;
-	private double p = .25, i = 0.0, d = 0.0, f = 1023 / 2200;
+public class Chassis extends SuperSubsystem implements SuperTalon {
 
 	private double TOLERANCE = 0.15, LIMITER = 0.75;
 	private final int direction = 1;
@@ -41,7 +31,7 @@ public class Chassis extends Subsystem {
 	 * Creates static Chassis instance.
 	 */
 	public static void createInstance() {
-		m_instance = new Chassis();
+		m_instance = new Chassis("chassis");
 	}
 
 	/**
@@ -58,17 +48,11 @@ public class Chassis extends Subsystem {
 
 	/**
 	 * Constructor for the subsystem.
-	 * 
-	 * Initializes both talons and victors with the values defined at the top of
-	 * this class.
 	 */
-	public Chassis() {
-		frontLeft = new TalonBuilder(TALON_FRONT_LEFT_PORT, VICTOR_BACK_LEFT_PORT, NeutralMode.Coast, true, RAMPDRIVE,
-				LOOP, FeedbackDevice.QuadEncoder, fpidIdx, ftimeoutMs, phase, sensorPos, pidIdx, timeoutMs, slotIdx, p,
-				i, d, f);
-		frontRight = new TalonBuilder(TALON_FRONT_RIGHT_PORT, VICTOR_BACK_RIGHT_PORT, NeutralMode.Coast, false,
-				RAMPDRIVE, LOOP, FeedbackDevice.QuadEncoder, fpidIdx, ftimeoutMs, phase, sensorPos, pidIdx, timeoutMs,
-				slotIdx, p, i, d, f);
+	public Chassis(String name) {
+		super(name, "src\\main\\java\\org\\usfirst\\frc6647\\robot\\RobotMap.json");
+
+		initTalons(robotMap, getName());
 	}
 
 	/**
@@ -95,7 +79,7 @@ public class Chassis extends Subsystem {
 	 * @return frontLeft Talon
 	 */
 	public TalonBuilder getLeftTalon() {
-		return frontLeft;
+		return talons.get("frontLeft");
 	}
 
 	/**
@@ -104,7 +88,7 @@ public class Chassis extends Subsystem {
 	 * @return frontRight Talon
 	 */
 	public TalonBuilder getRightTalon() {
-		return frontRight;
+		return talons.get("frontRight");
 	}
 
 	/**
@@ -113,7 +97,7 @@ public class Chassis extends Subsystem {
 	 * @param speed
 	 */
 	public void setLeftTalon(double speed) {
-		frontLeft.set(ControlMode.PercentOutput, speed);
+		talons.get("frontLeft").set(ControlMode.PercentOutput, speed);
 	}
 
 	/**
@@ -122,7 +106,7 @@ public class Chassis extends Subsystem {
 	 * @param speed
 	 */
 	public void setRightTalon(double speed) {
-		frontRight.set(ControlMode.PercentOutput, speed);
+		talons.get("frontRight").set(ControlMode.PercentOutput, speed);
 	}
 
 	/**

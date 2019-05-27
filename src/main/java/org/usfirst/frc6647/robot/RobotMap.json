@@ -1,0 +1,83 @@
+{
+	"subsystems": {
+		"chassis": [
+			{
+				"talons": [
+					{
+						"talonName": "frontLeft",
+						"talonPort": 4,
+						"neutralMode": "Coast",
+						"inverted": true,
+						"rampDrive": 0.2,
+						"loop": 20,
+						"feedbackDevice": "QuadEncoder",
+						"feedbackPidIdx": 0,
+						"feedbackTimeoutMs": 0,
+						"phase": true,
+						"sensorPos": 0,
+						"pidIdx": 0,
+						"timeoutMs": 0,
+						"slotIdx": 0,
+						"p": 0.25,
+						"i": 0.0,
+						"d": 0.0,
+						"f": 0.465,
+						"victor": true,
+						"victorName": "backLeft",
+						"victorPort": 2
+					},
+					{
+						"talonName": "frontRight",
+						"talonPort": 8,
+						"neutralMode": "Coast",
+						"inverted": true,
+						"rampDrive": 0.2,
+						"loop": 20,
+						"feedbackDevice": "QuadEncoder",
+						"feedbackPidIdx": 0,
+						"feedbackTimeoutMs": 0,
+						"phase": true,
+						"sensorPos": 0,
+						"pidIdx": 0,
+						"timeoutMs": 0,
+						"slotIdx": 0,
+						"p": 0.25,
+						"i": 0.0,
+						"d": 0.0,
+						"f": 0.465,
+						"victor": true,
+						"victorName": "backRight",
+						"victorPort": 7
+					}
+				]
+			}
+		],
+		"chassisH": [
+			{
+				"talons": [
+					{
+						"talonName": "hWheel",
+						"talonPort": 3,
+						"neutralMode": "Brake",
+						"inverted": true,
+						"rampDrive": 0.2,
+						"loop": 1000,
+						"feedbackDevice": "QuadEncoder",
+						"feedbackPidIdx": 0,
+						"feedbackTimeoutMs": 0,
+						"phase": true,
+						"sensorPos": 0,
+						"pidIdx": 0,
+						"timeoutMs": 0,
+						"slotIdx": 0,
+						"p": 0.0,
+						"i": 0.0,
+						"d": 0.0,
+						"f": 0.0,
+						"victor": false
+					}
+				]
+			}
+		]
+	}
+}

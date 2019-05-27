@@ -27,7 +27,6 @@ public class ButtonHelper {
 	 */
 	public Button oiButton(int joystick, String buttonName) {
 		JSONParser parser = new JSONParser();
-
 		try (Reader file = new FileReader("src\\main\\java\\org\\usfirst\\lib6647\\oi\\ControllerProfiles.json")) {
 			JSONObject profiles = (JSONObject) parser.parse(file);
 			String key = (String) profiles.get(joysticks.get(joystick).getName() + "." + buttonName);

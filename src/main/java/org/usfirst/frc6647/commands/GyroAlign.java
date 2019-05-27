@@ -77,7 +77,7 @@ public class GyroAlign extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Math.abs(oi.joysticks.get(1).getRawAxis(1)) > 0.1 && Math.abs(oi.joysticks.get(1).getRawAxis(5)) > 0.1)
+		if (Math.abs(oi.joysticks.get(0).getRawAxis(1)) > 0.1 && Math.abs(oi.joysticks.get(0).getRawAxis(5)) > 0.1)
 			end();
 
 		navX.acceleration += 0.0035;

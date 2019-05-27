@@ -10,6 +10,7 @@ package org.usfirst.frc6647.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc6647.robot.OI;
+import org.usfirst.lib6647.subsystem.PID;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Subsystem for the NAVX sensor.
  */
-public class NavX extends PIDSubsystem {
+public class NavX extends PIDSubsystem implements PID {
 
 	private double p = 0.0, i = 0.0, d = 0.0;
 	private AHRS ahrs;
@@ -64,7 +65,7 @@ public class NavX extends PIDSubsystem {
 		ahrs = new AHRS(SPI.Port.kMXP);
 		ahrs.reset();
 
-		outputPIDValues();
+		outputPIDValues(getName(), p, i, d);
 	}
 
 	/**
@@ -112,15 +113,6 @@ public class NavX extends PIDSubsystem {
 	 */
 	public double getYaw() {
 		return ahrs.getYaw();
-	}
-
-	/**
-	 * Method to display PID values in the SmartDashboard.
-	 */
-	public void outputPIDValues() {
-		SmartDashboard.putNumber("gyroP", p);
-		SmartDashboard.putNumber("gyroI", i);
-		SmartDashboard.putNumber("gyroD", d);
 	}
 
 	/**
