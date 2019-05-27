@@ -1,5 +1,6 @@
 package org.usfirst.lib6647.subsystem;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -30,9 +31,7 @@ public interface SuperTalon {
 		try {
 			JSONArray talonArray = (JSONArray) robotMap.get("subsystems." + subsystemName + ".talons");
 
-			for (int i = 0; i < talonArray.size(); i++) {
-				JSONObject talon = (JSONObject) talonArray.get(i);
-
+			Arrays.stream(talonArray.toArray()).map(obj -> (JSONObject) obj).forEach(talon -> {
 				if ((boolean) talon.get("victor")) {
 					talons.put((String) talon.get("talonName"), new TalonBuilder((int) talon.get("talonPort"),
 							(String) talon.get("talonName"), (int) talon.get("victorPort"),
@@ -53,7 +52,7 @@ public interface SuperTalon {
 							(int) talon.get("slotIdx"), (float) talon.get("p"), (float) talon.get("i"),
 							(float) talon.get("d"), (float) talon.get("f")));
 				}
-			}
+			});
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
