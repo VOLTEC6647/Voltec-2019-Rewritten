@@ -1,6 +1,6 @@
 # voltec-2019-rewritten
 
-<p align="center"><a href="https://github.com/pacoito123/voltec-2019-rewritten" target="_blank"><img width="100"src="https://repository-images.githubusercontent.com/184450787/736f4f80-80c8-11e9-975d-573e3fdaae6a"></a></p>
+<p align="left"><a href="https://github.com/pacoito123/voltec-2019-rewritten" target="_blank"><img src="https://repository-images.githubusercontent.com/184450787/736f4f80-80c8-11e9-975d-573e3fdaae6a"></a></p>
 
 A complete rewrite of team 6647's FRC code from the ground up, implementing many tweaks and cleaning things up.
 
