@@ -46,6 +46,8 @@ public class OI extends ButtonHelper {
 	 * Add joysticks and button inputs here.
 	 */
 	public OI() {
+		super("src\\main\\java\\org\\usfirst\\frc6647\\commands\\Profiles.json");
+
 		joysticks.add(new JController(0));
 
 		oiButton(0, "LBumper").whileHeld(new Slide(Direction.LEFT));

@@ -8,21 +8,21 @@
 package org.usfirst.frc6647.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.SuperTalon;
-import org.usfirst.lib6647.util.TalonBuilder;
+import org.usfirst.lib6647.subsystem.SuperVictor;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Subsystem for the chassis.
+ * Subsystem for the Chassis.
  */
-public class Chassis extends SuperSubsystem implements SuperTalon {
+public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 
 	private double TOLERANCE = 0.15, LIMITER = 0.75;
-	private final int direction = 1;
 	private double leftStickY, rightStickY;
 
 	private static Chassis m_instance = null;
@@ -31,7 +31,7 @@ public class Chassis extends SuperSubsystem implements SuperTalon {
 	 * Creates static Chassis instance.
 	 */
 	public static void createInstance() {
-		m_instance = new Chassis("chassis");
+		m_instance = new Chassis();
 	}
 
 	/**
@@ -47,12 +47,17 @@ public class Chassis extends SuperSubsystem implements SuperTalon {
 	}
 
 	/**
-	 * Constructor for the subsystem.
+	 * Constructor for the subsystem. Initializes Talons and Victors, and sets the
+	 * latter to follow its respective Talon.
 	 */
-	public Chassis(String name) {
-		super(name, "src\\main\\java\\org\\usfirst\\frc6647\\robot\\RobotMap.json");
+	public Chassis() {
+		super("chassis", "src\\main\\java\\org\\usfirst\\frc6647\\robot\\RobotMap.json");
 
 		initTalons(robotMap, getName());
+		initVictors(robotMap, getName());
+
+		victors.get("backLeft").follow(talons.get("frontLeft"));
+		victors.get("backRight").follow(talons.get("frontRight"));
 	}
 
 	/**
@@ -60,10 +65,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon {
 	 */
 	@Override
 	public void periodic() {
-		leftStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(1).getRawAxis(1), TOLERANCE, 1, 0, 1)
-				* direction;
-		rightStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(1).getRawAxis(5), TOLERANCE, 1, 0, 1)
-				* direction;
+		leftStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(1).getRawAxis(1), TOLERANCE, 1, 0, 1);
+		rightStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(1).getRawAxis(5), TOLERANCE, 1, 0, 1);
 
 		if (!SmartDashboard.getBoolean("Gyro", true))
 			Chassis.getInstance().setBothTalons(leftStickY, rightStickY);
@@ -78,7 +81,7 @@ public class Chassis extends SuperSubsystem implements SuperTalon {
 	 * 
 	 * @return frontLeft Talon
 	 */
-	public TalonBuilder getLeftTalon() {
+	public WPI_TalonSRX getLeftTalon() {
 		return talons.get("frontLeft");
 	}
 
@@ -87,7 +90,7 @@ public class Chassis extends SuperSubsystem implements SuperTalon {
 	 * 
 	 * @return frontRight Talon
 	 */
-	public TalonBuilder getRightTalon() {
+	public WPI_TalonSRX getRightTalon() {
 		return talons.get("frontRight");
 	}
 
@@ -110,7 +113,7 @@ public class Chassis extends SuperSubsystem implements SuperTalon {
 	}
 
 	/**
-	 * Sets both talons to the given speed, in PercentOutput.
+	 * Sets both Talons to the given speed, in PercentOutput.
 	 * 
 	 * @param leftSpeed
 	 * @param rightSpeed
@@ -121,7 +124,7 @@ public class Chassis extends SuperSubsystem implements SuperTalon {
 	}
 
 	/**
-	 * Stops both talons dead in their tracks.
+	 * Stops both Talons dead in their tracks.
 	 */
 	public void stopTalons() {
 		setBothTalons(0, 0);

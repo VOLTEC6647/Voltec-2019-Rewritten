@@ -1,83 +1,149 @@
 {
 	"subsystems": {
-		"chassis": [
-			{
-				"talons": [
-					{
-						"talonName": "frontLeft",
-						"talonPort": 4,
-						"neutralMode": "Coast",
-						"inverted": true,
-						"rampDrive": 0.2,
-						"loop": 20,
-						"feedbackDevice": "QuadEncoder",
-						"feedbackPidIdx": 0,
-						"feedbackTimeoutMs": 0,
-						"phase": true,
-						"sensorPos": 0,
-						"pidIdx": 0,
-						"timeoutMs": 0,
-						"slotIdx": 0,
-						"p": 0.25,
-						"i": 0.0,
-						"d": 0.0,
-						"f": 0.465,
-						"victor": true,
-						"victorName": "backLeft",
-						"victorPort": 2
+		"chassis": {
+			"talons": [
+				{
+					"talonName": "frontLeft",
+					"talonPort": 4,
+					"neutralMode": "Coast",
+					"inverted": true,
+					"loopRamp": {
+						"closed": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 20
+						},
+						"open": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 20
+						}
 					},
-					{
-						"talonName": "frontRight",
-						"talonPort": 8,
-						"neutralMode": "Coast",
-						"inverted": true,
-						"rampDrive": 0.2,
-						"loop": 20,
-						"feedbackDevice": "QuadEncoder",
-						"feedbackPidIdx": 0,
-						"feedbackTimeoutMs": 0,
+					"sensor": {
+						"feedback": {
+							"feedbackDevice": "QuadEncoder",
+							"pidIdx": 0,
+							"timeoutMs": 0
+						},
 						"phase": true,
 						"sensorPos": 0,
 						"pidIdx": 0,
-						"timeoutMs": 0,
+						"timeoutMs": 0
+					},
+					"pid": {
 						"slotIdx": 0,
 						"p": 0.25,
 						"i": 0.0,
 						"d": 0.0,
-						"f": 0.465,
-						"victor": true,
-						"victorName": "backRight",
-						"victorPort": 7
+						"f": 0.465
 					}
-				]
-			}
-		],
-		"chassisH": [
-			{
-				"talons": [
-					{
-						"talonName": "hWheel",
-						"talonPort": 3,
-						"neutralMode": "Brake",
-						"inverted": true,
-						"rampDrive": 0.2,
-						"loop": 1000,
-						"feedbackDevice": "QuadEncoder",
-						"feedbackPidIdx": 0,
-						"feedbackTimeoutMs": 0,
+				},
+				{
+					"talonName": "frontRight",
+					"talonPort": 8,
+					"neutralMode": "Coast",
+					"inverted": false,
+					"loopRamp": {
+						"closed": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 20
+						},
+						"open": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 20
+						}
+					},
+					"sensor": {
+						"feedback": {
+							"feedbackDevice": "QuadEncoder",
+							"pidIdx": 0,
+							"timeoutMs": 0
+						},
 						"phase": true,
 						"sensorPos": 0,
 						"pidIdx": 0,
-						"timeoutMs": 0,
+						"timeoutMs": 0
+					},
+					"pid": {
 						"slotIdx": 0,
-						"p": 0.0,
+						"p": 0.25,
 						"i": 0.0,
 						"d": 0.0,
-						"f": 0.0,
-						"victor": false
+						"f": 0.465
 					}
-				]
-			}
-		]
+				}
+			],
+			"victors": [
+				{
+					"victorName": "backLeft",
+					"victorPort": 2,
+					"inverted": true,
+					"neutralMode": "Coast",
+					"loopRamp": {
+						"closed": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						},
+						"open": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						}
+					},
+					"master": "frontLeft"
+				},
+				{
+					"victorName": "backRight",
+					"victorPort": 7,
+					"inverted": false,
+					"neutralMode": "Coast",
+					"loopRamp": {
+						"closed": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						},
+						"open": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						}
+					},
+					"master": "frontRight"
+				}
+			]
+		},
+		"chassisH": {
+			"talons": [
+				{
+					"talonName": "hWheel",
+					"talonPort": 3,
+					"inverted": true,
+					"loopRamp": {
+						"closed": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 1000
+						},
+						"open": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 1000
+						}
+					},
+					"sensor": {
+						"feedback": {
+							"feedbackDevice": "QuadEncoder",
+							"pidIdx": 0,
+							"timeoutMs": 0
+						},
+						"phase": true,
+						"sensorPos": 0,
+						"pidIdx": 0,
+						"timeoutMs": 0
+					},
+					"pid": {
+						"slotIdx": 0,
+						"p": 0,
+						"i": 0,
+						"d": 0,
+						"f": 0
+					}
+				}
+			]
+		}
 	}
 }

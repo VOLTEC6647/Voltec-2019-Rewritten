@@ -16,6 +16,16 @@ import edu.wpi.first.wpilibj.buttons.Button;
  */
 public class ButtonHelper {
 	public ArrayList<JController> joysticks;
+	String fileName;
+
+	/**
+	 * Constructor for the class.
+	 * 
+	 * @param fileName
+	 */
+	public ButtonHelper(String fileName) {
+		this.fileName = fileName;
+	}
 
 	/**
 	 * Method for getting a button with a JSON name from a given joystick. Returns
@@ -27,9 +37,10 @@ public class ButtonHelper {
 	 */
 	public Button oiButton(int joystick, String buttonName) {
 		JSONParser parser = new JSONParser();
-		try (Reader file = new FileReader("src\\main\\java\\org\\usfirst\\lib6647\\oi\\ControllerProfiles.json")) {
-			JSONObject profiles = (JSONObject) parser.parse(file);
-			String key = (String) profiles.get(joysticks.get(joystick).getName() + "." + buttonName);
+		try (Reader file = new FileReader(fileName)) {
+			JSONObject jsonJoystick = (JSONObject) ((JSONObject) parser.parse(file))
+					.get(joysticks.get(joystick).getName());
+			String key = (String) jsonJoystick.get(buttonName);
 			return joysticks.get(joystick).buttons.get(key);
 		} catch (IOException e) {
 			e.printStackTrace();
