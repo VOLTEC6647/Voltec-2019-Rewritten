@@ -1,4 +1,4 @@
-package org.usfirst.lib6647.subsystem;
+package org.usfirst.lib6647.util;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

@@ -13,7 +13,7 @@ import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.SuperTalon;
 
 /**
- * Subsystem for the midwheel.
+ * Subsystem for the hWheel.
  */
 public class ChassisH extends SuperSubsystem implements SuperTalon {
 
@@ -23,7 +23,7 @@ public class ChassisH extends SuperSubsystem implements SuperTalon {
 	 * Creates static ChassisH instance.
 	 */
 	public static void createInstance() {
-		m_instance = new ChassisH("chassisH");
+		m_instance = new ChassisH();
 	}
 
 	/**
@@ -39,12 +39,12 @@ public class ChassisH extends SuperSubsystem implements SuperTalon {
 	}
 
 	/**
-	 * Constructor for the subsystem. Initializes talons.
+	 * Constructor for the subsystem. Initializes Talons.
 	 * 
 	 * @param name
 	 */
-	public ChassisH(String name) {
-		super(name, "src\\main\\java\\org\\usfirst\\frc6647\\robot\\RobotMap.json");
+	public ChassisH() {
+		super("chassis", "src\\main\\java\\org\\usfirst\\frc6647\\robot\\RobotMap.json");
 
 		initTalons(robotMap, getName());
 	}
@@ -54,7 +54,7 @@ public class ChassisH extends SuperSubsystem implements SuperTalon {
 	}
 
 	/**
-	 * Sets the midwheel to the given speed, in PercentOutput.
+	 * Sets the hWheel Talon to the given speed, in PercentOutput.
 	 * 
 	 * @param speed
 	 */
@@ -63,7 +63,7 @@ public class ChassisH extends SuperSubsystem implements SuperTalon {
 	}
 
 	/**
-	 * Stops the midwheel dead in its tracks.
+	 * Stops the hWheel Talon dead in its tracks.
 	 */
 	public void stopHWheel() {
 		moveHWheel(0);

@@ -10,14 +10,14 @@ package org.usfirst.frc6647.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc6647.robot.OI;
-import org.usfirst.lib6647.subsystem.PID;
+import org.usfirst.lib6647.util.PID;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Subsystem for the NAVX sensor.
+ * Subsystem for the NavX sensor.
  */
 public class NavX extends PIDSubsystem implements PID {
 
@@ -50,7 +50,7 @@ public class NavX extends PIDSubsystem implements PID {
 	/**
 	 * Constructor for the subsystem.
 	 * 
-	 * Initializes PID subsystem and resets navX sensor.
+	 * Initializes PID subsystem and resets NavX sensor.
 	 */
 	public NavX() {
 		super("NavX", 0, 0, 0);
@@ -91,7 +91,7 @@ public class NavX extends PIDSubsystem implements PID {
 	}
 
 	/**
-	 * Adds or substracts calculated speed to its respective talon.
+	 * Adds or substracts calculated speed to its respective Talon.
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
@@ -107,7 +107,7 @@ public class NavX extends PIDSubsystem implements PID {
 	}
 
 	/**
-	 * Gets current yaw from navX.
+	 * Gets current yaw from NavX.
 	 * 
 	 * @return currentYaw
 	 */
