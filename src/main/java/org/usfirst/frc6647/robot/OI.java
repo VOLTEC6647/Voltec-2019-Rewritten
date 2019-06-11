@@ -14,6 +14,8 @@ import org.usfirst.lib6647.oi.ButtonHelper;
 import org.usfirst.lib6647.oi.JController;
 import org.usfirst.lib6647.util.Direction;
 
+import edu.wpi.first.wpilibj.Filesystem;
+
 /**
  * Class for registering driver input.
  */
@@ -46,13 +48,13 @@ public class OI extends ButtonHelper {
 	 * Add joysticks and button inputs here.
 	 */
 	public OI() {
-		super("src\\main\\java\\org\\usfirst\\frc6647\\commands\\Profiles.json");
+		super(Filesystem.getDeployDirectory() + "/Profiles.json");
 
 		joysticks.add(new JController(0));
 
-		oiButton(0, "LBumper").whileHeld(new Slide(Direction.LEFT));
-		oiButton(0, "RBumper").whileHeld(new Slide(Direction.RIGHT));
-		oiButton(0, 14).whileHeld(new GyroAlign());
+		oiButton(0, "LTrigger").whileHeld(new Slide(Direction.LEFT));
+		oiButton(0, "RTrigger").whileHeld(new Slide(Direction.RIGHT));
+		oiButton(0, "RStickBtn").toggleWhenPressed(new GyroAlign());
 
 		oiButton(0, "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
 		oiButton(0, "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
