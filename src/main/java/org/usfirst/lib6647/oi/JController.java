@@ -29,18 +29,17 @@ public class JController extends Joystick {
 			buttons.put("Button" + i, new JoystickButton(this, i));
 		}
 
-		for (int i = 1; i <= this.getPOVCount(); i++) {
+		for (int i = 0; i < this.getPOVCount(); i++) {
 			buttons.put("dPad" + i, axisButton(this, AxisType.dPad, i));
 			for (int j = 0; j <= 315; j += 45) {
 				buttons.put("dPad" + i + "_" + j, axisButton(this, AxisType.dPad, i, j));
 			}
 		}
 
-		for (int i = 1; i <= this.getAxisCount(); i++) {
+		for (int i = 0; i <= this.getAxisCount(); i++) {
 			buttons.put("Stick" + i, axisButton(this, AxisType.Stick, i));
-			for (int j = 0; j <= 270; j += 90) {
-				buttons.put("Stick" + i + "_" + j, axisButton(this, AxisType.Stick, i, j));
-			}
+			buttons.put("Stick" + i + "_1", axisButton(this, AxisType.Stick, 1));
+			buttons.put("Stick" + i + "_-1", axisButton(this, AxisType.Stick, -1));
 		}
 	}
 

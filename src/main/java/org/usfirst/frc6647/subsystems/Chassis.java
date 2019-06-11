@@ -15,6 +15,7 @@ import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.SuperTalon;
 import org.usfirst.lib6647.subsystem.SuperVictor;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -51,7 +52,7 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 * latter to follow its respective Talon.
 	 */
 	public Chassis() {
-		super("chassis", "src\\main\\java\\org\\usfirst\\frc6647\\robot\\RobotMap.json");
+		super("chassis", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initTalons(robotMap, getName());
 		initVictors(robotMap, getName());

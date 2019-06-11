@@ -12,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.SuperTalon;
 
+import edu.wpi.first.wpilibj.Filesystem;
+
 /**
  * Subsystem for the hWheel.
  */
@@ -44,7 +46,7 @@ public class ChassisH extends SuperSubsystem implements SuperTalon {
 	 * @param name
 	 */
 	public ChassisH() {
-		super("chassis", "src\\main\\java\\org\\usfirst\\frc6647\\robot\\RobotMap.json");
+		super("chassis", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initTalons(robotMap, getName());
 	}
