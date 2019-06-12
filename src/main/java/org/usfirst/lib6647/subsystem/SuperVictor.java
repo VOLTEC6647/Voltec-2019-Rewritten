@@ -32,18 +32,18 @@ public interface SuperVictor extends MotorUtils {
 			JSONArray victorArray = (JSONArray) ((JSONObject) ((JSONObject) robotMap.get("subsystems"))
 					.get(subsystemName)).get("victors");
 			Arrays.stream(victorArray.toArray()).map(json -> (JSONObject) json).forEach(json -> {
-				if (json.get("victorName") != null && json.get("victorPort") != null) {
-					WPI_VictorSPX victor = new WPI_VictorSPX((int) json.get("victorPort"));
+				WPI_VictorSPX victor = new WPI_VictorSPX(Integer.parseInt(json.get("victorPort").toString()));
 
-					setInverted(json, victor);
-					setNeutralMode(json, victor);
-					setLoopRamp(json, victor);
+				setInverted(json, victor);
+				setNeutralMode(json, victor);
+				setLoopRamp(json, victor);
 
-					victors.put((String) json.get("victorName"), victor);
-				}
+				victors.put(json.get("victorName").toString(), victor);
 			});
 		} catch (NullPointerException e) {
+			System.out.println("[!] VICTOR INIT FAILED.");
 			e.printStackTrace();
+			System.exit(1);
 		}
 	}
 }

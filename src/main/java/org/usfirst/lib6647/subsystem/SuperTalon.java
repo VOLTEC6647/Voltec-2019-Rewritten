@@ -32,20 +32,20 @@ public interface SuperTalon extends MotorUtils {
 			JSONArray talonArray = (JSONArray) ((JSONObject) ((JSONObject) robotMap.get("subsystems"))
 					.get(subsystemName)).get("talons");
 			Arrays.stream(talonArray.toArray()).map(json -> (JSONObject) json).forEach(json -> {
-				if (json.get("talonName") != null && json.get("talonPort") != null) {
-					WPI_TalonSRX talon = new WPI_TalonSRX((int) json.get("talonPort"));
+				WPI_TalonSRX talon = new WPI_TalonSRX(Integer.parseInt(json.get("talonPort").toString()));
 
-					setInverted(json, talon);
-					setNeutralMode(json, talon);
-					setLoopRamp(json, talon);
-					setSensors(json, talon);
-					setPIDValues(json, talon);
+				setInverted(json, talon);
+				setNeutralMode(json, talon);
+				setLoopRamp(json, talon);
+				setSensors(json, talon);
+				setPIDValues(json, talon);
 
-					talons.put((String) json.get("talonName"), talon);
-				}
+				talons.put(json.get("talonName").toString(), talon);
 			});
 		} catch (NullPointerException e) {
+			System.out.println("[!] TALON INIT FAILED.");
 			e.printStackTrace();
+			System.exit(1);
 		}
 	}
 }
