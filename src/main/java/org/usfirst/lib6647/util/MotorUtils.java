@@ -16,10 +16,10 @@ public interface MotorUtils {
 	 * 
 	 * @param json
 	 * @param motor
+	 * @throws NullPointerException
 	 */
-	default void setInverted(JSONObject json, BaseMotorController motor) {
-		if (json.get("inverted") != null)
-			motor.setInverted((boolean) json.get("inverted"));
+	default void setInverted(JSONObject json, BaseMotorController motor) throws NullPointerException {
+		motor.setInverted(Boolean.parseBoolean(json.get("inverted").toString()));
 	}
 
 	/**
@@ -27,8 +27,9 @@ public interface MotorUtils {
 	 * 
 	 * @param neutralMode
 	 * @return NeutralMode
+	 * @throws NullPointerException
 	 */
-	default NeutralMode getNeutralMode(String neutralMode) {
+	default NeutralMode getNeutralMode(String neutralMode) throws NullPointerException {
 		switch (neutralMode) {
 		case "Coast":
 			return NeutralMode.Coast;
@@ -37,7 +38,7 @@ public interface MotorUtils {
 		case "EEPROMSetting":
 			return NeutralMode.EEPROMSetting;
 		default:
-			return null;
+			throw new NullPointerException();
 		}
 	}
 
@@ -46,10 +47,10 @@ public interface MotorUtils {
 	 * 
 	 * @param json
 	 * @param motor
+	 * @throws NullPointerException
 	 */
-	default void setNeutralMode(JSONObject json, BaseMotorController motor) {
-		if (json.get("neutralMode") != null)
-			motor.setNeutralMode(getNeutralMode((String) json.get("neutralMode")));
+	default void setNeutralMode(JSONObject json, BaseMotorController motor) throws NullPointerException {
+		motor.setNeutralMode(getNeutralMode(json.get("neutralMode").toString()));
 	}
 
 	/**
@@ -57,20 +58,20 @@ public interface MotorUtils {
 	 * 
 	 * @param json
 	 * @param motor
+	 * @throws NullPointerException
 	 */
-	default void setLoopRamp(JSONObject json, BaseMotorController motor) {
-		if (json.get("loopRamp") != null) {
-			JSONObject closed = (JSONObject) ((JSONObject) json.get("loopRamp")).get("closed"),
-					open = (JSONObject) ((JSONObject) json.get("loopRamp")).get("open");
+	default void setLoopRamp(JSONObject json, BaseMotorController motor) throws NullPointerException {
+		JSONObject closed = (JSONObject) ((JSONObject) json.get("loopRamp")).get("closed"),
+				open = (JSONObject) ((JSONObject) json.get("loopRamp")).get("open");
 
-			if (closed.get("timeoutMs") != null && open.get("timeoutMs") != null) {
-				motor.configClosedloopRamp((double) closed.get("secondsFromNeutralToFull"),
-						(int) closed.get("timeoutMs"));
-				motor.configOpenloopRamp((double) open.get("secondsFromNeutralToFull"), (int) open.get("timeoutMs"));
-			} else {
-				motor.configClosedloopRamp((double) closed.get("secondsFromNeutralToFull"));
-				motor.configOpenloopRamp((double) open.get("secondsFromNeutralToFull"));
-			}
+		if (closed.containsKey("timeoutMs") && open.containsKey("timeoutMs")) {
+			motor.configClosedloopRamp(Double.parseDouble(closed.get("secondsFromNeutralToFull").toString()),
+					Integer.parseInt(closed.get("timeoutMs").toString()));
+			motor.configOpenloopRamp(Double.parseDouble(open.get("secondsFromNeutralToFull").toString()),
+					Integer.parseInt(open.get("timeoutMs").toString()));
+		} else {
+			motor.configClosedloopRamp(Double.parseDouble(closed.get("secondsFromNeutralToFull").toString()));
+			motor.configOpenloopRamp(Double.parseDouble(open.get("secondsFromNeutralToFull").toString()));
 		}
 	}
 
@@ -79,8 +80,9 @@ public interface MotorUtils {
 	 * 
 	 * @param feedbackDevice
 	 * @return FeedbackDevice
+	 * @throws NullPointerException
 	 */
-	default FeedbackDevice getFeedbackDevice(String feedbackDevice) {
+	default FeedbackDevice getFeedbackDevice(String feedbackDevice) throws NullPointerException {
 		switch (feedbackDevice) {
 		case "QuadEncoder":
 			return FeedbackDevice.QuadEncoder;
@@ -105,7 +107,7 @@ public interface MotorUtils {
 		case "CTRE_MagEncoder_Relative":
 			return FeedbackDevice.CTRE_MagEncoder_Relative;
 		default:
-			return null;
+			throw new NullPointerException();
 		}
 	}
 
@@ -115,27 +117,21 @@ public interface MotorUtils {
 	 * 
 	 * @param json
 	 * @param motor
+	 * @throws NullPointerException
 	 */
-	default void setSensors(JSONObject json, BaseMotorController motor) {
-		if (json.get("sensor") != null) {
-			JSONObject sensor = (JSONObject) json.get("sensor");
+	default void setSensors(JSONObject json, BaseMotorController motor) throws NullPointerException {
+		JSONObject sensor = (JSONObject) json.get("sensor");
+		JSONObject feedback = (JSONObject) sensor.get("feedback");
 
-			if (sensor.get("feedback") != null) {
-				JSONObject feedback = (JSONObject) sensor.get("feedback");
+		motor.configSelectedFeedbackSensor(getFeedbackDevice(feedback.get("feedbackDevice").toString()),
+				Integer.parseInt(feedback.get("pidIdx").toString()),
+				Integer.parseInt(feedback.get("timeoutMs").toString()));
 
-				if (feedback.get("feedbackDevice") != null && feedback.get("pidIdx") != null
-						&& feedback.get("timeoutMs") != null)
-					motor.configSelectedFeedbackSensor(getFeedbackDevice((String) feedback.get("feedbackDevice")),
-							(int) feedback.get("pidIdx"), (int) feedback.get("timeoutMs"));
-			}
+		motor.setSensorPhase(Boolean.parseBoolean(sensor.get("phase").toString()));
 
-			if (sensor.get("phase") != null)
-				motor.setSensorPhase((boolean) sensor.get("phase"));
-
-			if (sensor.get("sensorPos") != null && sensor.get("pidIdx") != null && sensor.get("timeoutMs") != null)
-				motor.setSelectedSensorPosition((int) sensor.get("sensorPos"), (int) sensor.get("pidIdx"),
-						(int) sensor.get("timeoutMs"));
-		}
+		motor.setSelectedSensorPosition(Integer.parseInt(sensor.get("sensorPos").toString()),
+				Integer.parseInt(sensor.get("pidIdx").toString()),
+				Integer.parseInt(sensor.get("timeoutMs").toString()));
 	}
 
 	/**
@@ -143,17 +139,14 @@ public interface MotorUtils {
 	 * 
 	 * @param json
 	 * @param motor
+	 * @throws NullPointerException
 	 */
-	default void setPIDValues(JSONObject json, BaseMotorController motor) {
-		if (json.get("pid") != null) {
-			JSONObject pid = (JSONObject) json.get("pid");
+	default void setPIDValues(JSONObject json, BaseMotorController motor) throws NullPointerException {
+		JSONObject pid = (JSONObject) json.get("pid");
 
-			if (pid.get("slotIdx") != null && pid.get("p") != null && pid.get("i") != null && pid.get("d") != null) {
-				motor.config_kP((int) pid.get("slotIdx"), (double) pid.get("p"));
-				motor.config_kI((int) pid.get("slotIdx"), (double) pid.get("i"));
-				motor.config_kD((int) pid.get("slotIdx"), (double) pid.get("d"));
-				motor.config_kF((int) pid.get("slotIdx"), (double) pid.get("f"));
-			}
-		}
+		motor.config_kP(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("p").toString()));
+		motor.config_kI(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("i").toString()));
+		motor.config_kD(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("d").toString()));
+		motor.config_kF(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("f").toString()));
 	}
 }
