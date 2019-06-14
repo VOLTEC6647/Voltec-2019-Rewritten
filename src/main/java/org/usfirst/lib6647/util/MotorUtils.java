@@ -16,9 +16,9 @@ public interface MotorUtils {
 	 * 
 	 * @param json
 	 * @param motor
-	 * @throws NullPointerException
+	 * @throws Exception
 	 */
-	default void setInverted(JSONObject json, BaseMotorController motor) throws NullPointerException {
+	default void setInverted(JSONObject json, BaseMotorController motor) throws Exception {
 		motor.setInverted(Boolean.parseBoolean(json.get("inverted").toString()));
 	}
 
@@ -27,9 +27,8 @@ public interface MotorUtils {
 	 * 
 	 * @param neutralMode
 	 * @return NeutralMode
-	 * @throws NullPointerException
 	 */
-	default NeutralMode getNeutralMode(String neutralMode) throws NullPointerException {
+	default NeutralMode getNeutralMode(String neutralMode) {
 		switch (neutralMode) {
 		case "Coast":
 			return NeutralMode.Coast;
@@ -38,7 +37,7 @@ public interface MotorUtils {
 		case "EEPROMSetting":
 			return NeutralMode.EEPROMSetting;
 		default:
-			throw new NullPointerException();
+			return null;
 		}
 	}
 
@@ -47,9 +46,9 @@ public interface MotorUtils {
 	 * 
 	 * @param json
 	 * @param motor
-	 * @throws NullPointerException
+	 * @throws Exception
 	 */
-	default void setNeutralMode(JSONObject json, BaseMotorController motor) throws NullPointerException {
+	default void setNeutralMode(JSONObject json, BaseMotorController motor) throws Exception {
 		motor.setNeutralMode(getNeutralMode(json.get("neutralMode").toString()));
 	}
 
@@ -58,9 +57,9 @@ public interface MotorUtils {
 	 * 
 	 * @param json
 	 * @param motor
-	 * @throws NullPointerException
+	 * @throws Exception
 	 */
-	default void setLoopRamp(JSONObject json, BaseMotorController motor) throws NullPointerException {
+	default void setLoopRamp(JSONObject json, BaseMotorController motor) throws Exception {
 		JSONObject closed = (JSONObject) ((JSONObject) json.get("loopRamp")).get("closed"),
 				open = (JSONObject) ((JSONObject) json.get("loopRamp")).get("open");
 
@@ -80,9 +79,8 @@ public interface MotorUtils {
 	 * 
 	 * @param feedbackDevice
 	 * @return FeedbackDevice
-	 * @throws NullPointerException
 	 */
-	default FeedbackDevice getFeedbackDevice(String feedbackDevice) throws NullPointerException {
+	default FeedbackDevice getFeedbackDevice(String feedbackDevice) {
 		switch (feedbackDevice) {
 		case "QuadEncoder":
 			return FeedbackDevice.QuadEncoder;
@@ -107,7 +105,7 @@ public interface MotorUtils {
 		case "CTRE_MagEncoder_Relative":
 			return FeedbackDevice.CTRE_MagEncoder_Relative;
 		default:
-			throw new NullPointerException();
+			return null;
 		}
 	}
 
@@ -117,9 +115,9 @@ public interface MotorUtils {
 	 * 
 	 * @param json
 	 * @param motor
-	 * @throws NullPointerException
+	 * @throws Exception
 	 */
-	default void setSensors(JSONObject json, BaseMotorController motor) throws NullPointerException {
+	default void setSensors(JSONObject json, BaseMotorController motor) throws Exception {
 		JSONObject sensor = (JSONObject) json.get("sensor");
 		JSONObject feedback = (JSONObject) sensor.get("feedback");
 
@@ -139,9 +137,9 @@ public interface MotorUtils {
 	 * 
 	 * @param json
 	 * @param motor
-	 * @throws NullPointerException
+	 * @throws Exception
 	 */
-	default void setPIDValues(JSONObject json, BaseMotorController motor) throws NullPointerException {
+	default void setPIDValues(JSONObject json, BaseMotorController motor) throws Exception{
 		JSONObject pid = (JSONObject) json.get("pid");
 
 		motor.config_kP(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("p").toString()));

@@ -32,19 +32,33 @@ public interface SuperTalon extends MotorUtils {
 			JSONArray talonArray = (JSONArray) ((JSONObject) ((JSONObject) robotMap.get("subsystems"))
 					.get(subsystemName)).get("talons");
 			Arrays.stream(talonArray.toArray()).map(json -> (JSONObject) json).forEach(json -> {
-				WPI_TalonSRX talon = new WPI_TalonSRX(Integer.parseInt(json.get("talonPort").toString()));
+				try {
+					WPI_TalonSRX talon = new WPI_TalonSRX(Integer.parseInt(json.get("talonPort").toString()));
 
-				setInverted(json, talon);
-				setNeutralMode(json, talon);
-				setLoopRamp(json, talon);
-				setSensors(json, talon);
-				setPIDValues(json, talon);
+					if (json.containsKey("inverted"))
+						setInverted(json, talon);
 
-				talons.put(json.get("talonName").toString(), talon);
+					if (json.containsKey("neutralMode"))
+						setNeutralMode(json, talon);
+
+					if (json.containsKey("loopRamp"))
+						setLoopRamp(json, talon);
+
+					if (json.containsKey("sensor"))
+						setSensors(json, talon);
+
+					if (json.containsKey("pid"))
+						setPIDValues(json, talon);
+
+					talons.put(json.get("talonName").toString(), talon);
+				} catch (Exception e) {
+					System.out.println(
+							"[!] TALON " + json.get("talonName").toString() + " INIT ERROR: " + e.getMessage());
+					System.exit(1);
+				}
 			});
-		} catch (NullPointerException e) {
-			System.out.println("[!] TALON INIT FAILED.");
-			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("[!] TALON INIT ERROR: " + e.getMessage());
 			System.exit(1);
 		}
 	}

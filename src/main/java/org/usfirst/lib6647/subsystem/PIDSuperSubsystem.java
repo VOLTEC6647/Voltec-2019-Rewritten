@@ -39,12 +39,9 @@ public abstract class PIDSuperSubsystem extends PIDSubsystem implements PID {
 		JSONParser parser = new JSONParser();
 		try (Reader file = new FileReader(fileName)) {
 			robotMap = (JSONObject) parser.parse(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
+		} catch (IOException | ParseException | NullPointerException e) {
+			System.out.println("[!] ROBOTMAP FILE ERROR: " + e.getMessage());
+			System.exit(1);
 		}
 	}
 }

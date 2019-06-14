@@ -21,16 +21,13 @@ public class Slide extends Command {
 	private Direction direction;
 	private double analogLT, analogRT;
 
-	private OI oi = OI.getInstance();
-	private ChassisH chassisH = ChassisH.getInstance();
-
 	/**
 	 * Constructor for the command. Requires the chassisH subsystem.
 	 * 
 	 * @param direction
 	 */
 	public Slide(Direction direction) {
-		requires(chassisH);
+		requires(ChassisH.getInstance());
 		this.direction = direction;
 	}
 
@@ -42,15 +39,15 @@ public class Slide extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		analogLT = (oi.joysticks.get(0).getRawAxis(3) + 1) / 2;
-		analogRT = (oi.joysticks.get(0).getRawAxis(4) + 1) / 2;
+		analogLT = (OI.getInstance().joysticks.get(0).getRawAxis(3) + 1) / 2;
+		analogRT = (OI.getInstance().joysticks.get(0).getRawAxis(4) + 1) / 2;
 
 		switch (direction) {
 		case LEFT:
-			chassisH.moveHWheel(analogLT * 0.7);
+			ChassisH.getInstance().moveHWheel(analogLT * 0.7);
 			break;
 		case RIGHT:
-			chassisH.moveHWheel(-analogRT * 0.7);
+			ChassisH.getInstance().moveHWheel(-analogRT * 0.7);
 			break;
 		default:
 			end();
@@ -67,7 +64,7 @@ public class Slide extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		chassisH.stopHWheel();
+		ChassisH.getInstance().stopHWheel();
 	}
 
 	// Called when another command which requires one or more of the same
