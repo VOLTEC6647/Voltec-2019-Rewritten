@@ -59,6 +59,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 
 		victors.get("backLeft").follow(talons.get("frontLeft"));
 		victors.get("backRight").follow(talons.get("frontRight"));
+
+		SmartDashboard.putBoolean("Gyro", false);
 	}
 
 	/**
@@ -66,8 +68,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 */
 	@Override
 	public void periodic() {
-		leftStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(1).getRawAxis(1), TOLERANCE, 1, 0, 1);
-		rightStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(1).getRawAxis(5), TOLERANCE, 1, 0, 1);
+		leftStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(0).getRawAxis(1), TOLERANCE, 1, 0, 1);
+		rightStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(0).getRawAxis(5), TOLERANCE, 1, 0, 1);
 
 		if (!SmartDashboard.getBoolean("Gyro", true))
 			Chassis.getInstance().setBothTalons(leftStickY, rightStickY);

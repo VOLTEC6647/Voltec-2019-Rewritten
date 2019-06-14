@@ -7,6 +7,9 @@
 
 package org.usfirst.frc6647.robot;
 
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
 import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.GyroAlign;
 import org.usfirst.frc6647.commands.Slide;
@@ -52,11 +55,15 @@ public class OI extends ButtonHelper {
 
 		joysticks.add(new JController(0));
 
-		oiButton(0, "LTrigger").whileHeld(new Slide(Direction.LEFT));
-		oiButton(0, "RTrigger").whileHeld(new Slide(Direction.RIGHT));
-		oiButton(0, "RStickBtn").toggleWhenPressed(new GyroAlign());
+		try {
+			oiButton(0, "LTrigger").whileHeld(new Slide(Direction.LEFT));
+			oiButton(0, "RTrigger").whileHeld(new Slide(Direction.RIGHT));
+			oiButton(0, "RStickBtn").toggleWhenPressed(new GyroAlign());
 
-		oiButton(0, "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
-		oiButton(0, "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
+			oiButton(0, "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
+			oiButton(0, "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
+		} catch (NullPointerException | IOException | ParseException e) {
+			System.out.print(e.getMessage());
+		}
 	}
 }

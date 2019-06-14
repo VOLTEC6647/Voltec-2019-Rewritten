@@ -56,11 +56,11 @@ public class NavX extends PIDSubsystem implements PID {
 		super("NavX", 0, 0, 0);
 
 		getPIDController().setPID(p, i, d);
-		getPIDController().setContinuous(true);
 
 		setInputRange(-180, 180);
 		setOutputRange(-0.70, 0.70);
 		setAbsoluteTolerance(0.5);
+		getPIDController().setContinuous(true);
 
 		ahrs = new AHRS(SPI.Port.kMXP);
 		ahrs.reset();
@@ -95,7 +95,7 @@ public class NavX extends PIDSubsystem implements PID {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		int angle = OI.getInstance().joysticks.get(1).getPOV(0);
+		int angle = OI.getInstance().joysticks.get(0).getPOV(0);
 		double speed = 0.5 + (acceleration * accelerationMultiplier) * padLimiter;
 
 		if (angle == 0)
@@ -119,8 +119,8 @@ public class NavX extends PIDSubsystem implements PID {
 	 * Method to update PID values from the SmartDashboard.
 	 */
 	public void updatePIDValues() {
-		p = SmartDashboard.getNumber("gyroP", p);
-		i = SmartDashboard.getNumber("gyroI", i);
-		d = SmartDashboard.getNumber("gyroD", d);
+		p = SmartDashboard.getNumber(getName() + "P", p);
+		i = SmartDashboard.getNumber(getName() + "I", i);
+		d = SmartDashboard.getNumber(getName() + "D", d);
 	}
 }

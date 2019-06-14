@@ -19,38 +19,34 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class GyroAlign extends Command {
 
-	private Chassis chassis = Chassis.getInstance();
-	private OI oi = OI.getInstance();
-	private NavX navX = NavX.getInstance();
-
 	/**
 	 * Constructor for the command.
 	 * 
 	 * Aligns the robot to the closest desired angle.
 	 */
 	public GyroAlign() {
-		requires(chassis);
-		requires(navX);
-		double yaw = navX.getYaw();
+		requires(Chassis.getInstance());
+		requires(NavX.getInstance());
+		double yaw = NavX.getInstance().getYaw();
 
 		if (-165.625 >= yaw)
-			navX.setSetpoint(-180);
+			NavX.getInstance().setSetpoint(-180);
 		else if (-120.625 >= yaw && yaw > -165.625)
-			navX.setSetpoint(-151.25);
+			NavX.getInstance().setSetpoint(-151.25);
 		else if (-59.375 >= yaw && yaw > -120.625)
-			navX.setSetpoint(-90);
+			NavX.getInstance().setSetpoint(-90);
 		else if (-14.375 >= yaw && yaw > -59.375)
-			navX.setSetpoint(-28.75);
+			NavX.getInstance().setSetpoint(-28.75);
 		else if (-14.375 < yaw && yaw < 14.375)
-			navX.setSetpoint(0);
+			NavX.getInstance().setSetpoint(0);
 		else if (14.375 <= yaw && yaw < 59.375)
-			navX.setSetpoint(28.75);
+			NavX.getInstance().setSetpoint(28.75);
 		else if (59.375 <= yaw && yaw < 120.625)
-			navX.setSetpoint(90);
+			NavX.getInstance().setSetpoint(90);
 		else if (120.625 <= yaw && yaw < 165.625)
-			navX.setSetpoint(151.25);
+			NavX.getInstance().setSetpoint(151.25);
 		else if (165.625 <= yaw)
-			navX.setSetpoint(180);
+			NavX.getInstance().setSetpoint(180);
 	}
 
 	/**
@@ -61,27 +57,28 @@ public class GyroAlign extends Command {
 	 * @param angle
 	 */
 	public GyroAlign(double angle) {
-		requires(chassis);
-		requires(navX);
-		navX.setSetpoint(angle);
+		requires(Chassis.getInstance());
+		requires(NavX.getInstance());
+		NavX.getInstance().setSetpoint(angle);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		SmartDashboard.putBoolean("Gyro", true);
-		navX.acceleration = 0.0;
-		navX.enable();
+		NavX.getInstance().acceleration = 0.0;
+		NavX.getInstance().enable();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Math.abs(oi.joysticks.get(0).getRawAxis(1)) > 0.1 && Math.abs(oi.joysticks.get(0).getRawAxis(5)) > 0.1)
+		if (Math.abs(OI.getInstance().joysticks.get(0).getRawAxis(1)) > 0.1
+				&& Math.abs(OI.getInstance().joysticks.get(0).getRawAxis(5)) > 0.1)
 			end();
 
-		navX.acceleration += 0.0035;
-		navX.updatePIDValues();
+		NavX.getInstance().acceleration += 0.0035;
+		NavX.getInstance().updatePIDValues();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -94,8 +91,8 @@ public class GyroAlign extends Command {
 	@Override
 	protected void end() {
 		SmartDashboard.putBoolean("Gyro", false);
-		navX.acceleration = 0.0;
-		navX.disable();
+		NavX.getInstance().acceleration = 0.0;
+		NavX.getInstance().disable();
 	}
 
 	// Called when another command which requires one or more of the same

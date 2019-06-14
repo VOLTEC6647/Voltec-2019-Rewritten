@@ -19,8 +19,6 @@ public class AlignNext extends Command {
 	private Direction direction;
 	private double yaw;
 
-	private NavX navX = NavX.getInstance();
-
 	/**
 	 * Constructor for the command.
 	 * 
@@ -33,10 +31,10 @@ public class AlignNext extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if (!navX.getPIDController().isEnabled())
+		if (!NavX.getInstance().getPIDController().isEnabled())
 			end();
 
-		yaw = navX.getPIDController().getSetpoint();
+		yaw = NavX.getInstance().getPIDController().getSetpoint();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -45,39 +43,39 @@ public class AlignNext extends Command {
 		switch (direction) {
 		case LEFT:
 			if (yaw == -180 || yaw == 180)
-				navX.setSetpoint(151.25);
+				NavX.getInstance().setSetpoint(151.25);
 			else if (yaw == -151.25)
-				navX.setSetpoint(-180);
+				NavX.getInstance().setSetpoint(-180);
 			else if (yaw == -90)
-				navX.setSetpoint(-151.25);
+				NavX.getInstance().setSetpoint(-151.25);
 			else if (yaw == -28.75)
-				navX.setSetpoint(-90);
+				NavX.getInstance().setSetpoint(-90);
 			else if (yaw == 0)
-				navX.setSetpoint(-28.75);
+				NavX.getInstance().setSetpoint(-28.75);
 			else if (yaw == 28.75)
-				navX.setSetpoint(0);
+				NavX.getInstance().setSetpoint(0);
 			else if (yaw == 90)
-				navX.setSetpoint(28.75);
+				NavX.getInstance().setSetpoint(28.75);
 			else if (yaw == 151.25)
-				navX.setSetpoint(90);
+				NavX.getInstance().setSetpoint(90);
 			break;
 		case RIGHT:
 			if (yaw == -180 || yaw == 180)
-				navX.setSetpoint(-151.25);
+				NavX.getInstance().setSetpoint(-151.25);
 			else if (yaw == -151.25)
-				navX.setSetpoint(-90);
+				NavX.getInstance().setSetpoint(-90);
 			else if (yaw == -90)
-				navX.setSetpoint(-28.75);
+				NavX.getInstance().setSetpoint(-28.75);
 			else if (yaw == -28.75)
-				navX.setSetpoint(0);
+				NavX.getInstance().setSetpoint(0);
 			else if (yaw == 0)
-				navX.setSetpoint(28.75);
+				NavX.getInstance().setSetpoint(28.75);
 			else if (yaw == 28.75)
-				navX.setSetpoint(90);
+				NavX.getInstance().setSetpoint(90);
 			else if (yaw == 90)
-				navX.setSetpoint(151.25);
+				NavX.getInstance().setSetpoint(151.25);
 			else if (yaw == 151.25)
-				navX.setSetpoint(180);
+				NavX.getInstance().setSetpoint(180);
 			break;
 		default:
 			end();

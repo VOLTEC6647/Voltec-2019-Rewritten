@@ -32,17 +32,27 @@ public interface SuperVictor extends MotorUtils {
 			JSONArray victorArray = (JSONArray) ((JSONObject) ((JSONObject) robotMap.get("subsystems"))
 					.get(subsystemName)).get("victors");
 			Arrays.stream(victorArray.toArray()).map(json -> (JSONObject) json).forEach(json -> {
-				WPI_VictorSPX victor = new WPI_VictorSPX(Integer.parseInt(json.get("victorPort").toString()));
+				try {
+					WPI_VictorSPX victor = new WPI_VictorSPX(Integer.parseInt(json.get("victorPort").toString()));
 
-				setInverted(json, victor);
-				setNeutralMode(json, victor);
-				setLoopRamp(json, victor);
+					if (json.containsKey("inverted"))
+						setInverted(json, victor);
 
-				victors.put(json.get("victorName").toString(), victor);
+					if (json.containsKey("neutralMode"))
+						setNeutralMode(json, victor);
+
+					if (json.containsKey("loopRamp"))
+						setLoopRamp(json, victor);
+
+					victors.put(json.get("victorName").toString(), victor);
+				} catch (Exception e) {
+					System.out.println(
+							"[!] VICTOR " + json.get("victorName").toString() + " INIT ERROR: " + e.getMessage());
+					System.exit(1);
+				}
 			});
-		} catch (NullPointerException e) {
-			System.out.println("[!] VICTOR INIT FAILED.");
-			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("[!] VICTOR INIT ERROR: " + e.getMessage());
 			System.exit(1);
 		}
 	}
