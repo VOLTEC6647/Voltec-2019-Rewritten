@@ -3,8 +3,8 @@
 		"chassis": {
 			"talons": [
 				{
-					"talonName": "frontLeft",
-					"talonPort": 4,
+					"name": "frontLeft",
+					"port": 4,
 					"neutralMode": "Coast",
 					"inverted": true,
 					"loopRamp": {
@@ -37,8 +37,8 @@
 					}
 				},
 				{
-					"talonName": "frontRight",
-					"talonPort": 8,
+					"name": "frontRight",
+					"port": 8,
 					"neutralMode": "Coast",
 					"inverted": false,
 					"loopRamp": {
@@ -73,8 +73,8 @@
 			],
 			"victors": [
 				{
-					"victorName": "backLeft",
-					"victorPort": 2,
+					"name": "backLeft",
+					"port": 2,
 					"inverted": true,
 					"neutralMode": "Coast",
 					"loopRamp": {
@@ -90,8 +90,8 @@
 					"master": "frontLeft"
 				},
 				{
-					"victorName": "backRight",
-					"victorPort": 7,
+					"name": "backRight",
+					"port": 7,
 					"inverted": false,
 					"neutralMode": "Coast",
 					"loopRamp": {
@@ -111,8 +111,8 @@
 		"chassisH": {
 			"talons": [
 				{
-					"talonName": "hWheel",
-					"talonPort": 3,
+					"name": "hWheel",
+					"port": 3,
 					"inverted": true,
 					"loopRamp": {
 						"closed": {
@@ -142,6 +142,59 @@
 						"d": 0,
 						"f": 0
 					}
+				}
+			]
+		},
+		"intake": {
+			"victors": [
+				{
+					"name": "intakeLeft",
+					"port": 5,
+					"inverted": true,
+					"neutralMode": "Brake",
+					"loopRamp": {
+						"closed": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						},
+						"open": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						}
+					}
+				},
+				{
+					"name": "intakeRight",
+					"port": 1,
+					"inverted": false,
+					"neutralMode": "Brake",
+					"loopRamp": {
+						"closed": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						},
+						"open": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						}
+					}
+				}
+			],
+			"solenoids": [
+				{
+					"name": "cylinderH",
+					"port": 3,
+					"initialValue": false
+				},
+				{
+					"name": "cylinderHReverse",
+					"port": 2,
+					"initialValue": false
+				},
+				{
+					"name": "pushHatch",
+					"port": 1,
+					"initialValue": false
 				}
 			]
 		}

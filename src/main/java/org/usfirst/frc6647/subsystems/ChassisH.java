@@ -41,9 +41,7 @@ public class ChassisH extends SuperSubsystem implements SuperTalon {
 	}
 
 	/**
-	 * Constructor for the subsystem. Initializes Talons.
-	 * 
-	 * @param name
+	 * Constructor for the subsystem.
 	 */
 	public ChassisH() {
 		super("chassis", Filesystem.getDeployDirectory() + "/RobotMap.json");

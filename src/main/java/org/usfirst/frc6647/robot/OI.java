@@ -12,6 +12,7 @@ import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.GyroAlign;
+import org.usfirst.frc6647.commands.MoveH;
 import org.usfirst.frc6647.commands.Slide;
 import org.usfirst.lib6647.oi.ButtonHelper;
 import org.usfirst.lib6647.oi.JController;
@@ -62,6 +63,9 @@ public class OI extends ButtonHelper {
 
 			oiButton(0, "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
 			oiButton(0, "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
+
+			oiButton(0, "Back").whenPressed(new MoveH(Direction.BACKWARD));
+			oiButton(0, "Start").whenPressed(new MoveH(Direction.FORWARD));
 		} catch (NullPointerException | IOException | ParseException e) {
 			System.out.print(e.getMessage());
 		}

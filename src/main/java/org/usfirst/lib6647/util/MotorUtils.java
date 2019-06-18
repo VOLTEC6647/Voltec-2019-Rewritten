@@ -2,24 +2,36 @@ package org.usfirst.lib6647.util;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import org.json.simple.JSONObject;
 
 /**
- * Interface for converting String values to CTRE Phoenix Objects.
+ * Interface for converting String values to CTRE Objects.
  */
 public interface MotorUtils {
 
 	/**
-	 * Sets a given motor's inverted status from the JSON configuration.
+	 * Sets a given Talon's inverted status from the JSON configuration.
 	 * 
 	 * @param json
-	 * @param motor
+	 * @param talon
 	 * @throws Exception
 	 */
-	default void setInverted(JSONObject json, BaseMotorController motor) throws Exception {
-		motor.setInverted(Boolean.parseBoolean(json.get("inverted").toString()));
+	default void setInverted(JSONObject json, WPI_TalonSRX talon) throws Exception {
+		talon.setInverted(Boolean.parseBoolean(json.get("inverted").toString()));
+	}
+
+	/**
+	 * Sets a given Victor's inverted status from the JSON configuration.
+	 * 
+	 * @param json
+	 * @param victor
+	 * @throws Exception
+	 */
+	default void setInverted(JSONObject json, WPI_VictorSPX victor) throws Exception {
+		victor.setInverted(Boolean.parseBoolean(json.get("inverted").toString()));
 	}
 
 	/**
@@ -42,35 +54,68 @@ public interface MotorUtils {
 	}
 
 	/**
-	 * Sets a given motor's inverted status from the JSON configuration.
+	 * Sets a given Talon's inverted status from the JSON configuration.
 	 * 
 	 * @param json
-	 * @param motor
+	 * @param talon
 	 * @throws Exception
 	 */
-	default void setNeutralMode(JSONObject json, BaseMotorController motor) throws Exception {
-		motor.setNeutralMode(getNeutralMode(json.get("neutralMode").toString()));
+	default void setNeutralMode(JSONObject json, WPI_TalonSRX talon) throws Exception {
+		talon.setNeutralMode(getNeutralMode(json.get("neutralMode").toString()));
 	}
 
 	/**
-	 * Sets a given motor's loop ramp from the JSON configuration.
+	 * Sets a given Victor's inverted status from the JSON configuration.
 	 * 
 	 * @param json
-	 * @param motor
+	 * @param victor
 	 * @throws Exception
 	 */
-	default void setLoopRamp(JSONObject json, BaseMotorController motor) throws Exception {
+	default void setNeutralMode(JSONObject json, WPI_VictorSPX victor) throws Exception {
+		victor.setNeutralMode(getNeutralMode(json.get("neutralMode").toString()));
+	}
+
+	/**
+	 * Sets a given Talon's loopramp from the JSON configuration.
+	 * 
+	 * @param json
+	 * @param talon
+	 * @throws Exception
+	 */
+	default void setLoopRamp(JSONObject json, WPI_TalonSRX talon) throws Exception {
 		JSONObject closed = (JSONObject) ((JSONObject) json.get("loopRamp")).get("closed"),
 				open = (JSONObject) ((JSONObject) json.get("loopRamp")).get("open");
 
 		if (closed.containsKey("timeoutMs") && open.containsKey("timeoutMs")) {
-			motor.configClosedloopRamp(Double.parseDouble(closed.get("secondsFromNeutralToFull").toString()),
+			talon.configClosedloopRamp(Double.parseDouble(closed.get("secondsFromNeutralToFull").toString()),
 					Integer.parseInt(closed.get("timeoutMs").toString()));
-			motor.configOpenloopRamp(Double.parseDouble(open.get("secondsFromNeutralToFull").toString()),
+			talon.configOpenloopRamp(Double.parseDouble(open.get("secondsFromNeutralToFull").toString()),
 					Integer.parseInt(open.get("timeoutMs").toString()));
 		} else {
-			motor.configClosedloopRamp(Double.parseDouble(closed.get("secondsFromNeutralToFull").toString()));
-			motor.configOpenloopRamp(Double.parseDouble(open.get("secondsFromNeutralToFull").toString()));
+			talon.configClosedloopRamp(Double.parseDouble(closed.get("secondsFromNeutralToFull").toString()));
+			talon.configOpenloopRamp(Double.parseDouble(open.get("secondsFromNeutralToFull").toString()));
+		}
+	}
+
+	/**
+	 * Sets a given Victor's loopramp from the JSON configuration.
+	 * 
+	 * @param json
+	 * @param victor
+	 * @throws Exception
+	 */
+	default void setLoopRamp(JSONObject json, WPI_VictorSPX victor) throws Exception {
+		JSONObject closed = (JSONObject) ((JSONObject) json.get("loopRamp")).get("closed"),
+				open = (JSONObject) ((JSONObject) json.get("loopRamp")).get("open");
+
+		if (closed.containsKey("timeoutMs") && open.containsKey("timeoutMs")) {
+			victor.configClosedloopRamp(Double.parseDouble(closed.get("secondsFromNeutralToFull").toString()),
+					Integer.parseInt(closed.get("timeoutMs").toString()));
+			victor.configOpenloopRamp(Double.parseDouble(open.get("secondsFromNeutralToFull").toString()),
+					Integer.parseInt(open.get("timeoutMs").toString()));
+		} else {
+			victor.configClosedloopRamp(Double.parseDouble(closed.get("secondsFromNeutralToFull").toString()));
+			victor.configOpenloopRamp(Double.parseDouble(open.get("secondsFromNeutralToFull").toString()));
 		}
 	}
 
@@ -110,41 +155,41 @@ public interface MotorUtils {
 	}
 
 	/**
-	 * Sets a given motor's sensors from the JSON configuration (fairly limited in
+	 * Sets a given Talon's sensors from the JSON configuration (fairly limited in
 	 * terms of customizability at the moment).
 	 * 
 	 * @param json
-	 * @param motor
+	 * @param talon
 	 * @throws Exception
 	 */
-	default void setSensors(JSONObject json, BaseMotorController motor) throws Exception {
+	default void setSensors(JSONObject json, WPI_TalonSRX talon) throws Exception {
 		JSONObject sensor = (JSONObject) json.get("sensor");
 		JSONObject feedback = (JSONObject) sensor.get("feedback");
 
-		motor.configSelectedFeedbackSensor(getFeedbackDevice(feedback.get("feedbackDevice").toString()),
+		talon.configSelectedFeedbackSensor(getFeedbackDevice(feedback.get("feedbackDevice").toString()),
 				Integer.parseInt(feedback.get("pidIdx").toString()),
 				Integer.parseInt(feedback.get("timeoutMs").toString()));
 
-		motor.setSensorPhase(Boolean.parseBoolean(sensor.get("phase").toString()));
+		talon.setSensorPhase(Boolean.parseBoolean(sensor.get("phase").toString()));
 
-		motor.setSelectedSensorPosition(Integer.parseInt(sensor.get("sensorPos").toString()),
+		talon.setSelectedSensorPosition(Integer.parseInt(sensor.get("sensorPos").toString()),
 				Integer.parseInt(sensor.get("pidIdx").toString()),
 				Integer.parseInt(sensor.get("timeoutMs").toString()));
 	}
 
 	/**
-	 * Sets a given motor's PID values from the JSON configuration.
+	 * Sets a given Talon's PID values from the JSON configuration.
 	 * 
 	 * @param json
-	 * @param motor
+	 * @param talon
 	 * @throws Exception
 	 */
-	default void setPIDValues(JSONObject json, BaseMotorController motor) throws Exception{
+	default void setPIDValues(JSONObject json, WPI_TalonSRX talon) throws Exception {
 		JSONObject pid = (JSONObject) json.get("pid");
 
-		motor.config_kP(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("p").toString()));
-		motor.config_kI(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("i").toString()));
-		motor.config_kD(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("d").toString()));
-		motor.config_kF(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("f").toString()));
+		talon.config_kP(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("p").toString()));
+		talon.config_kI(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("i").toString()));
+		talon.config_kD(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("d").toString()));
+		talon.config_kF(Integer.parseInt(pid.get("slotIdx").toString()), Double.parseDouble(pid.get("f").toString()));
 	}
 }
