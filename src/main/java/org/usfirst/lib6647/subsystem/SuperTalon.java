@@ -33,7 +33,7 @@ public interface SuperTalon extends MotorUtils {
 					.get(subsystemName)).get("talons");
 			Arrays.stream(talonArray.toArray()).map(json -> (JSONObject) json).forEach(json -> {
 				try {
-					WPI_TalonSRX talon = new WPI_TalonSRX(Integer.parseInt(json.get("talonPort").toString()));
+					WPI_TalonSRX talon = new WPI_TalonSRX(Integer.parseInt(json.get("port").toString()));
 
 					if (json.containsKey("inverted"))
 						setInverted(json, talon);
@@ -50,10 +50,10 @@ public interface SuperTalon extends MotorUtils {
 					if (json.containsKey("pid"))
 						setPIDValues(json, talon);
 
-					talons.put(json.get("talonName").toString(), talon);
+					talons.put(json.get("name").toString(), talon);
 				} catch (Exception e) {
-					System.out.println(
-							"[!] TALON " + json.get("talonName").toString() + " INIT ERROR: " + e.getMessage());
+					System.out.println("[!] TALON '" + json.get("name").toString().toUpperCase() + "' INIT ERROR: "
+							+ e.getMessage());
 					System.exit(1);
 				}
 			});

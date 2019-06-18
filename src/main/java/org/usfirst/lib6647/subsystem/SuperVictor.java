@@ -33,7 +33,7 @@ public interface SuperVictor extends MotorUtils {
 					.get(subsystemName)).get("victors");
 			Arrays.stream(victorArray.toArray()).map(json -> (JSONObject) json).forEach(json -> {
 				try {
-					WPI_VictorSPX victor = new WPI_VictorSPX(Integer.parseInt(json.get("victorPort").toString()));
+					WPI_VictorSPX victor = new WPI_VictorSPX(Integer.parseInt(json.get("port").toString()));
 
 					if (json.containsKey("inverted"))
 						setInverted(json, victor);
@@ -44,10 +44,10 @@ public interface SuperVictor extends MotorUtils {
 					if (json.containsKey("loopRamp"))
 						setLoopRamp(json, victor);
 
-					victors.put(json.get("victorName").toString(), victor);
+					victors.put(json.get("name").toString(), victor);
 				} catch (Exception e) {
-					System.out.println(
-							"[!] VICTOR " + json.get("victorName").toString() + " INIT ERROR: " + e.getMessage());
+					System.out.println("[!] VICTOR '" + json.get("name").toString().toUpperCase() + "' INIT ERROR: "
+							+ e.getMessage());
 					System.exit(1);
 				}
 			});

@@ -9,6 +9,7 @@ package org.usfirst.frc6647.robot;
 
 import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.ChassisH;
+import org.usfirst.frc6647.subsystems.Intake;
 import org.usfirst.frc6647.subsystems.NavX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
 		Chassis.createInstance();
 		ChassisH.createInstance();
 		NavX.createInstance();
+		// Intake.createInstance(); Not ready yet.
 
 		OI.createInstance();
 	}

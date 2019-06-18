@@ -82,7 +82,7 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	/**
 	 * Gets frontLeft Talon, with backLeft Victor as follower.
 	 * 
-	 * @return frontLeft Talon
+	 * @return frontLeft
 	 */
 	public WPI_TalonSRX getLeftTalon() {
 		return talons.get("frontLeft");
@@ -91,7 +91,7 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	/**
 	 * Gets frontRight Talon, with backRight Victor as follower.
 	 * 
-	 * @return frontRight Talon
+	 * @return frontRight
 	 */
 	public WPI_TalonSRX getRightTalon() {
 		return talons.get("frontRight");
