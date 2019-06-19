@@ -8,26 +8,26 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.robot.OI;
-import org.usfirst.frc6647.subsystems.ChassisH;
+import org.usfirst.frc6647.subsystems.TiltIntake;
 import org.usfirst.lib6647.util.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command for horizontal movement of the robot.
+ * Command for manually controlling Intake tilt.
  */
-public class Slide extends Command {
+public class TiltIntakeManual extends Command {
 
-	private Direction direction;
-	private double analogLT, analogRT;
+	Direction direction;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
 	 */
-	public Slide(Direction direction) {
-		requires(ChassisH.getInstance());
+	public TiltIntakeManual(Direction direction) {
+		requires(TiltIntake.getInstance());
+
 		this.direction = direction;
 	}
 
@@ -39,16 +39,13 @@ public class Slide extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		analogLT = (OI.getInstance().joysticks.get(0).getRawAxis(3) + 1) / 2;
-		analogRT = (OI.getInstance().joysticks.get(0).getRawAxis(4) + 1) / 2;
-
 		switch (direction) {
-		case LEFT:
-			ChassisH.getInstance().moveHWheel(analogLT * 0.7);
-			break;
-		case RIGHT:
-			ChassisH.getInstance().moveHWheel(-analogRT * 0.7);
-			break;
+		case UP:
+			TiltIntake.getInstance()
+					.setTiltIntake(Math.pow(((OI.getInstance().joysticks.get(1).getRawAxis(4) + 1) * 0.5), 2) * 0.8);
+		case DOWN:
+			TiltIntake.getInstance()
+					.setTiltIntake(-(Math.pow(((OI.getInstance().joysticks.get(1).getRawAxis(3) + 1) * 0.5), 2) * 0.6));
 		default:
 			end();
 			break;
@@ -64,7 +61,7 @@ public class Slide extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ChassisH.getInstance().stopHWheel();
+		TiltIntake.getInstance().stopTiltIntake();
 	}
 
 	// Called when another command which requires one or more of the same

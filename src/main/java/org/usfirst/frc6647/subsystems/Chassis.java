@@ -11,8 +11,11 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import org.usfirst.frc6647.robot.OI;
+import org.usfirst.lib6647.subsystem.SuperCompressor;
+import org.usfirst.lib6647.subsystem.SuperPDP;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.SuperTalon;
+import org.usfirst.lib6647.subsystem.SuperUltrasonic;
 import org.usfirst.lib6647.subsystem.SuperVictor;
 
 import edu.wpi.first.wpilibj.Filesystem;
@@ -21,10 +24,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Subsystem for the Chassis.
  */
-public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
+public class Chassis extends SuperSubsystem
+		implements SuperTalon, SuperVictor, SuperUltrasonic, SuperCompressor, SuperPDP {
 
-	private double TOLERANCE = 0.15, LIMITER = 0.75;
 	private double leftStickY, rightStickY;
+
+	public double driveTolerance = 0.15, driveLimiter = 0.75;
 
 	private static Chassis m_instance = null;
 
@@ -68,8 +73,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 */
 	@Override
 	public void periodic() {
-		leftStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(0).getRawAxis(1), TOLERANCE, 1, 0, 1);
-		rightStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(0).getRawAxis(5), TOLERANCE, 1, 0, 1);
+		leftStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(0).getRawAxis(1), driveTolerance, 1, 0, 1);
+		rightStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(0).getRawAxis(5), driveTolerance, 1, 0, 1);
 
 		if (!SmartDashboard.getBoolean("Gyro", true))
 			Chassis.getInstance().setBothTalons(leftStickY, rightStickY);
@@ -122,8 +127,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 * @param rightSpeed
 	 */
 	public void setBothTalons(double leftSpeed, double rightSpeed) {
-		setLeftTalon(leftSpeed * LIMITER);
-		setRightTalon(rightSpeed * LIMITER);
+		setLeftTalon(leftSpeed * driveLimiter);
+		setRightTalon(rightSpeed * driveLimiter);
 	}
 
 	/**

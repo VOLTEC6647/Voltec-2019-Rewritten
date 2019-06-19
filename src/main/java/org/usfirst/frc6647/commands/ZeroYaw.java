@@ -7,52 +7,29 @@
 
 package org.usfirst.frc6647.commands;
 
-import org.usfirst.frc6647.robot.OI;
-import org.usfirst.frc6647.subsystems.ChassisH;
-import org.usfirst.lib6647.util.Direction;
+import org.usfirst.frc6647.subsystems.NavX;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command for horizontal movement of the robot.
+ * Command for Zeroing the NavX's yaw.
  */
-public class Slide extends Command {
-
-	private Direction direction;
-	private double analogLT, analogRT;
-
+public class ZeroYaw extends Command {
 	/**
 	 * Constructor for the command.
-	 * 
-	 * @param direction
 	 */
-	public Slide(Direction direction) {
-		requires(ChassisH.getInstance());
-		this.direction = direction;
+	public ZeroYaw() {
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		NavX.getInstance().zeroYaw();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		analogLT = (OI.getInstance().joysticks.get(0).getRawAxis(3) + 1) / 2;
-		analogRT = (OI.getInstance().joysticks.get(0).getRawAxis(4) + 1) / 2;
-
-		switch (direction) {
-		case LEFT:
-			ChassisH.getInstance().moveHWheel(analogLT * 0.7);
-			break;
-		case RIGHT:
-			ChassisH.getInstance().moveHWheel(-analogRT * 0.7);
-			break;
-		default:
-			end();
-			break;
-		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -64,13 +41,11 @@ public class Slide extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ChassisH.getInstance().stopHWheel();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		end();
 	}
 }
