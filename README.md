@@ -32,11 +32,11 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 - [ ] Generic subsystem object creation through JSON.
 	- [X] SuperTalon
 	- [X] SuperVictor
-	- [ ] SuperSolenoid
+	- [X] SuperSolenoid
 	- [ ] SuperEncoder
 	- ...
 - [X] Everything commented (keep it that way!).
-- [ ] Test everything.
+- [X] Everything tested.
 
 ## License
 

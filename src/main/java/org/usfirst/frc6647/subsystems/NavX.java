@@ -74,6 +74,9 @@ public class NavX extends PIDSubsystem implements PID {
 	@Override
 	public void periodic() {
 		updatePIDValues();
+
+		SmartDashboard.putNumber("NavXYaw", ahrs.getYaw());
+		SmartDashboard.putNumber("Goal", getPIDController().getSetpoint());
 	}
 
 	@Override

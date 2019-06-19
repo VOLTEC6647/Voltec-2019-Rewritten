@@ -12,7 +12,7 @@ import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.GyroAlign;
-import org.usfirst.frc6647.commands.MoveH;
+// import org.usfirst.frc6647.commands.MoveH;
 import org.usfirst.frc6647.commands.Slide;
 import org.usfirst.lib6647.oi.ButtonHelper;
 import org.usfirst.lib6647.oi.JController;
@@ -57,15 +57,20 @@ public class OI extends ButtonHelper {
 		joysticks.add(new JController(0));
 
 		try {
-			oiButton(0, "LTrigger").whileHeld(new Slide(Direction.LEFT));
-			oiButton(0, "RTrigger").whileHeld(new Slide(Direction.RIGHT));
-			oiButton(0, "RStickBtn").toggleWhenPressed(new GyroAlign());
-
+			switch (joysticks.get(0).getName()) {
+			case "Generic   USB  Joystick":
+				oiButton(0, "LTrigger").whileHeld(new Slide(Direction.LEFT));
+				oiButton(0, "RTrigger").whileHeld(new Slide(Direction.RIGHT));
+				oiButton(0, "RStickBtn").toggleWhenPressed(new GyroAlign());
+				break;
+			case "Wireless Controller":
+				oiButton(0, "L2").whileHeld(new Slide(Direction.LEFT));
+				oiButton(0, "R2").whileHeld(new Slide(Direction.RIGHT));
+				oiButton(0, "PS4Btn").toggleWhenPressed(new GyroAlign());
+				break;
+			}
 			oiButton(0, "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
 			oiButton(0, "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
-
-			oiButton(0, "Back").whenPressed(new MoveH(Direction.BACKWARD));
-			oiButton(0, "Start").whenPressed(new MoveH(Direction.FORWARD));
 		} catch (NullPointerException | IOException | ParseException e) {
 			System.out.print(e.getMessage());
 		}
