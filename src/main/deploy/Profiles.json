@@ -1,9 +1,9 @@
 {
 	"Generic   USB  Joystick": {
-		"Y": "Button1",
-		"B": "Button2",
-		"A": "Button3",
-		"X": "Button4",
+		"1": "Button1",
+		"2": "Button2",
+		"3": "Button3",
+		"4": "Button4",
 		"LTrigger": "Button5",
 		"RTrigger": "Button6",
 		"LBumper": "Button7",

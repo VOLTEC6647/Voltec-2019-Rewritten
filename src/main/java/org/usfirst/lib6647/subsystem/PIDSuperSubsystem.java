@@ -25,7 +25,7 @@ public abstract class PIDSuperSubsystem extends PIDSubsystem implements PID {
 	 * @param fileName (of JSON)
 	 */
 	public PIDSuperSubsystem(String name, String fileName) {
-		super(name, 0, 0, 0);
+		super(name, 0.0, 0.0, 0.0);
 
 		initJSON(fileName);
 	}

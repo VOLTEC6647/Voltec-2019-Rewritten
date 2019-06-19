@@ -9,8 +9,10 @@ package org.usfirst.frc6647.robot;
 
 import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.ChassisH;
-// import org.usfirst.frc6647.subsystems.Intake;
+import org.usfirst.frc6647.subsystems.Intake;
+import org.usfirst.frc6647.subsystems.Lift;
 import org.usfirst.frc6647.subsystems.NavX;
+import org.usfirst.frc6647.subsystems.TiltIntake;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,7 +34,9 @@ public class Robot extends TimedRobot {
 		Chassis.createInstance();
 		ChassisH.createInstance();
 		NavX.createInstance();
-		// Intake.createInstance(); Not ready yet.
+		Intake.createInstance();
+		TiltIntake.createInstance();
+		Lift.createInstance();
 
 		OI.createInstance();
 	}

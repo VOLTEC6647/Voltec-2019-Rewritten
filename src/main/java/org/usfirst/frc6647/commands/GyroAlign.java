@@ -66,7 +66,7 @@ public class GyroAlign extends Command {
 	@Override
 	protected void initialize() {
 		SmartDashboard.putBoolean("Gyro", true);
-		NavX.getInstance().acceleration = 0.0;
+		NavX.getInstance().accel = 0.0;
 		NavX.getInstance().enable();
 	}
 
@@ -77,7 +77,7 @@ public class GyroAlign extends Command {
 				&& Math.abs(OI.getInstance().joysticks.get(0).getRawAxis(5)) > 0.1)
 			end();
 
-		NavX.getInstance().acceleration += 0.0035;
+		NavX.getInstance().accel += 0.0035;
 		NavX.getInstance().updatePIDValues();
 	}
 
@@ -91,7 +91,7 @@ public class GyroAlign extends Command {
 	@Override
 	protected void end() {
 		SmartDashboard.putBoolean("Gyro", false);
-		NavX.getInstance().acceleration = 0.0;
+		NavX.getInstance().accel = 0.0;
 		NavX.getInstance().disable();
 	}
 

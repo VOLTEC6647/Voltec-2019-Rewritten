@@ -86,8 +86,7 @@
 							"secondsFromNeutralToFull": 0.2,
 							"timeoutMs": 0
 						}
-					},
-					"master": "frontLeft"
+					}
 				},
 				{
 					"name": "backRight",
@@ -103,8 +102,26 @@
 							"secondsFromNeutralToFull": 0.2,
 							"timeoutMs": 0
 						}
-					},
-					"master": "frontRight"
+					}
+				}
+			],
+			"ultrasonics": [
+				{
+					"name": "ultrasense",
+					"pingChannel": 0,
+					"echoChannel": 8
+				}
+			],
+			"compressors": [
+				{
+					"name": "compressor",
+					"port": 0
+				}
+			],
+			"PDPs": [
+				{
+					"name": "pdp",
+					"port": 0
 				}
 			]
 		},
@@ -195,6 +212,95 @@
 					"name": "pushHatch",
 					"port": 1,
 					"initialValue": false
+				}
+			],
+			"digitalInputs": [
+				{
+					"name": "ballPresent",
+					"port": 5
+				}
+			]
+		},
+		"tiltIntake": {
+			"victors": [
+				{
+					"name": "tiltIntake",
+					"port": 12,
+					"inverted": true,
+					"neutralMode": "Brake",
+					"loopRamp": {
+						"closed": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						},
+						"open": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						}
+					}
+				}
+			],
+			"digitalInputs": [
+				{
+					"name": "lowLimitTilt",
+					"port": 3
+				},
+				{
+					"name": "topLimitTilt",
+					"port": 4
+				}
+			]
+		},
+		"lift": {
+			"victors": [
+				{
+					"name": "liftMain",
+					"port": 9,
+					"neutralMode": "Brake",
+					"loopRamp": {
+						"closed": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						},
+						"open": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						}
+					}
+				},
+				{
+					"name": "liftFollower",
+					"port": 10,
+					"neutralMode": "Brake",
+					"loopRamp": {
+						"closed": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						},
+						"open": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						}
+					}
+				}
+			],
+			"encoders": [
+				{
+					"name": "liftEncoder",
+					"channelA": 6,
+					"channelB": 7,
+					"reverse": false,
+					"encodingType": "k4X"
+				}
+			],
+			"digitalInputs": [
+				{
+					"name": "lowLimitLift",
+					"port": 1
+				},
+				{
+					"name": "topLimitLift",
+					"port": 2
 				}
 			]
 		}

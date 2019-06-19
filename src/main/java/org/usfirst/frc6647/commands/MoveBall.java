@@ -13,15 +13,24 @@ import org.usfirst.lib6647.util.Direction;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command for pushing/retracting the H.
+ * Command for grabbing/releasing Cargo balls.
  */
-public class MoveH extends Command {
+public class MoveBall extends Command {
 
-	Direction direction;
+	private double speed;
+	private Direction direction;
 
-	public MoveH(Direction direction) {
+	/**
+	 * Constructor for the command.
+	 * 
+	 * @param direction
+	 * @param speed
+	 */
+	public MoveBall(Direction direction, double speed) {
 		requires(Intake.getInstance());
+
 		this.direction = direction;
+		this.speed = speed;
 	}
 
 	// Called just before this Command runs the first time
@@ -33,10 +42,12 @@ public class MoveH extends Command {
 	@Override
 	protected void execute() {
 		switch (direction) {
-		case BACKWARD:
-			Intake.getInstance().setH(false);
-		case FORWARD:
-			Intake.getInstance().setH(true);
+		case IN:
+			Intake.getInstance().setIntake(speed, speed);
+			break;
+		case OUT:
+			Intake.getInstance().setIntake(-speed, -speed);
+			break;
 		default:
 			end();
 			break;
@@ -46,18 +57,19 @@ public class MoveH extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Intake.getInstance().stopH();
+		Intake.getInstance().stopIntake();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		end();
 	}
 }

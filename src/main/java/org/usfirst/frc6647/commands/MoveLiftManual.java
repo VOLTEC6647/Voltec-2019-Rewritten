@@ -7,27 +7,26 @@
 
 package org.usfirst.frc6647.commands;
 
-import org.usfirst.frc6647.robot.OI;
-import org.usfirst.frc6647.subsystems.ChassisH;
+import org.usfirst.frc6647.subsystems.Lift;
 import org.usfirst.lib6647.util.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command for horizontal movement of the robot.
+ * Command for manually moving Lift.
  */
-public class Slide extends Command {
+public class MoveLiftManual extends Command {
 
 	private Direction direction;
-	private double analogLT, analogRT;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
 	 */
-	public Slide(Direction direction) {
-		requires(ChassisH.getInstance());
+	public MoveLiftManual(Direction direction) {
+		requires(Lift.getInstance());
+
 		this.direction = direction;
 	}
 
@@ -39,15 +38,15 @@ public class Slide extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		analogLT = (OI.getInstance().joysticks.get(0).getRawAxis(3) + 1) / 2;
-		analogRT = (OI.getInstance().joysticks.get(0).getRawAxis(4) + 1) / 2;
-
 		switch (direction) {
-		case LEFT:
-			ChassisH.getInstance().moveHWheel(analogLT * 0.7);
+		case UP:
+			Lift.getInstance().setLift(0.6);
 			break;
-		case RIGHT:
-			ChassisH.getInstance().moveHWheel(-analogRT * 0.7);
+		case DOWN:
+			if (!Lift.getInstance().getDownLimit().get())
+				end();
+			else
+				Lift.getInstance().setLift(-0.3);
 			break;
 		default:
 			end();
@@ -64,7 +63,7 @@ public class Slide extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ChassisH.getInstance().stopHWheel();
+		Lift.getInstance().stopLift();
 	}
 
 	// Called when another command which requires one or more of the same

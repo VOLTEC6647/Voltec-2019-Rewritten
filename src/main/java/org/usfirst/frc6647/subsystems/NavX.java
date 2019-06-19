@@ -21,10 +21,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class NavX extends PIDSubsystem implements PID {
 
-	private double p = 0.0, i = 0.0, d = 0.0;
+	private double p = 0.02, i = 0.0000025, d = 0.0025;
+
 	private AHRS ahrs;
 
-	public double acceleration, accelerationMultiplier = 1.0, padLimiter = 0.6;
+	public double accel = 0.0, accelMult = 1.0, padLimiter = 0.6;
 
 	private static NavX m_instance = null;
 
@@ -99,7 +100,7 @@ public class NavX extends PIDSubsystem implements PID {
 	@Override
 	protected void usePIDOutput(double output) {
 		int angle = OI.getInstance().joysticks.get(0).getPOV(0);
-		double speed = 0.5 + (acceleration * accelerationMultiplier) * padLimiter;
+		double speed = 0.5 + (accel * accelMult) * padLimiter;
 
 		if (angle == 0)
 			Chassis.getInstance().setBothTalons(-speed + output, -speed - output);
@@ -119,11 +120,20 @@ public class NavX extends PIDSubsystem implements PID {
 	}
 
 	/**
+	 * Method to zero the NavX's yaw.
+	 */
+	public void zeroYaw() {
+		ahrs.zeroYaw();
+	}
+
+	/**
 	 * Method to update PID values from the SmartDashboard.
 	 */
 	public void updatePIDValues() {
 		p = SmartDashboard.getNumber(getName() + "P", p);
 		i = SmartDashboard.getNumber(getName() + "I", i);
 		d = SmartDashboard.getNumber(getName() + "D", d);
+
+		getPIDController().setPID(p, i, d);
 	}
 }

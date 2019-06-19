@@ -2,6 +2,7 @@ package org.usfirst.frc6647.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import org.usfirst.lib6647.subsystem.SuperDigitalInput;
 import org.usfirst.lib6647.subsystem.SuperSolenoid;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.SuperVictor;
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 /**
  * Subsystem for the Intake.
  */
-public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid {
+public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid, SuperDigitalInput {
 
 	private static Intake m_instance = null;
 
@@ -38,7 +39,7 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid
 	 * Constructor for the subsystem.
 	 */
 	public Intake() {
-		super("name", Filesystem.getDeployDirectory() + "/RobotMap.json");
+		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initVictors(robotMap, getName());
 	}

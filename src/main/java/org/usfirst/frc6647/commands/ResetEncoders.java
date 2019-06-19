@@ -7,64 +7,42 @@
 
 package org.usfirst.frc6647.commands;
 
-import org.usfirst.frc6647.robot.OI;
-import org.usfirst.frc6647.subsystems.ChassisH;
-import org.usfirst.lib6647.util.Direction;
+import org.usfirst.frc6647.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command for horizontal movement of the robot.
+ * Command to reset Lift Encoder.
  */
-public class Slide extends Command {
-
-	private Direction direction;
-	private double analogLT, analogRT;
-
+public class ResetEncoders extends Command {
 	/**
 	 * Constructor for the command.
-	 * 
-	 * @param direction
 	 */
-	public Slide(Direction direction) {
-		requires(ChassisH.getInstance());
-		this.direction = direction;
+	public ResetEncoders() {
+		requires(Lift.getInstance());
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		Lift.getInstance().getEncoder().reset();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		analogLT = (OI.getInstance().joysticks.get(0).getRawAxis(3) + 1) / 2;
-		analogRT = (OI.getInstance().joysticks.get(0).getRawAxis(4) + 1) / 2;
-
-		switch (direction) {
-		case LEFT:
-			ChassisH.getInstance().moveHWheel(analogLT * 0.7);
-			break;
-		case RIGHT:
-			ChassisH.getInstance().moveHWheel(-analogRT * 0.7);
-			break;
-		default:
-			end();
-			break;
-		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ChassisH.getInstance().stopHWheel();
+		end();
 	}
 
 	// Called when another command which requires one or more of the same
