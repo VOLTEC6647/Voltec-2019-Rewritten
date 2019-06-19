@@ -40,5 +40,25 @@
 		"dPadDown": "dPad0_180",
 		"dPadLeft": "dPad0_270",
 		"dPadRight": "dPad0_90"
+	},
+	"Wireless Controller": {
+		"Square": "Button1",
+		"X": "Button2",
+		"Circle": "Button3",
+		"Triangle": "Button4",
+		"L1": "Button5",
+		"R1": "Button6",
+		"L2": "Button7",
+		"R2": "Button8",
+		"Share": "Button9",
+		"Options": "Button10",
+		"LStickBtn": "Button11",
+		"RStickBtn": "Button12",
+		"PS4Btn": "Button13",
+		"Touchpad": "Button14",
+		"dPadUp": "dPad0_0",
+		"dPadDown": "dPad0_180",
+		"dPadLeft": "dPad0_270",
+		"dPadRight": "dPad0_90"
 	}
 }
