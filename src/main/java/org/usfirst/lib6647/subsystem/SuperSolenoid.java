@@ -31,7 +31,7 @@ public interface SuperSolenoid {
 					.get(subsystemName)).get("solenoids");
 			Arrays.stream(solenoidArray.toArray()).map(json -> (JSONObject) json).forEach(json -> {
 				try {
-					Solenoid solenoid = new Solenoid(Integer.parseInt(json.get("port").toString()));
+					Solenoid solenoid = new Solenoid(Integer.parseInt(json.get("channel").toString()));
 
 					if (json.containsKey("initialValue"))
 						solenoid.set(Boolean.parseBoolean(json.get("initialValue").toString()));

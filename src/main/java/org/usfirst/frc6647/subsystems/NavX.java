@@ -135,5 +135,9 @@ public class NavX extends PIDSubsystem implements PID {
 		d = SmartDashboard.getNumber(getName() + "D", d);
 
 		getPIDController().setPID(p, i, d);
+
+		SmartDashboard.putNumber("debug" + getName() + "P", getPIDController().getP());
+		SmartDashboard.putNumber("debug" + getName() + "I", getPIDController().getI());
+		SmartDashboard.putNumber("debug" + getName() + "D", getPIDController().getD());
 	}
 }
