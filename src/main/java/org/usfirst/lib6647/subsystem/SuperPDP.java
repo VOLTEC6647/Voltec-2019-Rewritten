@@ -32,7 +32,7 @@ public interface SuperPDP {
 			Arrays.stream(PDPArray.toArray()).map(json -> (JSONObject) json).forEach(json -> {
 				try {
 					PowerDistributionPanel pdp = new PowerDistributionPanel(
-							Integer.parseInt(json.get("port").toString()));
+							Integer.parseInt(json.get("module").toString()));
 					PDPs.put(json.get("name").toString(), pdp);
 				} catch (Exception e) {
 					System.out.println("[!] PDP INIT ERROR: " + e.getMessage());

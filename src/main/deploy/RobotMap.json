@@ -115,13 +115,13 @@
 			"compressors": [
 				{
 					"name": "compressor",
-					"port": 0
+					"module": 0
 				}
 			],
 			"PDPs": [
 				{
 					"name": "pdp",
-					"port": 0
+					"module": 0
 				}
 			]
 		},
@@ -200,24 +200,24 @@
 			"solenoids": [
 				{
 					"name": "cylinderH",
-					"port": 3,
+					"channel": 3,
 					"initialValue": false
 				},
 				{
 					"name": "cylinderHReverse",
-					"port": 2,
+					"channel": 2,
 					"initialValue": false
 				},
 				{
 					"name": "pushHatch",
-					"port": 1,
+					"channel": 1,
 					"initialValue": false
 				}
 			],
 			"digitalInputs": [
 				{
 					"name": "ballPresent",
-					"port": 5
+					"channel": 5
 				}
 			]
 		},
@@ -243,11 +243,11 @@
 			"digitalInputs": [
 				{
 					"name": "lowLimitTilt",
-					"port": 3
+					"channel": 3
 				},
 				{
 					"name": "topLimitTilt",
-					"port": 4
+					"channel": 4
 				}
 			]
 		},
@@ -296,11 +296,11 @@
 			"digitalInputs": [
 				{
 					"name": "lowLimitLift",
-					"port": 1
+					"channel": 1
 				},
 				{
 					"name": "topLimitLift",
-					"port": 2
+					"channel": 2
 				}
 			]
 		}

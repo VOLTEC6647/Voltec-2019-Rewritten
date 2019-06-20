@@ -31,7 +31,7 @@ public interface SuperDigitalInput {
 					.get(subsystemName)).get("digitalInputs");
 			Arrays.stream(digitalInputArray.toArray()).map(json -> (JSONObject) json).forEach(json -> {
 				try {
-					DigitalInput digitalInput = new DigitalInput(Integer.parseInt(json.get("port").toString()));
+					DigitalInput digitalInput = new DigitalInput(Integer.parseInt(json.get("channel").toString()));
 					digitalInputs.put(json.get("name").toString(), digitalInput);
 				} catch (Exception e) {
 					System.out.println("[!] DIGITAL INPUT INIT ERROR: " + e.getMessage());

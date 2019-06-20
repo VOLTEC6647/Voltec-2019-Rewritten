@@ -36,11 +36,8 @@ public class ButtonHelper {
 	 * @param joystick
 	 * @param buttonName
 	 * @return button from the given joystick
-	 * @throws IOException
-	 * @throws ParseException
-	 * @throws NullPointerException
 	 */
-	public Button oiButton(int joystick, String buttonName) throws IOException, ParseException, NullPointerException {
+	public Button oiButton(int joystick, String buttonName) {
 		JSONParser parser = new JSONParser();
 		try (Reader file = new FileReader(fileName)) {
 			JSONObject jsonJoystick = (JSONObject) ((JSONObject) parser.parse(file))
@@ -48,14 +45,15 @@ public class ButtonHelper {
 			return joysticks.get(joystick).buttons.get(jsonJoystick.get(buttonName).toString());
 		} catch (IOException e) {
 			System.out.println("[!] OIBUTTON " + buttonName + " IO ERROR: " + e.getMessage());
-			throw e;
+			System.exit(1);
 		} catch (ParseException e) {
 			System.out.println("[!] OIBUTTON " + buttonName + " PARSE ERROR: " + e.getMessage());
-			throw e;
+			System.exit(1);
 		} catch (NullPointerException e) {
 			System.out.println("[!] OIBUTTON " + buttonName + " ERROR: " + e.getMessage());
-			throw e;
+			System.exit(1);
 		}
+		return null;
 	}
 
 	/**

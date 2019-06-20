@@ -49,6 +49,7 @@ public class TiltIntake extends PIDSuperSubsystem implements SuperVictor, SuperD
 		super("tiltIntake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initVictors(robotMap, getName());
+		initDigitalInputs(robotMap, getName());
 
 		getPIDController().setPID(p, i, d);
 		setInputRange(.920, 1);
@@ -116,6 +117,10 @@ public class TiltIntake extends PIDSuperSubsystem implements SuperVictor, SuperD
 		d = SmartDashboard.getNumber(getName() + "D", d);
 
 		getPIDController().setPID(p, i, d);
+
+		SmartDashboard.putNumber("debug" + getName() + "P", getPIDController().getP());
+		SmartDashboard.putNumber("debug" + getName() + "I", getPIDController().getI());
+		SmartDashboard.putNumber("debug" + getName() + "D", getPIDController().getD());
 	}
 
 	/**

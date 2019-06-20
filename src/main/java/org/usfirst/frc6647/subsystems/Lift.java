@@ -47,6 +47,8 @@ public class Lift extends PIDSuperSubsystem implements SuperVictor, SuperEncoder
 		super("lift", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initVictors(robotMap, getName());
+		initEncoders(robotMap, getName());
+		initDigitalInputs(robotMap, getName());
 
 		victors.get("liftFollower").follow(victors.get("liftMain"));
 
@@ -136,5 +138,9 @@ public class Lift extends PIDSuperSubsystem implements SuperVictor, SuperEncoder
 		d = SmartDashboard.getNumber(getName() + "D", d);
 
 		getPIDController().setPID(p, i, d);
+
+		SmartDashboard.putNumber("debug" + getName() + "P", getPIDController().getP());
+		SmartDashboard.putNumber("debug" + getName() + "I", getPIDController().getI());
+		SmartDashboard.putNumber("debug" + getName() + "D", getPIDController().getD());
 	}
 }

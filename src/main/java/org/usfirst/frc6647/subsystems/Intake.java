@@ -42,6 +42,8 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid
 		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initVictors(robotMap, getName());
+		initSolenoids(robotMap, getName());
+		initDigitalInputs(robotMap, getName());
 	}
 
 	@Override

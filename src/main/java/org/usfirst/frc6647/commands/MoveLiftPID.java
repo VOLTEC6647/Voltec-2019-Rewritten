@@ -49,24 +49,23 @@ public class MoveLiftPID extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		double setPoint = Lift.getInstance().getPIDController().getSetpoint();
 		switch (target) {
 		case CARGO:
 			switch (height) {
+			case FLOOR:
+				Lift.getInstance().setSetpoint(135000);
+				break;
 			case LOW:
-				setPoint = 260000;
+				Lift.getInstance().setSetpoint(235000);
 				break;
 			case MID:
-				setPoint = 260000;
-				break;
-			case HIGH:
-				setPoint = 385000;
+				Lift.getInstance().setSetpoint(260000);
 				break;
 			case SHIP:
-				setPoint = 310000;
+				Lift.getInstance().setSetpoint(310000);
 				break;
-			case FLOOR:
-				setPoint = 135000;
+			case HIGH:
+				Lift.getInstance().setSetpoint(385000);
 				break;
 			default:
 				end();
@@ -76,10 +75,19 @@ public class MoveLiftPID extends Command {
 		case HATCH:
 			switch (height) {
 			case LOW:
-				setPoint = 20000;
+				Lift.getInstance().setSetpoint(20000);
+				break;
+			case MID:
+				Lift.getInstance().setSetpoint(230000);
+				break;
+			case SHIP:
+				Lift.getInstance().setSetpoint(310000);
+				break;
+			case HIGH:
+				Lift.getInstance().setSetpoint(350000);
 				break;
 			case FLOOR:
-				setPoint = Lift.getInstance().getEncoder().get() - 20000;
+				Lift.getInstance().setSetpoint(Lift.getInstance().getEncoder().get() - 20000);
 			default:
 				end();
 				break;
@@ -89,7 +97,8 @@ public class MoveLiftPID extends Command {
 			end();
 			break;
 		}
-		Lift.getInstance().getPIDController().setSetpoint(setPoint);
+
+		Lift.getInstance().enable();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

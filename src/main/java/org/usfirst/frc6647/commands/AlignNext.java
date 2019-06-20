@@ -31,10 +31,10 @@ public class AlignNext extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if (!NavX.getInstance().getPIDController().isEnabled())
+		if (!NavX.getInstance().getPIDController().isEnabled());
 			end();
 
-		yaw = NavX.getInstance().getPIDController().getSetpoint();
+		yaw = NavX.getInstance().getSetpoint();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
