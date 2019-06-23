@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Lift extends PIDSuperSubsystem implements SuperVictor, SuperEncoder, SuperDigitalInput {
 
-	private double p = 0.00004, i = 0.0000009015, d = 0.000132;
-
 	private static Lift m_instance = null;
 
 	/**
@@ -47,15 +45,9 @@ public class Lift extends PIDSuperSubsystem implements SuperVictor, SuperEncoder
 		initEncoders(robotMap, getName());
 		initDigitalInputs(robotMap, getName());
 
+		finishedJSONInit();
+
 		victors.get("liftFollower").follow(victors.get("liftMain"));
-
-		getPIDController().setPID(p, i, d);
-		setInputRange(-3600000, 360000);
-		setOutputRange(-0.8, 0.8);
-		setAbsoluteTolerance(200);
-		getPIDController().setContinuous(true);
-
-		outputPIDValues(getName(), p, i, d);
 	}
 
 	/**
@@ -89,22 +81,6 @@ public class Lift extends PIDSuperSubsystem implements SuperVictor, SuperEncoder
 	@Override
 	protected void usePIDOutput(double output) {
 		setLift(output);
-	}
-
-	/**
-	 * Method to update PID values from the SmartDashboard.
-	 */
-	@Override
-	public void updatePIDValues() {
-		p = SmartDashboard.getNumber(getName() + "P", p);
-		i = SmartDashboard.getNumber(getName() + "I", i);
-		d = SmartDashboard.getNumber(getName() + "D", d);
-
-		getPIDController().setPID(p, i, d);
-
-		SmartDashboard.putNumber("debug" + getName() + "P", getPIDController().getP());
-		SmartDashboard.putNumber("debug" + getName() + "I", getPIDController().getI());
-		SmartDashboard.putNumber("debug" + getName() + "D", getPIDController().getD());
 	}
 
 	/**

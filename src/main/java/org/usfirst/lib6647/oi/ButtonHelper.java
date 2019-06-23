@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.buttons.Button;
 
 /**
@@ -38,18 +39,33 @@ public class ButtonHelper {
 	 * @return button from the given joystick
 	 */
 	public Button oiButton(int joystick, String buttonName) {
-		JSONParser parser = new JSONParser();
-		try (Reader file = new FileReader(fileName)) {
+		try {
+			JSONParser parser = new JSONParser();
+			Reader file = new FileReader(fileName);
 			JSONObject jsonJoystick = (JSONObject) ((JSONObject) parser.parse(file))
 					.get(joysticks.get(joystick).getName());
-			return joysticks.get(joystick).buttons.get(jsonJoystick.get(buttonName).toString());
+
+			Button button = joysticks.get(joystick).buttons.get(jsonJoystick.get(buttonName).toString());
+
+			jsonJoystick.clear();
+			file.close();
+			parser.reset();
+
+			return button;
 		} catch (IOException e) {
+			DriverStation.reportError("[!] OIBUTTON " + buttonName + " IO ERROR: " + e.getMessage(), false);
 			System.out.println("[!] OIBUTTON " + buttonName + " IO ERROR: " + e.getMessage());
 			System.exit(1);
 		} catch (ParseException e) {
+			DriverStation.reportError("[!] OIBUTTON " + buttonName + " PARSE ERROR: " + e.getMessage(), false);
 			System.out.println("[!] OIBUTTON " + buttonName + " PARSE ERROR: " + e.getMessage());
 			System.exit(1);
 		} catch (NullPointerException e) {
+			DriverStation.reportError("[!] OIBUTTON " + buttonName + " NOT FOUND: " + e.getMessage(), false);
+			System.out.println("[!] OIBUTTON " + buttonName + " NOT FOUND: " + e.getMessage());
+			System.exit(1);
+		} catch (Exception e) {
+			DriverStation.reportError("[!] OIBUTTON " + buttonName + " ERROR: " + e.getMessage(), false);
 			System.out.println("[!] OIBUTTON " + buttonName + " ERROR: " + e.getMessage());
 			System.exit(1);
 		}

@@ -162,6 +162,19 @@
 				}
 			]
 		},
+		"navX": {
+			"pid": {
+				"p": 0.009,
+				"i": 0.00003,
+				"d": 0.009,
+				"inputMin": -180,
+				"inputMax": 180,
+				"outputMin": -0.75,
+				"outputMax": 0.75,
+				"absoluteTolerance": 0.5,
+				"continuous": true
+			}
+		},
 		"intake": {
 			"victors": [
 				{
@@ -241,6 +254,17 @@
 			]
 		},
 		"lift": {
+			"pid": {
+				"p": 0.00004,
+				"i": 0.0000009015,
+				"d": 0.000132,
+				"inputMin": -3600000,
+				"inputMax": 360000,
+				"outputMin": -0.8,
+				"outputMax": 0.8,
+				"absoluteTolerance": 200,
+				"continuous": true
+			},
 			"victors": [
 				{
 					"name": "liftMain",

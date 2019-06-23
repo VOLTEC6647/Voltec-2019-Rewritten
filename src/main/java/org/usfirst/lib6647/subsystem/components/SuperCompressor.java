@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * Interface to allow Compressor initialization via JSON file. Subsystem needs
@@ -34,12 +35,22 @@ public interface SuperCompressor {
 					Compressor compressor = new Compressor(Integer.parseInt(json.get("port").toString()));
 					compressors.put(json.get("name").toString(), compressor);
 				} catch (Exception e) {
-					System.out.println("[!] COMPRESSOR INIT ERROR: " + e.getMessage());
+					DriverStation.reportError("[!] SUBSYSTEM '" + subsystemName.toUpperCase()
+							+ "' COMPRESSOR INIT ERROR: " + e.getMessage(), false);
+					System.out.println("[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' COMPRESSOR INIT ERROR: "
+							+ e.getMessage());
 					System.exit(1);
+				} finally {
+					json.clear();
 				}
 			});
+			compressorArray.clear();
 		} catch (Exception e) {
-			System.out.println("[!] COMPRESSOR INIT ERROR: " + e.getMessage());
+			DriverStation.reportError(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' COMPRESSOR INIT ERROR: " + e.getMessage(),
+					false);
+			System.out.println(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' COMPRESSOR INIT ERROR: " + e.getMessage());
 			System.exit(1);
 		}
 	}

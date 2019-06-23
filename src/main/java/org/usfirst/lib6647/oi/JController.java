@@ -44,6 +44,24 @@ public class JController extends Joystick {
 	}
 
 	/**
+	 * Method to get left-most Stick raw value.
+	 * 
+	 * @return leftAxis
+	 */
+	public double getLeftAxis() {
+		return getRawAxis(1);
+	}
+
+	/**
+	 * Method to get right-most Stick raw value.
+	 * 
+	 * @return rightAxis
+	 */
+	public double getRightAxis() {
+		return getRawAxis(getAxisCount());
+	}
+
+	/**
 	 * Enum listing possible axis types.
 	 */
 	private enum AxisType {

@@ -8,12 +8,11 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 
 - [ ] Improve OI class.
 	- [X] Simplify Button initialization and calling.
-	- [X] Config file for controls through JSON.
-	- [ ] Add different functionality for different controllers.
+	- [X] Allow config file for controls through JSON.
+	- [ ] Add different functionality for non-PS4 controllers.
 		- [ ] Add Joycon support (now easily done thanks to JSON functionality).
+		- [ ] Add Guitar Hero controller support.
 - [ ] Implement and improve upon other robot subsystems.
-	- [X] General.
-		- [X] Create interface for PID subsystems, for updating and outputting values.
 	- [X] Chassis.
 		- [X] Improve Talon building functionality.
 		- [X] Merge Drive velocity-changing commands into one.
@@ -21,6 +20,7 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 	- [X] Midwheel.
 		- [X] Move the midwheel to its own subsystem.
 		- [X] Merge Slide commands into one.
+		- [X] Add axis speed functionality for non-PS4 controllers.
 	- [X] Gyro.
 		- [X] Add command to align to closest left or right angle.
 		- [X] Add command to align to next closest left or right angle.
@@ -31,21 +31,29 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 		- [X] Merge H control commands into one.
 		- [X] Merge Ball in/out commands into one.
 		- [X] Remove Unused PID functionality.
-	- [X] TiltIntake.
 		- [X] Merge Tilt commands into one.
-		- [X] Add functionality for non-PS4 controllers.
+		- [X] Add tilt functionality for non-PS4 controllers.
 	- [ ] Climb.
 	- [ ] Vision (RIP).
-- [X] Generic subsystem object creation through JSON.
+- [X] Generic subsystem object creation and configuration through JSON.
 	- [X] SuperTalon
+		- [X] Allow optional configuration values.
 	- [X] SuperVictor
+		- [X] Allow optional configuration values.
 	- [X] SuperSolenoid
 	- [X] SuperEncoder
 	- [X] SuperDigitalInput
 	- [X] SuperCompressor (Not really necessary).
 	- [X] SuperPDP (Not really necessary).
-- [X] Everything commented.
-- [ ] Everything tested.
+- [X] PIDSuperSubsystem creation and configuration through JSON.
+	- [X] Add float support for PID values.
+	- [X] Add SmartDashboard input and output methods.
+- [ ] Overall code optimization.
+	- [X] Restrict PID update loops to run only when enabled.
+	- [X] Remove any and all instances of memory leaks.
+	- [ ] Do proper Exception handling.
+- [X] Add comments.
+- [ ] Test everything.
 
 ## License
 

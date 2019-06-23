@@ -10,19 +10,16 @@ package org.usfirst.frc6647.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc6647.robot.OI;
-import org.usfirst.lib6647.util.PID;
+import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Subsystem for the NavX sensor.
  */
-public class NavX extends PIDSubsystem implements PID {
-
-	public double p = 0.02, i = 0.0000025, d = 0.0025;
-
+public class NavX extends PIDSuperSubsystem {
 	private AHRS ahrs;
 	private double accel = 0.0, accelMult = 1.0, padLimiter = 0.6;
 
@@ -52,18 +49,11 @@ public class NavX extends PIDSubsystem implements PID {
 	 * Initializes PID subsystem and resets NavX sensor.
 	 */
 	public NavX() {
-		super("NavX", 0, 0, 0);
-
-		getPIDController().setPID(p, i, d);
-		setInputRange(-180, 180);
-		setOutputRange(-0.70, 0.70);
-		setAbsoluteTolerance(0.5);
-		getPIDController().setContinuous(true);
+		super("navX", Filesystem.getDeployDirectory() + "/RobotMap.json");
+		finishedJSONInit();
 
 		ahrs = new AHRS(SPI.Port.kMXP);
 		ahrs.reset();
-
-		outputPIDValues(getName(), p, i, d);
 	}
 
 	/**
@@ -96,30 +86,14 @@ public class NavX extends PIDSubsystem implements PID {
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		int angle = OI.getInstance().joysticks.get(0).getPOV(0);
-		double speed = 0.5 + (accel * accelMult) * padLimiter;
+		double speed = padLimiter + (accel * accelMult);
 
-		if (angle == 0)
+		if (OI.getInstance().oiButton(0, "dPadUp").get())
 			Chassis.getInstance().setBothTalons(-speed + output, -speed - output);
-		else if (angle == 180)
+		else if (OI.getInstance().oiButton(0, "dPadDown").get())
 			Chassis.getInstance().setBothTalons(speed + output, speed - output);
 		else
 			Chassis.getInstance().setBothTalons(output, -output);
-	}
-
-	/**
-	 * Method to update PID values from the SmartDashboard.
-	 */
-	public void updatePIDValues() {
-		p = SmartDashboard.getNumber(getName() + "P", p);
-		i = SmartDashboard.getNumber(getName() + "I", i);
-		d = SmartDashboard.getNumber(getName() + "D", d);
-
-		getPIDController().setPID(p, i, d);
-
-		SmartDashboard.putNumber("debug" + getName() + "P", getPIDController().getP());
-		SmartDashboard.putNumber("debug" + getName() + "I", getPIDController().getI());
-		SmartDashboard.putNumber("debug" + getName() + "D", getPIDController().getD());
 	}
 
 	/**

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 /**
@@ -35,12 +36,22 @@ public interface SuperUltrasonic {
 							Integer.parseInt(json.get("echoChannel").toString()));
 					ultrasonics.put(json.get("name").toString(), ultrasonic);
 				} catch (Exception e) {
-					System.out.println("[!] ULTRASONIC INIT ERROR: " + e.getMessage());
+					DriverStation.reportError("[!] SUBSYSTEM '" + subsystemName.toUpperCase()
+							+ "' ULTRASONIC INIT ERROR: " + e.getMessage(), false);
+					System.out.println("[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' ULTRASONIC INIT ERROR: "
+							+ e.getMessage());
 					System.exit(1);
+				} finally {
+					json.clear();
 				}
 			});
+			ultrasonicArray.clear();
 		} catch (Exception e) {
-			System.out.println("[!] ULTRASONIC INIT ERROR: " + e.getMessage());
+			DriverStation.reportError(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' ULTRASONIC INIT ERROR: " + e.getMessage(),
+					false);
+			System.out.println(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' ULTRASONIC INIT ERROR: " + e.getMessage());
 			System.exit(1);
 		}
 	}
