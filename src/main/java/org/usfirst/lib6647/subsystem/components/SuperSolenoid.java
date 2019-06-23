@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**
@@ -38,12 +39,22 @@ public interface SuperSolenoid {
 
 					solenoids.put(json.get("name").toString(), solenoid);
 				} catch (Exception e) {
-					System.out.println("[!] SOLENOID INIT ERROR: " + e.getMessage());
+					DriverStation.reportError("[!] SUBSYSTEM '" + subsystemName.toUpperCase()
+							+ "' SOLENOID INIT ERROR: " + e.getMessage(), false);
+					System.out.println("[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' SOLENOID INIT ERROR: "
+							+ e.getMessage());
 					System.exit(1);
+				} finally {
+					json.clear();
 				}
 			});
+			solenoidArray.clear();
 		} catch (Exception e) {
-			System.out.println("[!] SOLENOID INIT ERROR: " + e.getMessage());
+			DriverStation.reportError(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' SOLENOID INIT ERROR: " + e.getMessage(),
+					false);
+			System.out.println(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' SOLENOID INIT ERROR: " + e.getMessage());
 			System.exit(1);
 		}
 	}

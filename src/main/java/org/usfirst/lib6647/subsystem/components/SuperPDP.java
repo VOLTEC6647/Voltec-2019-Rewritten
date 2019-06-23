@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 /**
@@ -35,12 +36,21 @@ public interface SuperPDP {
 							Integer.parseInt(json.get("module").toString()));
 					PDPs.put(json.get("name").toString(), pdp);
 				} catch (Exception e) {
-					System.out.println("[!] PDP INIT ERROR: " + e.getMessage());
+					DriverStation.reportError(
+							"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' PDP INIT ERROR: " + e.getMessage(),
+							false);
+					System.out.println(
+							"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' PDP INIT ERROR: " + e.getMessage());
 					System.exit(1);
+				} finally {
+					json.clear();
 				}
 			});
+			PDPArray.clear();
 		} catch (Exception e) {
-			System.out.println("[!] PDP INIT ERROR: " + e.getMessage());
+			DriverStation.reportError(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' PDP INIT ERROR: " + e.getMessage(), false);
+			System.out.println("[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' PDP INIT ERROR: " + e.getMessage());
 			System.exit(1);
 		}
 	}

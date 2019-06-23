@@ -63,6 +63,8 @@ public class Chassis extends SuperSubsystem
 		initCompressors(robotMap, getName());
 		initPDPs(robotMap, getName());
 
+		finishedJSONInit();
+
 		victors.get("backLeft").follow(talons.get("frontLeft"));
 		victors.get("backRight").follow(talons.get("frontRight"));
 	}
@@ -79,8 +81,8 @@ public class Chassis extends SuperSubsystem
 	@Override
 	public void periodic() {
 		if (!NavX.getInstance().getPIDController().isEnabled()) {
-			double leftStickY = mapDoubleT.apply(OI.getInstance().joysticks.get(0).getRawAxis(1)),
-					rightStickY = mapDoubleT.apply(OI.getInstance().joysticks.get(0).getRawAxis(5));
+			double leftStickY = mapDoubleT.apply(OI.getInstance().joysticks.get(0).getLeftAxis() * driveLimiter),
+					rightStickY = mapDoubleT.apply(OI.getInstance().joysticks.get(0).getRightAxis() * driveLimiter);
 			Chassis.getInstance().setBothTalons(leftStickY, rightStickY);
 		}
 	}
@@ -113,10 +115,7 @@ public class Chassis extends SuperSubsystem
 	 * @param speed
 	 */
 	public void setLeftTalon(double speed) {
-		if (speed > driveLimiter)
-			talons.get("frontLeft").set(ControlMode.PercentOutput, speed * driveLimiter);
-		else
-			talons.get("frontLeft").set(ControlMode.PercentOutput, speed);
+		talons.get("frontLeft").set(ControlMode.PercentOutput, speed);
 	}
 
 	/**
@@ -125,10 +124,7 @@ public class Chassis extends SuperSubsystem
 	 * @param speed
 	 */
 	public void setRightTalon(double speed) {
-		if (speed > driveLimiter)
-			talons.get("frontRight").set(ControlMode.PercentOutput, speed * driveLimiter);
-		else
-			talons.get("frontRight").set(ControlMode.PercentOutput, speed);
+		talons.get("frontRight").set(ControlMode.PercentOutput, speed);
 	}
 
 	/**

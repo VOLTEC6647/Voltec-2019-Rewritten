@@ -46,6 +46,8 @@ public class ChassisH extends SuperSubsystem implements SuperTalon {
 		super("chassisH", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initTalons(robotMap, getName());
+
+		finishedJSONInit();
 	}
 
 	@Override

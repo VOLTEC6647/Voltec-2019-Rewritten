@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * Interface to allow DigitalInput initialization via JSON file. Subsystem needs
@@ -34,12 +35,22 @@ public interface SuperDigitalInput {
 					DigitalInput digitalInput = new DigitalInput(Integer.parseInt(json.get("channel").toString()));
 					digitalInputs.put(json.get("name").toString(), digitalInput);
 				} catch (Exception e) {
-					System.out.println("[!] DIGITAL INPUT INIT ERROR: " + e.getMessage());
+					DriverStation.reportError("[!] SUBSYSTEM '" + subsystemName.toUpperCase()
+							+ "' DIGITAL INPUT INIT ERROR: " + e.getMessage(), false);
+					System.out.println("[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' DIGITAL INPUT INIT ERROR: "
+							+ e.getMessage());
 					System.exit(1);
+				} finally {
+					json.clear();
 				}
 			});
+			digitalInputArray.clear();
 		} catch (Exception e) {
-			System.out.println("[!] DIGITAL INPUT INIT ERROR: " + e.getMessage());
+			DriverStation.reportError(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' DIGITAL INPUT INIT ERROR: " + e.getMessage(),
+					false);
+			System.out.println(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' DIGITAL INPUT INIT ERROR: " + e.getMessage());
 			System.exit(1);
 		}
 	}
