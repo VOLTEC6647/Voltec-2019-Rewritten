@@ -36,7 +36,7 @@ public class JController extends Joystick {
 			}
 		}
 
-		for (int i = 0; i <= this.getAxisCount(); i++) {
+		for (int i = 0; i < this.getAxisCount(); i++) {
 			buttons.put("Stick" + i, axisButton(this, AxisType.Stick, i));
 			buttons.put("Stick" + i + "_1", axisButton(this, AxisType.Stick, 1));
 			buttons.put("Stick" + i + "_-1", axisButton(this, AxisType.Stick, -1));

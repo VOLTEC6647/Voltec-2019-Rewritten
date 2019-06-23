@@ -21,11 +21,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class NavX extends PIDSubsystem implements PID {
 
-	private double p = 0.02, i = 0.0000025, d = 0.0025;
+	public double p = 0.02, i = 0.0000025, d = 0.0025;
 
 	private AHRS ahrs;
-
-	public double accel = 0.0, accelMult = 1.0, padLimiter = 0.6;
+	private double accel = 0.0, accelMult = 1.0, padLimiter = 0.6;
 
 	private static NavX m_instance = null;
 
@@ -42,9 +41,8 @@ public class NavX extends PIDSubsystem implements PID {
 	 * @return static NavX instance
 	 */
 	public static NavX getInstance() {
-		if (m_instance == null) {
+		if (m_instance == null)
 			createInstance();
-		}
 		return m_instance;
 	}
 
@@ -57,7 +55,6 @@ public class NavX extends PIDSubsystem implements PID {
 		super("NavX", 0, 0, 0);
 
 		getPIDController().setPID(p, i, d);
-
 		setInputRange(-180, 180);
 		setOutputRange(-0.70, 0.70);
 		setAbsoluteTolerance(0.5);
@@ -74,8 +71,6 @@ public class NavX extends PIDSubsystem implements PID {
 	 */
 	@Override
 	public void periodic() {
-		updatePIDValues();
-
 		SmartDashboard.putNumber("NavXYaw", ahrs.getYaw());
 		SmartDashboard.putNumber("Goal", getPIDController().getSetpoint());
 	}
@@ -96,6 +91,8 @@ public class NavX extends PIDSubsystem implements PID {
 
 	/**
 	 * Adds or substracts calculated speed to its respective Talon.
+	 * 
+	 * @param PIDoutput
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
@@ -108,6 +105,21 @@ public class NavX extends PIDSubsystem implements PID {
 			Chassis.getInstance().setBothTalons(speed + output, speed - output);
 		else
 			Chassis.getInstance().setBothTalons(output, -output);
+	}
+
+	/**
+	 * Method to update PID values from the SmartDashboard.
+	 */
+	public void updatePIDValues() {
+		p = SmartDashboard.getNumber(getName() + "P", p);
+		i = SmartDashboard.getNumber(getName() + "I", i);
+		d = SmartDashboard.getNumber(getName() + "D", d);
+
+		getPIDController().setPID(p, i, d);
+
+		SmartDashboard.putNumber("debug" + getName() + "P", getPIDController().getP());
+		SmartDashboard.putNumber("debug" + getName() + "I", getPIDController().getI());
+		SmartDashboard.putNumber("debug" + getName() + "D", getPIDController().getD());
 	}
 
 	/**
@@ -127,17 +139,32 @@ public class NavX extends PIDSubsystem implements PID {
 	}
 
 	/**
-	 * Method to update PID values from the SmartDashboard.
+	 * Sets padLimiter and acceleration.
+	 * 
+	 * @param padLimiter
+	 * @param accel
 	 */
-	public void updatePIDValues() {
-		p = SmartDashboard.getNumber(getName() + "P", p);
-		i = SmartDashboard.getNumber(getName() + "I", i);
-		d = SmartDashboard.getNumber(getName() + "D", d);
+	public void setPadLimiter(double padLimiter, boolean accel) {
+		if (accel)
+			accelMult = 1;
+		else
+			accelMult = 0;
+		this.padLimiter = padLimiter;
+	}
 
-		getPIDController().setPID(p, i, d);
+	/**
+	 * Increases Gyro acceleration by a specified amount.
+	 * 
+	 * @param accel
+	 */
+	public void increaseAccel(double accel) {
+		this.accel += accel;
+	}
 
-		SmartDashboard.putNumber("debug" + getName() + "P", getPIDController().getP());
-		SmartDashboard.putNumber("debug" + getName() + "I", getPIDController().getI());
-		SmartDashboard.putNumber("debug" + getName() + "D", getPIDController().getD());
+	/**
+	 * Resets Gyro acceleration amount.
+	 */
+	public void resetAccel() {
+		this.accel = 0;
 	}
 }

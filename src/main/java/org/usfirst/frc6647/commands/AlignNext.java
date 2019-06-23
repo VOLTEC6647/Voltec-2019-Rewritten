@@ -7,9 +7,10 @@
 
 package org.usfirst.frc6647.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6647.subsystems.NavX;
 import org.usfirst.lib6647.util.Direction;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Command for changing the Gyro alignment to the next desired angle.

@@ -195,36 +195,9 @@
 							"timeoutMs": 0
 						}
 					}
-				}
-			],
-			"solenoids": [
-				{
-					"name": "cylinderH",
-					"channel": 3,
-					"initialValue": false
 				},
 				{
-					"name": "cylinderHReverse",
-					"channel": 2,
-					"initialValue": false
-				},
-				{
-					"name": "pushHatch",
-					"channel": 1,
-					"initialValue": false
-				}
-			],
-			"digitalInputs": [
-				{
-					"name": "ballPresent",
-					"channel": 5
-				}
-			]
-		},
-		"tiltIntake": {
-			"victors": [
-				{
-					"name": "tiltIntake",
+					"name": "intakeTilt",
 					"port": 12,
 					"inverted": true,
 					"neutralMode": "Brake",
@@ -240,14 +213,30 @@
 					}
 				}
 			],
+			"solenoids": [
+				{
+					"name": "cylinderH",
+					"channel": 3,
+					"initialValue": false
+				},
+				{
+					"name": "cylinderHReverse",
+					"channel": 2,
+					"initialValue": false
+				}
+			],
 			"digitalInputs": [
 				{
-					"name": "lowLimitTilt",
-					"channel": 3
+					"name": "ballPresent",
+					"channel": 5
 				},
 				{
 					"name": "topLimitTilt",
 					"channel": 4
+				},
+				{
+					"name": "lowLimitTilt",
+					"channel": 3
 				}
 			]
 		},

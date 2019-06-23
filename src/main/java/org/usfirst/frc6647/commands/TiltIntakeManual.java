@@ -8,7 +8,7 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.robot.OI;
-import org.usfirst.frc6647.subsystems.TiltIntake;
+import org.usfirst.frc6647.subsystems.Intake;
 import org.usfirst.lib6647.util.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TiltIntakeManual extends Command {
 
-	Direction direction;
+	private Direction direction;
 
 	/**
 	 * Constructor for the command.
@@ -26,7 +26,7 @@ public class TiltIntakeManual extends Command {
 	 * @param direction
 	 */
 	public TiltIntakeManual(Direction direction) {
-		requires(TiltIntake.getInstance());
+		requires(Intake.getInstance());
 
 		this.direction = direction;
 	}
@@ -41,11 +41,19 @@ public class TiltIntakeManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			TiltIntake.getInstance()
-					.setTiltIntake(Math.pow(((OI.getInstance().joysticks.get(1).getRawAxis(4) + 1) * 0.5), 2) * 0.8);
+			Intake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get(1).getRawAxis(4) + 1) / 2) * 0.8);
+			break;
 		case DOWN:
-			TiltIntake.getInstance()
-					.setTiltIntake(-(Math.pow(((OI.getInstance().joysticks.get(1).getRawAxis(3) + 1) * 0.5), 2) * 0.6));
+			Intake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get(1).getRawAxis(3) + 1) / 2) * -0.6);
+			break;
+		case NONE:
+			if (OI.getInstance().joysticks.get(1).getRawAxis(4) > 0)
+				Intake.getInstance().setTiltIntake(OI.getInstance().joysticks.get(1).getRawAxis(4) * 0.8);
+			else if (OI.getInstance().joysticks.get(1).getRawAxis(4) < 0)
+				Intake.getInstance().setTiltIntake(OI.getInstance().joysticks.get(1).getRawAxis(4) * 0.6);
+			else
+				Intake.getInstance().stopTiltIntake();
+			break;
 		default:
 			end();
 			break;
@@ -61,7 +69,7 @@ public class TiltIntakeManual extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		TiltIntake.getInstance().stopTiltIntake();
+		Intake.getInstance().stopTiltIntake();
 	}
 
 	// Called when another command which requires one or more of the same

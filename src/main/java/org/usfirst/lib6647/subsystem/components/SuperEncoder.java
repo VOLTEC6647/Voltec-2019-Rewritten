@@ -1,4 +1,4 @@
-package org.usfirst.lib6647.subsystem;
+package org.usfirst.lib6647.subsystem.components;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -6,8 +6,8 @@ import java.util.HashMap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.Encoder;
 
 /**
  * Interface to allow Encoder initialization via JSON file. Subsystem needs to

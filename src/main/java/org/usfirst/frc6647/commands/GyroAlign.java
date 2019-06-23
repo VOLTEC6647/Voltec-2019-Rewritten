@@ -12,7 +12,6 @@ import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.NavX;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Command for Robot alignment.
@@ -27,6 +26,7 @@ public class GyroAlign extends Command {
 	public GyroAlign() {
 		requires(Chassis.getInstance());
 		requires(NavX.getInstance());
+
 		double yaw = NavX.getInstance().getYaw();
 
 		if (-165.625 >= yaw)
@@ -59,14 +59,15 @@ public class GyroAlign extends Command {
 	public GyroAlign(double angle) {
 		requires(Chassis.getInstance());
 		requires(NavX.getInstance());
+
 		NavX.getInstance().setSetpoint(angle);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		SmartDashboard.putBoolean("Gyro", true);
-		NavX.getInstance().accel = 0.0;
+		NavX.getInstance().resetAccel();
+		NavX.getInstance().updatePIDValues();
 		NavX.getInstance().enable();
 	}
 
@@ -77,8 +78,7 @@ public class GyroAlign extends Command {
 				&& Math.abs(OI.getInstance().joysticks.get(0).getRawAxis(5)) > 0.1)
 			end();
 
-		NavX.getInstance().accel += 0.0035;
-		NavX.getInstance().updatePIDValues();
+		NavX.getInstance().increaseAccel(0.0035);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -90,9 +90,9 @@ public class GyroAlign extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		SmartDashboard.putBoolean("Gyro", false);
-		NavX.getInstance().accel = 0.0;
+		NavX.getInstance().resetAccel();
 		NavX.getInstance().disable();
+		NavX.getInstance().getPIDController().close();
 	}
 
 	// Called when another command which requires one or more of the same

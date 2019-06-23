@@ -7,9 +7,19 @@
 
 package org.usfirst.frc6647.robot;
 
-import org.usfirst.frc6647.commands.*;
+import org.usfirst.frc6647.commands.AlignNext;
+import org.usfirst.frc6647.commands.ChangeVelocity;
+import org.usfirst.frc6647.commands.ControlH;
+import org.usfirst.frc6647.commands.GyroAlign;
+import org.usfirst.frc6647.commands.MoveBall;
+import org.usfirst.frc6647.commands.MoveLiftManual;
+import org.usfirst.frc6647.commands.MoveLiftPID;
 import org.usfirst.frc6647.commands.MoveLiftPID.Height;
 import org.usfirst.frc6647.commands.MoveLiftPID.Target;
+import org.usfirst.frc6647.commands.ResetEncoders;
+import org.usfirst.frc6647.commands.Slide;
+import org.usfirst.frc6647.commands.TiltIntakeManual;
+import org.usfirst.frc6647.commands.ZeroYaw;
 import org.usfirst.lib6647.oi.ButtonHelper;
 import org.usfirst.lib6647.oi.JController;
 import org.usfirst.lib6647.util.Direction;
@@ -53,8 +63,7 @@ public class OI extends ButtonHelper {
 		joysticks.add(new JController(0));
 
 		oiButton(0, 4).whenPressed(new ChangeVelocity(0.75, 0.9, false));
-		oiButton(0, 3).whileHeld(new ControlH(Direction.FORWARD));
-		oiButton(0, 2).whileHeld(new ControlH(Direction.BACKWARD));
+		oiButton(0, 3).whileHeld(new ControlH(Direction.TOGGLE));
 		oiButton(0, 1).whenPressed(new ChangeVelocity(0.6, 0.6, true));
 
 		oiButton(0, 5).whileHeld(new MoveBall(Direction.IN, 0.7));
@@ -82,9 +91,8 @@ public class OI extends ButtonHelper {
 		oiButton(1, 7).whileHeld(new TiltIntakeManual(Direction.UP));
 		oiButton(1, 8).whileHeld(new TiltIntakeManual(Direction.DOWN));
 
-		/* oiButton(1, 9).whileHeld(new ControlH(Direction.BACKWARD));
-		oiButton(1, 10).whileHeld(new ControlH(Direction.FORWARD)); */
-		oiButton(1, 9).whenPressed(new PushHatch(1.0));
+		oiButton(1, 9).whileHeld(new ControlH(Direction.BACKWARD));
+		oiButton(1, 10).whileHeld(new ControlH(Direction.FORWARD));
 
 		oiButton(1, 13).whenPressed(new ResetEncoders());
 		oiButton(1, 14).whileHeld(new MoveLiftPID(Target.HATCH, Height.FLOOR));
