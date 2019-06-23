@@ -113,7 +113,10 @@ public class Chassis extends SuperSubsystem
 	 * @param speed
 	 */
 	public void setLeftTalon(double speed) {
-		talons.get("frontLeft").set(ControlMode.PercentOutput, speed);
+		if (speed > driveLimiter)
+			talons.get("frontLeft").set(ControlMode.PercentOutput, speed * driveLimiter);
+		else
+			talons.get("frontLeft").set(ControlMode.PercentOutput, speed);
 	}
 
 	/**
@@ -122,7 +125,10 @@ public class Chassis extends SuperSubsystem
 	 * @param speed
 	 */
 	public void setRightTalon(double speed) {
-		talons.get("frontRight").set(ControlMode.PercentOutput, speed);
+		if (speed > driveLimiter)
+			talons.get("frontRight").set(ControlMode.PercentOutput, speed * driveLimiter);
+		else
+			talons.get("frontRight").set(ControlMode.PercentOutput, speed);
 	}
 
 	/**
@@ -132,8 +138,8 @@ public class Chassis extends SuperSubsystem
 	 * @param rightSpeed
 	 */
 	public void setBothTalons(double leftSpeed, double rightSpeed) {
-		setLeftTalon(leftSpeed * driveLimiter);
-		setRightTalon(rightSpeed * driveLimiter);
+		setLeftTalon(leftSpeed);
+		setRightTalon(rightSpeed);
 	}
 
 	/**
