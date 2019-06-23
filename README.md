@@ -8,16 +8,16 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 
 - [ ] Improve OI class.
 	- [X] Simplify Button initialization and calling.
+	- [X] Config file for controls through JSON.
 	- [ ] Add different functionality for different controllers.
-		- [X] Config file for controls through JSON.
 		- [ ] Add Joycon support (now easily done thanks to JSON functionality).
 - [ ] Implement and improve upon other robot subsystems.
 	- [X] General.
 		- [X] Create interface for PID subsystems, for updating and outputting values.
-	- [ ] Chassis.
+	- [X] Chassis.
 		- [X] Improve Talon building functionality.
 		- [X] Merge Drive velocity-changing commands into one.
-		- [ ] Clean up the eyesore that is the mapDoubleT method.
+		- [X] Clean up the eyesore that is the mapDoubleT method.
 	- [X] Midwheel.
 		- [X] Move the midwheel to its own subsystem.
 		- [X] Merge Slide commands into one.
@@ -30,7 +30,10 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 	- [X] Intake.
 		- [X] Merge H control commands into one.
 		- [X] Merge Ball in/out commands into one.
+		- [X] Remove Unused PID functionality.
 	- [X] TiltIntake.
+		- [X] Merge Tilt commands into one.
+		- [X] Add functionality for non-PS4 controllers.
 	- [ ] Climb.
 	- [ ] Vision (RIP).
 - [X] Generic subsystem object creation through JSON.

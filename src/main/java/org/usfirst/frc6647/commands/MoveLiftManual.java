@@ -43,7 +43,7 @@ public class MoveLiftManual extends Command {
 			Lift.getInstance().setLift(0.6);
 			break;
 		case DOWN:
-			if (!Lift.getInstance().getDownLimit().get())
+			if (!Lift.getInstance().getDownLimitValue())
 				end();
 			else
 				Lift.getInstance().setLift(-0.3);

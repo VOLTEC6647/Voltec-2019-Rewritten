@@ -7,15 +7,17 @@
 
 package org.usfirst.frc6647.robot;
 
-import org.usfirst.frc6647.commands.*;
+import org.usfirst.frc6647.commands.MoveLiftManual;
+import org.usfirst.frc6647.commands.MoveLiftPID;
 import org.usfirst.frc6647.commands.MoveLiftPID.Height;
 import org.usfirst.frc6647.commands.MoveLiftPID.Target;
+import org.usfirst.frc6647.commands.ResetEncoders;
+import org.usfirst.frc6647.commands.TiltIntakeManual;
 import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.ChassisH;
 import org.usfirst.frc6647.subsystems.Intake;
 import org.usfirst.frc6647.subsystems.Lift;
 import org.usfirst.frc6647.subsystems.NavX;
-import org.usfirst.frc6647.subsystems.TiltIntake;
 import org.usfirst.lib6647.util.Direction;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -40,7 +42,6 @@ public class Robot extends TimedRobot {
 		ChassisH.createInstance();
 		NavX.createInstance();
 		Intake.createInstance();
-		TiltIntake.createInstance();
 		Lift.createInstance();
 
 		OI.createInstance();
@@ -72,7 +73,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("TiltIntakeUpManual", new TiltIntakeManual(Direction.UP));
 		SmartDashboard.putData("TiltIntakeDownManual", new TiltIntakeManual(Direction.DOWN));
 
-		SmartDashboard.putData("PushHatch", new PushHatch(1.0));
 		SmartDashboard.putData("ResetEncoders", new ResetEncoders());
 		SmartDashboard.putData("LowerHatch", new MoveLiftPID(Target.HATCH, Height.FLOOR));
 	}

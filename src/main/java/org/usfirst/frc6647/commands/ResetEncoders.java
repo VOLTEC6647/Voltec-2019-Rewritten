@@ -25,7 +25,7 @@ public class ResetEncoders extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Lift.getInstance().getEncoder().reset();
+		Lift.getInstance().resetEncoder();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -42,7 +42,6 @@ public class ResetEncoders extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		end();
 	}
 
 	// Called when another command which requires one or more of the same

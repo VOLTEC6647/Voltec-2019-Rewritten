@@ -36,13 +36,8 @@ public class ChangeVelocity extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		if (acceleration)
-			NavX.getInstance().accelMult = 1;
-		else
-			NavX.getInstance().accelMult = 0;
-
-		Chassis.getInstance().driveLimiter = driveLimiter;
-		NavX.getInstance().padLimiter = padLimiter;
+		Chassis.getInstance().setDriveLimiter(driveLimiter);
+		NavX.getInstance().setPadLimiter(padLimiter, acceleration);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

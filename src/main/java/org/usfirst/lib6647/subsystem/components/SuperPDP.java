@@ -1,4 +1,4 @@
-package org.usfirst.lib6647.subsystem;
+package org.usfirst.lib6647.subsystem.components;
 
 import java.util.Arrays;
 import java.util.HashMap;

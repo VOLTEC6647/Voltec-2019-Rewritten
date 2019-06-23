@@ -7,19 +7,20 @@
 
 package org.usfirst.frc6647.subsystems;
 
+import java.util.function.Function;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import org.usfirst.frc6647.robot.OI;
-import org.usfirst.lib6647.subsystem.SuperCompressor;
-import org.usfirst.lib6647.subsystem.SuperPDP;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.SuperTalon;
-import org.usfirst.lib6647.subsystem.SuperUltrasonic;
-import org.usfirst.lib6647.subsystem.SuperVictor;
+import org.usfirst.lib6647.subsystem.components.SuperCompressor;
+import org.usfirst.lib6647.subsystem.components.SuperPDP;
+import org.usfirst.lib6647.subsystem.components.SuperTalon;
+import org.usfirst.lib6647.subsystem.components.SuperUltrasonic;
+import org.usfirst.lib6647.subsystem.components.SuperVictor;
 
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Subsystem for the Chassis.
@@ -27,9 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Chassis extends SuperSubsystem
 		implements SuperTalon, SuperVictor, SuperUltrasonic, SuperCompressor, SuperPDP {
 
-	private double leftStickY, rightStickY;
-
-	public double driveTolerance = 0.15, driveLimiter = 0.75;
+	private double joyTolerance = 0.15, driveLimiter = 0.75;
 
 	private static Chassis m_instance = null;
 
@@ -46,9 +45,8 @@ public class Chassis extends SuperSubsystem
 	 * @return static Chassis instance
 	 */
 	public static Chassis getInstance() {
-		if (m_instance == null) {
+		if (m_instance == null)
 			createInstance();
-		}
 		return m_instance;
 	}
 
@@ -61,23 +59,30 @@ public class Chassis extends SuperSubsystem
 
 		initTalons(robotMap, getName());
 		initVictors(robotMap, getName());
+		initUltrasonics(robotMap, getName());
+		initCompressors(robotMap, getName());
+		initPDPs(robotMap, getName());
 
 		victors.get("backLeft").follow(talons.get("frontLeft"));
 		victors.get("backRight").follow(talons.get("frontRight"));
-
-		SmartDashboard.putBoolean("Gyro", false);
 	}
+
+	/**
+	 * Lambda for joystick mapping.
+	 */
+	private Function<Double, Double> mapDoubleT = x -> Math.abs(x) < joyTolerance ? 0
+			: x < 0 ? (x + joyTolerance) / (1 - joyTolerance) : (x - joyTolerance) / (1 - joyTolerance);
 
 	/**
 	 * Runs every time Scheduler.getInstance().run() is called.
 	 */
 	@Override
 	public void periodic() {
-		leftStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(0).getRawAxis(1), driveTolerance, 1, 0, 1);
-		rightStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(0).getRawAxis(5), driveTolerance, 1, 0, 1);
-
-		if (!SmartDashboard.getBoolean("Gyro", true))
+		if (!NavX.getInstance().getPIDController().isEnabled()) {
+			double leftStickY = mapDoubleT.apply(OI.getInstance().joysticks.get(0).getRawAxis(1)),
+					rightStickY = mapDoubleT.apply(OI.getInstance().joysticks.get(0).getRawAxis(5));
 			Chassis.getInstance().setBothTalons(leftStickY, rightStickY);
+		}
 	}
 
 	@Override
@@ -139,26 +144,11 @@ public class Chassis extends SuperSubsystem
 	}
 
 	/**
-	 * Functional interface for Joystick mapping.
+	 * Set driveLimiter.
+	 * 
+	 * @param driveLimiter
 	 */
-	private interface MapDoubleT {
-		/**
-		 * Abstract method for Joystick mapping.
-		 * 
-		 * @param rawAxis
-		 * @param in_min
-		 * @param in_max
-		 * @param out_min
-		 * @param out_max
-		 * @return mapDoubleT
-		 */
-		double mapDoubleT(double rawAxis, double in_min, double in_max, double out_min, double out_max);
+	public void setDriveLimiter(double driveLimiter) {
+		this.driveLimiter = driveLimiter;
 	}
-
-	/**
-	 * Lambda declaration for mapping joystick input.
-	 */
-	private MapDoubleT joystickMap = (x, in_min, in_max, out_min, out_max) -> Math.abs(x) < in_min ? 0
-			: x < 0 ? (x + in_min) * (-out_max + out_min) / (-in_max + in_min) - out_min
-					: (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }

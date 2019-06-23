@@ -2,17 +2,20 @@ package org.usfirst.frc6647.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import org.usfirst.lib6647.subsystem.SuperDigitalInput;
-import org.usfirst.lib6647.subsystem.SuperSolenoid;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.SuperVictor;
+import org.usfirst.lib6647.subsystem.components.SuperDigitalInput;
+import org.usfirst.lib6647.subsystem.components.SuperSolenoid;
+import org.usfirst.lib6647.subsystem.components.SuperVictor;
 
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.Servo;
 
 /**
  * Subsystem for the Intake.
  */
 public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid, SuperDigitalInput {
+
+	private Servo camServo;
 
 	private static Intake m_instance = null;
 
@@ -29,9 +32,8 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid
 	 * @return static Intake instance
 	 */
 	public static Intake getInstance() {
-		if (m_instance == null) {
+		if (m_instance == null)
 			createInstance();
-		}
 		return m_instance;
 	}
 
@@ -69,12 +71,19 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid
 	}
 
 	/**
-	 * Sets value of H solenoids.
+	 * Set Intake tilt Victor speed.
 	 * 
-	 * @param value
+	 * @param speedTilt
 	 */
-	public void setH(boolean value) {
-		setH(value, !value);
+	public void setTiltIntake(double speedTilt) {
+		victors.get("intakeTilt").set(ControlMode.PercentOutput, speedTilt);
+	}
+
+	/**
+	 * Stop Intake tilt Victor dead in its tracks.
+	 */
+	public void stopTiltIntake() {
+		setTiltIntake(0.0);
 	}
 
 	/**
@@ -89,6 +98,22 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid
 	}
 
 	/**
+	 * Sets value of H solenoids.
+	 * 
+	 * @param boolean
+	 */
+	public void setH(boolean value) {
+		setH(value, !value);
+	}
+
+	/**
+	 * Toggles H.
+	 */
+	public void toggleH() {
+		setH(!solenoids.get("cylinderH").get());
+	}
+
+	/**
 	 * Sets both H solenoids to false.
 	 */
 	public void stopH() {
@@ -96,11 +121,11 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid
 	}
 
 	/**
-	 * Sets value of pushHatch solenoid.
+	 * Gets camServo object.
 	 * 
-	 * @param value
+	 * @return camServo
 	 */
-	public void pushHatch(boolean value) {
-		solenoids.get("pushHatch").set(value);
+	public Servo getCamServo() {
+		return camServo;
 	}
 }
