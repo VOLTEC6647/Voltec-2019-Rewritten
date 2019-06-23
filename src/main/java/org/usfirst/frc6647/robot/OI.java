@@ -62,9 +62,9 @@ public class OI extends ButtonHelper {
 
 		joysticks.add(new JController(0));
 
-		oiButton(0, 4).whenPressed(new ChangeVelocity(0.75, 0.6, false));
+		oiButton(0, 4).whenPressed(new ChangeVelocity(0.75, 0.75, false));
 		oiButton(0, 3).whileHeld(new ControlH(Direction.TOGGLE));
-		oiButton(0, 1).whenPressed(new ChangeVelocity(0.6, 0.3, true));
+		oiButton(0, 1).whenPressed(new ChangeVelocity(0.6, 0.6, true));
 
 		oiButton(0, 5).whileHeld(new MoveBall(Direction.IN, 0.7));
 		oiButton(0, 6).whileHeld(new MoveBall(Direction.OUT, 0.7));
