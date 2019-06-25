@@ -117,7 +117,6 @@ public class MoveLiftPID extends Command {
 	@Override
 	protected void end() {
 		Lift.getInstance().disable();
-		Lift.getInstance().getPIDController().close();
 		Lift.getInstance().stopLift();
 	}
 

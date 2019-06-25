@@ -26,7 +26,11 @@ public class GyroAlign extends Command {
 	public GyroAlign() {
 		requires(Chassis.getInstance());
 		requires(NavX.getInstance());
+	}
 
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize() {
 		double yaw = NavX.getInstance().getYaw();
 
 		if (-165.625 >= yaw)
@@ -47,25 +51,7 @@ public class GyroAlign extends Command {
 			NavX.getInstance().setSetpoint(151.25);
 		else if (165.625 <= yaw)
 			NavX.getInstance().setSetpoint(180);
-	}
 
-	/**
-	 * Constructor for the command.
-	 * 
-	 * Aligns the robot to the specified angle.
-	 * 
-	 * @param angle
-	 */
-	public GyroAlign(double angle) {
-		requires(Chassis.getInstance());
-		requires(NavX.getInstance());
-
-		NavX.getInstance().setSetpoint(angle);
-	}
-
-	// Called just before this Command runs the first time
-	@Override
-	protected void initialize() {
 		NavX.getInstance().resetAccel();
 		NavX.getInstance().updatePIDValues();
 		NavX.getInstance().enable();
@@ -92,7 +78,6 @@ public class GyroAlign extends Command {
 	protected void end() {
 		NavX.getInstance().resetAccel();
 		NavX.getInstance().disable();
-		NavX.getInstance().getPIDController().close();
 	}
 
 	// Called when another command which requires one or more of the same

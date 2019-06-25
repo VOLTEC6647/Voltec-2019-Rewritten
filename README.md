@@ -31,6 +31,7 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 		- [X] Merge H control commands into one.
 		- [X] Merge Ball in/out commands into one.
 		- [X] Remove Unused PID functionality.
+	- [X] TiltIntake.
 		- [X] Merge Tilt commands into one.
 		- [X] Add tilt functionality for non-PS4 controllers.
 	- [ ] Climb.

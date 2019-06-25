@@ -60,10 +60,6 @@ public class ButtonHelper {
 			DriverStation.reportError("[!] OIBUTTON " + buttonName + " PARSE ERROR: " + e.getMessage(), false);
 			System.out.println("[!] OIBUTTON " + buttonName + " PARSE ERROR: " + e.getMessage());
 			System.exit(1);
-		} catch (NullPointerException e) {
-			DriverStation.reportError("[!] OIBUTTON " + buttonName + " NOT FOUND: " + e.getMessage(), false);
-			System.out.println("[!] OIBUTTON " + buttonName + " NOT FOUND: " + e.getMessage());
-			System.exit(1);
 		} catch (Exception e) {
 			DriverStation.reportError("[!] OIBUTTON " + buttonName + " ERROR: " + e.getMessage(), false);
 			System.out.println("[!] OIBUTTON " + buttonName + " ERROR: " + e.getMessage());
