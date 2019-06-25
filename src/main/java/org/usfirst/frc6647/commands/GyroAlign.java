@@ -60,8 +60,8 @@ public class GyroAlign extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Math.abs(OI.getInstance().joysticks.get(0).getLeftAxis()) > 0.1
-				&& Math.abs(OI.getInstance().joysticks.get(0).getRightAxis()) > 0.1)
+		if (Math.abs(OI.getInstance().joysticks.get("Driver1").getLeftAxis()) > 0.1
+				&& Math.abs(OI.getInstance().joysticks.get("Driver1").getRightAxis()) > 0.1)
 			end();
 
 		NavX.getInstance().increaseAccel(0.0035);

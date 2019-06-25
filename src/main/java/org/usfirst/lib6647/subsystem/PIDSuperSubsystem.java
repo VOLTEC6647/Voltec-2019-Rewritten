@@ -110,9 +110,5 @@ public abstract class PIDSuperSubsystem extends PIDSubsystem {
 		d = Float.parseFloat(SmartDashboard.getString(getName() + "D", d + ""));
 
 		getPIDController().setPID(p, i, d);
-
-		SmartDashboard.putNumber("(debug) " + getName() + "P", getPIDController().getP());
-		SmartDashboard.putNumber("(debug) " + getName() + "I", getPIDController().getI());
-		SmartDashboard.putNumber("(debug) " + getName() + "D", getPIDController().getD());
 	}
 }

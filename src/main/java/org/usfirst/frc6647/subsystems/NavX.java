@@ -90,9 +90,9 @@ public class NavX extends PIDSuperSubsystem {
 
 		SmartDashboard.putNumber(getName() + "Output", output);
 
-		if (OI.getInstance().oiButton(0, "dPadUp").get())
+		if (OI.getInstance().oiButton("Driver1", "dPadUp").get())
 			Chassis.getInstance().setBothTalons(-speed + output, -speed - output);
-		else if (OI.getInstance().oiButton(0, "dPadDown").get())
+		else if (OI.getInstance().oiButton("Driver1", "dPadDown").get())
 			Chassis.getInstance().setBothTalons(speed + output, speed - output);
 		else
 			Chassis.getInstance().setBothTalons(output, -output);
