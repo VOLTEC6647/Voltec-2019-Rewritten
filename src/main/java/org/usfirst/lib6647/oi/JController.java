@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class JController extends Joystick {
 
 	public HashMap<String, Button> buttons = new HashMap<String, Button>();
+	private int leftAxis = 1, rightAxis = 5;
 
 	/**
 	 * Constructor for the controller.
@@ -44,12 +45,23 @@ public class JController extends Joystick {
 	}
 
 	/**
+	 * Method to set left and right axis.
+	 * 
+	 * @param leftAxis
+	 * @param rightAxis
+	 */
+	public void setLeftRightAxis(int leftAxis, int rightAxis) {
+		this.leftAxis = leftAxis;
+		this.rightAxis = rightAxis;
+	}
+
+	/**
 	 * Method to get left-most Stick raw value.
 	 * 
 	 * @return leftAxis
 	 */
 	public double getLeftAxis() {
-		return getRawAxis(1);
+		return getRawAxis(leftAxis);
 	}
 
 	/**
@@ -58,7 +70,7 @@ public class JController extends Joystick {
 	 * @return rightAxis
 	 */
 	public double getRightAxis() {
-		return getRawAxis(getAxisCount());
+		return getRawAxis(rightAxis);
 	}
 
 	/**

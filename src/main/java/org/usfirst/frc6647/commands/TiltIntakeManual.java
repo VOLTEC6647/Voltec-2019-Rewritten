@@ -8,7 +8,7 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.robot.OI;
-import org.usfirst.frc6647.subsystems.Intake;
+import org.usfirst.frc6647.subsystems.TiltIntake;
 import org.usfirst.lib6647.util.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -26,7 +26,7 @@ public class TiltIntakeManual extends Command {
 	 * @param direction
 	 */
 	public TiltIntakeManual(Direction direction) {
-		requires(Intake.getInstance());
+		requires(TiltIntake.getInstance());
 
 		this.direction = direction;
 	}
@@ -41,18 +41,20 @@ public class TiltIntakeManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			Intake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get(1).getRawAxis(4) + 1) / 2) * 0.8);
+			TiltIntake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get(1).getRawAxis(4) + 1) * 0.5)
+					* ((OI.getInstance().joysticks.get(1).getRawAxis(4) + 1) * 0.5) * 0.8);
 			break;
 		case DOWN:
-			Intake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get(1).getRawAxis(3) + 1) / 2) * -0.6);
+			TiltIntake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get(1).getRawAxis(3) + 1) * 0.5)
+					* ((OI.getInstance().joysticks.get(1).getRawAxis(3) + 1) * 0.5) * -0.6);
 			break;
 		case NONE:
-			if (OI.getInstance().joysticks.get(1).getRawAxis(4) > 0)
-				Intake.getInstance().setTiltIntake(OI.getInstance().joysticks.get(1).getRawAxis(4) * 0.8);
-			else if (OI.getInstance().joysticks.get(1).getRawAxis(4) < 0)
-				Intake.getInstance().setTiltIntake(OI.getInstance().joysticks.get(1).getRawAxis(4) * 0.6);
+			if (OI.getInstance().joysticks.get(1).getRightAxis() > 0)
+				TiltIntake.getInstance().setTiltIntake(OI.getInstance().joysticks.get(1).getRightAxis() * 0.8);
+			else if (OI.getInstance().joysticks.get(1).getRightAxis() < 0)
+				TiltIntake.getInstance().setTiltIntake(OI.getInstance().joysticks.get(1).getRightAxis() * -0.6);
 			else
-				Intake.getInstance().stopTiltIntake();
+				TiltIntake.getInstance().stopTiltIntake();
 			break;
 		default:
 			end();
@@ -69,7 +71,7 @@ public class TiltIntakeManual extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Intake.getInstance().stopTiltIntake();
+		TiltIntake.getInstance().stopTiltIntake();
 	}
 
 	// Called when another command which requires one or more of the same

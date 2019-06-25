@@ -104,25 +104,6 @@
 						}
 					}
 				}
-			],
-			"ultrasonics": [
-				{
-					"name": "ultrasense",
-					"pingChannel": 0,
-					"echoChannel": 8
-				}
-			],
-			"compressors": [
-				{
-					"name": "compressor",
-					"module": 0
-				}
-			],
-			"PDPs": [
-				{
-					"name": "pdp",
-					"module": 0
-				}
 			]
 		},
 		"chassisH": {
@@ -164,9 +145,9 @@
 		},
 		"navX": {
 			"pid": {
-				"p": 0.009,
-				"i": 0.00003,
-				"d": 0.009,
+				"p": 0.015,
+				"i": 0.0003,
+				"d": 0.007,
 				"inputMin": -180,
 				"inputMax": 180,
 				"outputMin": -0.75,
@@ -208,33 +189,18 @@
 							"timeoutMs": 0
 						}
 					}
-				},
+				}
+			],
+			"compressors": [
 				{
-					"name": "intakeTilt",
-					"port": 12,
-					"inverted": true,
-					"neutralMode": "Brake",
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						}
-					}
+					"name": "compressor",
+					"module": 0
 				}
 			],
 			"solenoids": [
 				{
-					"name": "cylinderH",
+					"name": "pushHatch",
 					"channel": 3,
-					"initialValue": false
-				},
-				{
-					"name": "cylinderHReverse",
-					"channel": 2,
 					"initialValue": false
 				}
 			],
@@ -250,6 +216,26 @@
 				{
 					"name": "lowLimitTilt",
 					"channel": 3
+				}
+			]
+		},
+		"tiltIntake": {
+			"victors": [
+				{
+					"name": "intakeTilt",
+					"port": 12,
+					"inverted": true,
+					"neutralMode": "Brake",
+					"loopRamp": {
+						"closed": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						},
+						"open": {
+							"secondsFromNeutralToFull": 0.2,
+							"timeoutMs": 0
+						}
+					}
 				}
 			]
 		},

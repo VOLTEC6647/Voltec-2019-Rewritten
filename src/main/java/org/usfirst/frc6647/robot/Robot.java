@@ -13,6 +13,7 @@ import org.usfirst.frc6647.commands.MoveLiftPID.Height;
 import org.usfirst.frc6647.commands.MoveLiftPID.Target;
 import org.usfirst.frc6647.commands.ResetEncoders;
 import org.usfirst.frc6647.commands.TiltIntakeManual;
+import org.usfirst.frc6647.commands.ZeroYaw;
 import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.ChassisH;
 import org.usfirst.frc6647.subsystems.Intake;
@@ -75,6 +76,7 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putData("ResetEncoders", new ResetEncoders());
 		SmartDashboard.putData("LowerHatch", new MoveLiftPID(Target.HATCH, Height.FLOOR));
+		SmartDashboard.putData("ZeroYaw", new ZeroYaw());
 	}
 
 	@Override

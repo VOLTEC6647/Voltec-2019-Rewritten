@@ -8,43 +8,26 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Intake;
-import org.usfirst.lib6647.util.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Command for pushing/retracting the H.
  */
-public class ControlH extends Command {
-
-	Direction direction;
-
+public class PushHatch extends Command {
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
 	 */
-	public ControlH(Direction direction) {
+	public PushHatch() {
 		requires(Intake.getInstance());
-		this.direction = direction;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		switch (direction) {
-		case BACKWARD:
-			Intake.getInstance().setH(false);
-			break;
-		case FORWARD:
-			Intake.getInstance().setH(true);
-			break;
-		case TOGGLE:
-			Intake.getInstance().toggleH();
-		default:
-			end();
-			break;
-		}
+		Intake.getInstance().toggleH();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -61,7 +44,7 @@ public class ControlH extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Intake.getInstance().stopH();
+		Intake.getInstance().toggleH();
 	}
 
 	// Called when another command which requires one or more of the same

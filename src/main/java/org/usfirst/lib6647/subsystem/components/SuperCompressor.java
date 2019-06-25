@@ -32,7 +32,7 @@ public interface SuperCompressor {
 					.get(subsystemName)).get("compressors");
 			Arrays.stream(compressorArray.toArray()).map(json -> (JSONObject) json).forEach(json -> {
 				try {
-					Compressor compressor = new Compressor(Integer.parseInt(json.get("port").toString()));
+					Compressor compressor = new Compressor(Integer.parseInt(json.get("module").toString()));
 					compressors.put(json.get("name").toString(), compressor);
 				} catch (Exception e) {
 					DriverStation.reportError("[!] SUBSYSTEM '" + subsystemName.toUpperCase()

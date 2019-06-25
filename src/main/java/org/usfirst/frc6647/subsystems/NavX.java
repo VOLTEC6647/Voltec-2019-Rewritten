@@ -88,6 +88,8 @@ public class NavX extends PIDSuperSubsystem {
 	protected void usePIDOutput(double output) {
 		double speed = (0.35 + (accel * accelMult)) * padLimiter;
 
+		SmartDashboard.putNumber(getName() + "Output", output);
+
 		if (OI.getInstance().oiButton(0, "dPadUp").get())
 			Chassis.getInstance().setBothTalons(-speed + output, -speed - output);
 		else if (OI.getInstance().oiButton(0, "dPadDown").get())

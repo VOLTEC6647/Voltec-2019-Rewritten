@@ -14,10 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.components.SuperCompressor;
-import org.usfirst.lib6647.subsystem.components.SuperPDP;
 import org.usfirst.lib6647.subsystem.components.SuperTalon;
-import org.usfirst.lib6647.subsystem.components.SuperUltrasonic;
 import org.usfirst.lib6647.subsystem.components.SuperVictor;
 
 import edu.wpi.first.wpilibj.Filesystem;
@@ -25,8 +22,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 /**
  * Subsystem for the Chassis.
  */
-public class Chassis extends SuperSubsystem
-		implements SuperTalon, SuperVictor, SuperUltrasonic, SuperCompressor, SuperPDP {
+public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 
 	private double joyTolerance = 0.15, driveLimiter = 0.75;
 
@@ -59,9 +55,6 @@ public class Chassis extends SuperSubsystem
 
 		initTalons(robotMap, getName());
 		initVictors(robotMap, getName());
-		initUltrasonics(robotMap, getName());
-		initCompressors(robotMap, getName());
-		initPDPs(robotMap, getName());
 
 		finishedJSONInit();
 

@@ -3,6 +3,7 @@ package org.usfirst.frc6647.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
+import org.usfirst.lib6647.subsystem.components.SuperCompressor;
 import org.usfirst.lib6647.subsystem.components.SuperDigitalInput;
 import org.usfirst.lib6647.subsystem.components.SuperSolenoid;
 import org.usfirst.lib6647.subsystem.components.SuperVictor;
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj.Servo;
 /**
  * Subsystem for the Intake.
  */
-public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid, SuperDigitalInput {
+public class Intake extends SuperSubsystem implements SuperVictor, SuperCompressor, SuperSolenoid, SuperDigitalInput {
 
 	private Servo camServo;
 
@@ -44,6 +45,7 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid
 		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initVictors(robotMap, getName());
+		initCompressors(robotMap, getName());
 		initSolenoids(robotMap, getName());
 		initDigitalInputs(robotMap, getName());
 
@@ -73,53 +75,19 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid
 	}
 
 	/**
-	 * Set Intake tilt Victor speed.
-	 * 
-	 * @param speedTilt
-	 */
-	public void setTiltIntake(double speedTilt) {
-		victors.get("intakeTilt").set(ControlMode.PercentOutput, speedTilt);
-	}
-
-	/**
-	 * Stop Intake tilt Victor dead in its tracks.
-	 */
-	public void stopTiltIntake() {
-		setTiltIntake(0.0);
-	}
-
-	/**
-	 * Sets value of each H solenoid.
-	 * 
-	 * @param cylinderH
-	 * @param cylinderHReverse
-	 */
-	public void setH(boolean cylinderH, boolean cylinderHReverse) {
-		solenoids.get("cylinderH").set(cylinderH);
-		solenoids.get("cylinderHReverse").set(cylinderHReverse);
-	}
-
-	/**
-	 * Sets value of H solenoids.
+	 * Sets value of pushHatch solenoid.
 	 * 
 	 * @param boolean
 	 */
 	public void setH(boolean value) {
-		setH(value, !value);
+		solenoids.get("pushHatch").set(value);
 	}
 
 	/**
 	 * Toggles H.
 	 */
 	public void toggleH() {
-		setH(!solenoids.get("cylinderH").get());
-	}
-
-	/**
-	 * Sets both H solenoids to false.
-	 */
-	public void stopH() {
-		setH(false, false);
+		setH(!solenoids.get("pushHatch").get());
 	}
 
 	/**
