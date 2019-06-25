@@ -3,7 +3,7 @@ package org.usfirst.lib6647.oi;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
  * Helper class for registering button input.
  */
 public class ButtonHelper {
-	public ArrayList<JController> joysticks;
+	public HashMap<String, JController> joysticks;
 	String fileName;
 
 	/**
@@ -27,7 +27,7 @@ public class ButtonHelper {
 	public ButtonHelper(String fileName) {
 		this.fileName = fileName;
 
-		joysticks = new ArrayList<JController>();
+		joysticks = new HashMap<String, JController>();
 	}
 
 	/**
@@ -38,14 +38,14 @@ public class ButtonHelper {
 	 * @param buttonName
 	 * @return button from the given joystick
 	 */
-	public Button oiButton(int joystick, String buttonName) {
+	public Button oiButton(String joystickName, String buttonName) {
 		try {
 			JSONParser parser = new JSONParser();
 			Reader file = new FileReader(fileName);
 			JSONObject jsonJoystick = (JSONObject) ((JSONObject) parser.parse(file))
-					.get(joysticks.get(joystick).getName());
+					.get(joysticks.get(joystickName).getName());
 
-			Button button = joysticks.get(joystick).buttons.get(jsonJoystick.get(buttonName).toString());
+			Button button = joysticks.get(joystickName).buttons.get(jsonJoystick.get(buttonName).toString());
 
 			jsonJoystick.clear();
 			file.close();
@@ -71,37 +71,37 @@ public class ButtonHelper {
 	/**
 	 * Method for getting a button from a given joystick.
 	 * 
-	 * @param joystick
+	 * @param joystickName
 	 * @param button
 	 * @return button from the given joystick
 	 */
-	public Button oiButton(int joystick, int button) {
-		return joysticks.get(joystick).buttons.get("Button" + button);
+	public Button oiButton(String joystickName, int button) {
+		return joysticks.get(joystickName).buttons.get("Button" + button);
 	}
 
 	/**
 	 * Method for getting an axisButton from a given joystick.
 	 * 
-	 * @param joystick
+	 * @param joystickName
 	 * @param type
 	 * @param axis
 	 * @return axisButton from the given joystick, for the given axis
 	 */
-	public Button oiButton(int joystick, String type, int axis) {
-		return joysticks.get(joystick).buttons.get(type + axis);
+	public Button oiButton(String joystickName, String type, int axis) {
+		return joysticks.get(joystickName).buttons.get(type + axis);
 	}
 
 	/**
 	 * Method for getting an axisButton from a given joystick, at a specific angle.
 	 * 
-	 * @param joystick
+	 * @param joystickName
 	 * @param type
 	 * @param axis
 	 * @param angle
 	 * @return axisButton from the given joystick, for the given axis, for the given
 	 *         angle
 	 */
-	public Button oiButton(int joystick, String type, int axis, int angle) {
-		return joysticks.get(joystick).buttons.get(type + axis + "_" + angle);
+	public Button oiButton(String joystickName, String type, int axis, int angle) {
+		return joysticks.get(joystickName).buttons.get(type + axis + "_" + angle);
 	}
 }

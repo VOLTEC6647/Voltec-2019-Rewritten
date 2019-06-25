@@ -61,165 +61,165 @@ public class OI extends ButtonHelper {
 	public OI() {
 		super(Filesystem.getDeployDirectory() + "/Profiles.json");
 
-		joysticks.add(new JController(0));
+		joysticks.put("Driver1", new JController(0));
 
-		if (!joysticks.get(0).getName().equals(null)) {
+		if (!joysticks.get("Driver1").getName().equals(null)) {
 			DriverStation.reportWarning("[!] Controller 1 found!", false);
 			System.out.println("[!] Controller 1 found!");
 
-			if (joysticks.get(0).getName().equals("Wireless Controller")) {
+			if (joysticks.get("Driver1").getName().equals("Wireless Controller")) {
 
-				oiButton(0, "Square").whenPressed(new ChangeVelocity(0.6, 0.6, true));
-				oiButton(0, "X").whileHeld(new PushHatch());
-				oiButton(0, "Triangle").whenPressed(new ChangeVelocity(0.75, 0.75, false));
+				oiButton("Driver1", "Square").whenPressed(new ChangeVelocity(0.6, 0.6, true));
+				oiButton("Driver1", "X").whileHeld(new PushHatch());
+				oiButton("Driver1", "Triangle").whenPressed(new ChangeVelocity(0.75, 0.75, false));
 
-				oiButton(0, "L1").whileHeld(new MoveBall(Direction.IN, 0.7));
-				oiButton(0, "R1").whileHeld(new MoveBall(Direction.OUT, 0.7));
+				oiButton("Driver1", "L1").whileHeld(new MoveBall(Direction.IN, 0.7));
+				oiButton("Driver1", "R1").whileHeld(new MoveBall(Direction.OUT, 0.7));
 
-				oiButton(0, "L2").whileHeld(new Slide(Direction.LEFT));
-				oiButton(0, "R2").whileHeld(new Slide(Direction.RIGHT));
+				oiButton("Driver1", "L2").whileHeld(new Slide(Direction.LEFT));
+				oiButton("Driver1", "R2").whileHeld(new Slide(Direction.RIGHT));
 
-				oiButton(0, "PS4Btn").whenPressed(new ZeroYaw());
-				oiButton(0, "Touchpad").whileHeld(new GyroAlign());
+				oiButton("Driver1", "PS4Btn").whenPressed(new ZeroYaw());
+				oiButton("Driver1", "Touchpad").whileHeld(new GyroAlign());
 
-				oiButton(0, "dPadUp").whileHeld(new GyroAlign());
-				oiButton(0, "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
-				oiButton(0, "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
-				oiButton(0, "dPadDown").whileHeld(new GyroAlign());
+				oiButton("Driver1", "dPadUp").whileHeld(new GyroAlign());
+				oiButton("Driver1", "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
+				oiButton("Driver1", "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
+				oiButton("Driver1", "dPadDown").whileHeld(new GyroAlign());
 
-			} else if (joysticks.get(0).getName().equals("Controller (Gamepad F310)")) {
+			} else if (joysticks.get("Driver1").getName().equals("Controller (Gamepad F310)")) {
 
-				oiButton(0, "A").whenPressed(new ChangeVelocity(0.6, 0.6, true));
-				oiButton(0, "B").whileHeld(new PushHatch());
-				oiButton(0, "Y").whenPressed(new ChangeVelocity(0.75, 0.75, false));
+				oiButton("Driver1", "A").whenPressed(new ChangeVelocity(0.6, 0.6, true));
+				oiButton("Driver1", "B").whileHeld(new PushHatch());
+				oiButton("Driver1", "Y").whenPressed(new ChangeVelocity(0.75, 0.75, false));
 
-				oiButton(0, "LTrigger").whileHeld(new MoveBall(Direction.IN, 0.7));
-				oiButton(0, "RTrigger").whileHeld(new MoveBall(Direction.OUT, 0.7));
+				oiButton("Driver1", "LTrigger").whileHeld(new MoveBall(Direction.IN, 0.7));
+				oiButton("Driver1", "RTrigger").whileHeld(new MoveBall(Direction.OUT, 0.7));
 
-				oiButton(0, "Back").whileHeld(new Slide(Direction.LEFT));
-				oiButton(0, "Start").whileHeld(new Slide(Direction.RIGHT));
+				oiButton("Driver1", "Back").whileHeld(new Slide(Direction.LEFT));
+				oiButton("Driver1", "Start").whileHeld(new Slide(Direction.RIGHT));
 
-				oiButton(0, "LStickBtn").whenPressed(new ZeroYaw());
-				oiButton(0, "RStickBtn").toggleWhenPressed(new GyroAlign());
+				oiButton("Driver1", "LStickBtn").whenPressed(new ZeroYaw());
+				oiButton("Driver1", "RStickBtn").toggleWhenPressed(new GyroAlign());
 
-				oiButton(0, "dPadUp").whileHeld(new GyroAlign());
-				oiButton(0, "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
-				oiButton(0, "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
-				oiButton(0, "dPadDown").whileHeld(new GyroAlign());
+				oiButton("Driver1", "dPadUp").whileHeld(new GyroAlign());
+				oiButton("Driver1", "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
+				oiButton("Driver1", "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
+				oiButton("Driver1", "dPadDown").whileHeld(new GyroAlign());
 
-			} else if (joysticks.get(0).getName().equals("Generic   USB  Joystick")) {
+			} else if (joysticks.get("Driver1").getName().equals("Generic   USB  Joystick")) {
 
-				oiButton(0, "1").whenPressed(new ChangeVelocity(0.6, 0.6, true));
-				oiButton(0, "2").whileHeld(new PushHatch());
-				oiButton(0, "4").whenPressed(new ChangeVelocity(0.75, 0.75, false));
+				oiButton("Driver1", "1").whenPressed(new ChangeVelocity(0.6, 0.6, true));
+				oiButton("Driver1", "2").whileHeld(new PushHatch());
+				oiButton("Driver1", "4").whenPressed(new ChangeVelocity(0.75, 0.75, false));
 
-				oiButton(0, "LTrigger").whileHeld(new MoveBall(Direction.IN, 0.7));
-				oiButton(0, "RTrigger").whileHeld(new MoveBall(Direction.OUT, 0.7));
+				oiButton("Driver1", "LTrigger").whileHeld(new MoveBall(Direction.IN, 0.7));
+				oiButton("Driver1", "RTrigger").whileHeld(new MoveBall(Direction.OUT, 0.7));
 
-				oiButton(0, "LBumper").whileHeld(new Slide(Direction.LEFT));
-				oiButton(0, "RBumper").whileHeld(new Slide(Direction.RIGHT));
+				oiButton("Driver1", "LBumper").whileHeld(new Slide(Direction.LEFT));
+				oiButton("Driver1", "RBumper").whileHeld(new Slide(Direction.RIGHT));
 
-				oiButton(0, "Select").whenPressed(new ZeroYaw());
-				oiButton(0, "Start").toggleWhenPressed(new GyroAlign());
+				oiButton("Driver1", "Select").whenPressed(new ZeroYaw());
+				oiButton("Driver1", "Start").toggleWhenPressed(new GyroAlign());
 
-				oiButton(0, "dPadUp").whileHeld(new GyroAlign());
-				oiButton(0, "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
-				oiButton(0, "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
-				oiButton(0, "dPadDown").whileHeld(new GyroAlign());
+				oiButton("Driver1", "dPadUp").whileHeld(new GyroAlign());
+				oiButton("Driver1", "dPadLeft").whileHeld(new AlignNext(Direction.LEFT));
+				oiButton("Driver1", "dPadRight").whileHeld(new AlignNext(Direction.RIGHT));
+				oiButton("Driver1", "dPadDown").whileHeld(new GyroAlign());
 
-				joysticks.get(0).setLeftRightAxis(1, 4);
+				joysticks.get("Driver1").setLeftRightAxis(1, 4);
 
-			} else if (joysticks.get(0).getButtonCount() >= 10 && joysticks.get(0).getPOVCount() > 0) {
-				loadUnsupportedController(0, joysticks.get(0).getName());
+			} else if (joysticks.get("Driver1").getButtonCount() >= 10 && joysticks.get("Driver1").getPOVCount() > 0) {
+				loadUnsupportedController("Driver1", joysticks.get("Driver1").getName());
 			} else {
-				fullyUnsupportedController(joysticks.get(0).getName());
+				fullyUnsupportedController(joysticks.get("Driver1").getName());
 			}
 
 			DriverStation.reportWarning(
-					"[!] '" + joysticks.get(0).getName().toUpperCase() + "' loaded as Controller 1!", false);
-			System.out.println("[!] '" + joysticks.get(0).getName().toUpperCase() + "' loaded as Controller 1!");
+					"[!] '" + joysticks.get("Driver1").getName().toUpperCase() + "' loaded as Controller 1!", false);
+			System.out.println("[!] '" + joysticks.get("Driver1").getName().toUpperCase() + "' loaded as Controller 1!");
 		}
 
-		joysticks.add(new JController(1));
+		joysticks.put("Driver2", new JController(1));
 
-		if (!joysticks.get(1).getName().equals(null)) {
+		if (!joysticks.get("Driver2").getName().equals(null)) {
 			DriverStation.reportWarning("[!] Controller 2 found!", false);
 			System.out.println("[!] Controller 2 found!");
 
-			if (joysticks.get(1).getName().equals("Wireless Controller")) {
+			if (joysticks.get("Driver2").getName().equals("Wireless Controller")) {
 
-				oiButton(1, "Square").whileHeld(new MoveLiftPID(Target.CARGO, Height.SHIP));
-				oiButton(1, "X").whileHeld(new MoveLiftPID(Target.CARGO, Height.LOW));
-				oiButton(1, "Circle").whileHeld(new MoveLiftPID(Target.CARGO, Height.FLOOR));
-				oiButton(1, "Triangle").whileHeld(new MoveLiftPID(Target.CARGO, Height.MID));
+				oiButton("Driver2", "Square").whileHeld(new MoveLiftPID(Target.CARGO, Height.SHIP));
+				oiButton("Driver2", "X").whileHeld(new MoveLiftPID(Target.CARGO, Height.LOW));
+				oiButton("Driver2", "Circle").whileHeld(new MoveLiftPID(Target.CARGO, Height.FLOOR));
+				oiButton("Driver2", "Triangle").whileHeld(new MoveLiftPID(Target.CARGO, Height.MID));
 
-				oiButton(1, "L1").whileHeld(new MoveLiftManual(Direction.DOWN));
-				oiButton(1, "R1").whileHeld(new MoveLiftPID(Target.CARGO, Height.HIGH));
+				oiButton("Driver2", "L1").whileHeld(new MoveLiftManual(Direction.DOWN));
+				oiButton("Driver2", "R1").whileHeld(new MoveLiftPID(Target.CARGO, Height.HIGH));
 
-				oiButton(1, "L2").whileHeld(new TiltIntakeManual(Direction.UP));
-				oiButton(1, "R2").whileHeld(new TiltIntakeManual(Direction.DOWN));
+				oiButton("Driver2", "L2").whileHeld(new TiltIntakeManual(Direction.UP));
+				oiButton("Driver2", "R2").whileHeld(new TiltIntakeManual(Direction.DOWN));
 
-				oiButton(1, "PS4Btn").whenPressed(new ResetEncoders());
-				oiButton(1, "Touchpad").whileHeld(new MoveLiftPID(Target.HATCH, Height.FLOOR));
+				oiButton("Driver2", "PS4Btn").whenPressed(new ResetEncoders());
+				oiButton("Driver2", "Touchpad").whileHeld(new MoveLiftPID(Target.HATCH, Height.FLOOR));
 
-				oiButton(1, "dPadUp").whileHeld(new MoveLiftPID(Target.HATCH, Height.LOW));
-				oiButton(1, "dPadLeft").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
-				oiButton(1, "dPadRight").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
-				oiButton(1, "dPadDown").whileHeld(new MoveLiftPID(Target.HATCH, Height.HIGH));
+				oiButton("Driver2", "dPadUp").whileHeld(new MoveLiftPID(Target.HATCH, Height.LOW));
+				oiButton("Driver2", "dPadLeft").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
+				oiButton("Driver2", "dPadRight").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
+				oiButton("Driver2", "dPadDown").whileHeld(new MoveLiftPID(Target.HATCH, Height.HIGH));
 
-			} else if (joysticks.get(1).getName().equals("Controller (Gamepad F310)")) {
+			} else if (joysticks.get("Driver2").getName().equals("Controller (Gamepad F310)")) {
 
-				oiButton(1, "A").whileHeld(new MoveLiftPID(Target.CARGO, Height.SHIP));
-				oiButton(1, "B").whileHeld(new MoveLiftPID(Target.CARGO, Height.LOW));
-				oiButton(1, "X").whileHeld(new MoveLiftPID(Target.CARGO, Height.FLOOR));
-				oiButton(1, "Y").whileHeld(new MoveLiftPID(Target.CARGO, Height.MID));
+				oiButton("Driver2", "A").whileHeld(new MoveLiftPID(Target.CARGO, Height.SHIP));
+				oiButton("Driver2", "B").whileHeld(new MoveLiftPID(Target.CARGO, Height.LOW));
+				oiButton("Driver2", "X").whileHeld(new MoveLiftPID(Target.CARGO, Height.FLOOR));
+				oiButton("Driver2", "Y").whileHeld(new MoveLiftPID(Target.CARGO, Height.MID));
 
-				oiButton(1, "L1").whileHeld(new MoveLiftManual(Direction.DOWN));
-				oiButton(1, "R1").whileHeld(new MoveLiftPID(Target.CARGO, Height.HIGH));
+				oiButton("Driver2", "L1").whileHeld(new MoveLiftManual(Direction.DOWN));
+				oiButton("Driver2", "R1").whileHeld(new MoveLiftPID(Target.CARGO, Height.HIGH));
 
-				oiButton(1, "L2").whileHeld(new TiltIntakeManual(Direction.UP));
-				oiButton(1, "R2").whileHeld(new TiltIntakeManual(Direction.DOWN));
+				oiButton("Driver2", "L2").whileHeld(new TiltIntakeManual(Direction.UP));
+				oiButton("Driver2", "R2").whileHeld(new TiltIntakeManual(Direction.DOWN));
 
-				oiButton(1, "PS4Btn").whenPressed(new ResetEncoders());
-				oiButton(1, "Touchpad").whileHeld(new MoveLiftPID(Target.HATCH, Height.FLOOR));
+				oiButton("Driver2", "PS4Btn").whenPressed(new ResetEncoders());
+				oiButton("Driver2", "Touchpad").whileHeld(new MoveLiftPID(Target.HATCH, Height.FLOOR));
 
-				oiButton(1, "dPadUp").whileHeld(new MoveLiftPID(Target.HATCH, Height.LOW));
-				oiButton(1, "dPadLeft").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
-				oiButton(1, "dPadRight").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
-				oiButton(1, "dPadDown").whileHeld(new MoveLiftPID(Target.HATCH, Height.HIGH));
+				oiButton("Driver2", "dPadUp").whileHeld(new MoveLiftPID(Target.HATCH, Height.LOW));
+				oiButton("Driver2", "dPadLeft").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
+				oiButton("Driver2", "dPadRight").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
+				oiButton("Driver2", "dPadDown").whileHeld(new MoveLiftPID(Target.HATCH, Height.HIGH));
 
-			} else if (joysticks.get(1).getName().equals("Generic   USB  Joystick")) {
+			} else if (joysticks.get("Driver2").getName().equals("Generic   USB  Joystick")) {
 
-				oiButton(1, "1").whileHeld(new MoveLiftPID(Target.CARGO, Height.SHIP));
-				oiButton(1, "2").whileHeld(new MoveLiftPID(Target.CARGO, Height.LOW));
-				oiButton(1, "3").whileHeld(new MoveLiftPID(Target.CARGO, Height.FLOOR));
-				oiButton(1, "4").whileHeld(new MoveLiftPID(Target.CARGO, Height.MID));
+				oiButton("Driver2", "1").whileHeld(new MoveLiftPID(Target.CARGO, Height.SHIP));
+				oiButton("Driver2", "2").whileHeld(new MoveLiftPID(Target.CARGO, Height.LOW));
+				oiButton("Driver2", "3").whileHeld(new MoveLiftPID(Target.CARGO, Height.FLOOR));
+				oiButton("Driver2", "4").whileHeld(new MoveLiftPID(Target.CARGO, Height.MID));
 
-				oiButton(1, "LTrigger").whileHeld(new MoveLiftManual(Direction.DOWN));
-				oiButton(1, "RTrigger").whileHeld(new MoveLiftPID(Target.CARGO, Height.HIGH));
+				oiButton("Driver2", "LTrigger").whileHeld(new MoveLiftManual(Direction.DOWN));
+				oiButton("Driver2", "RTrigger").whileHeld(new MoveLiftPID(Target.CARGO, Height.HIGH));
 
-				oiButton(1, "LBumper").whileHeld(new TiltIntakeManual(Direction.UP));
-				oiButton(1, "RBumper").whileHeld(new TiltIntakeManual(Direction.DOWN));
+				oiButton("Driver2", "LBumper").whileHeld(new TiltIntakeManual(Direction.UP));
+				oiButton("Driver2", "RBumper").whileHeld(new TiltIntakeManual(Direction.DOWN));
 
-				oiButton(1, "Start").whenPressed(new ResetEncoders());
-				oiButton(1, "Select").whileHeld(new MoveLiftPID(Target.HATCH, Height.FLOOR));
+				oiButton("Driver2", "Start").whenPressed(new ResetEncoders());
+				oiButton("Driver2", "Select").whileHeld(new MoveLiftPID(Target.HATCH, Height.FLOOR));
 
-				oiButton(1, "dPadUp").whileHeld(new MoveLiftPID(Target.HATCH, Height.LOW));
-				oiButton(1, "dPadLeft").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
-				oiButton(1, "dPadRight").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
-				oiButton(1, "dPadDown").whileHeld(new MoveLiftPID(Target.HATCH, Height.HIGH));
+				oiButton("Driver2", "dPadUp").whileHeld(new MoveLiftPID(Target.HATCH, Height.LOW));
+				oiButton("Driver2", "dPadLeft").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
+				oiButton("Driver2", "dPadRight").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));
+				oiButton("Driver2", "dPadDown").whileHeld(new MoveLiftPID(Target.HATCH, Height.HIGH));
 
-				joysticks.get(0).setLeftRightAxis(1, 4);
+				joysticks.get("Driver2").setLeftRightAxis(1, 4);
 
-			} else if (joysticks.get(1).getButtonCount() >= 10 && joysticks.get(1).getPOVCount() > 0) {
-				loadUnsupportedController(1, joysticks.get(1).getName());
+			} else if (joysticks.get("Driver2").getButtonCount() >= 10 && joysticks.get("Driver2").getPOVCount() > 0) {
+				loadUnsupportedController("Driver2", joysticks.get("Driver2").getName());
 			} else {
-				fullyUnsupportedController(joysticks.get(1).getName());
+				fullyUnsupportedController(joysticks.get("Driver2").getName());
 			}
 
 			DriverStation.reportWarning(
-					"[!] '" + joysticks.get(0).getName().toUpperCase() + "' loaded as Controller 2!", false);
-			System.out.println("[!] '" + joysticks.get(0).getName().toUpperCase() + "' loaded as Controller 2!");
+					"[!] '" + joysticks.get("Driver2").getName().toUpperCase() + "' loaded as Controller 2!", false);
+			System.out.println("[!] '" + joysticks.get("Driver2").getName().toUpperCase() + "' loaded as Controller 2!");
 		}
 	}
 
@@ -229,30 +229,30 @@ public class OI extends ButtonHelper {
 	 * @param port
 	 * @param name
 	 */
-	private void loadUnsupportedController(int port, String name) {
+	private void loadUnsupportedController(String joystickName, String name) {
 		DriverStation.reportWarning(
 				"[!] Unsupported Controller: '" + name.toUpperCase() + "'. Loading default settings...", false);
 		System.out.println("[!] Unsupported Controller: '" + name.toUpperCase() + "'. Loading default settings...");
 
-		oiButton(port, 1).whenPressed(new ChangeVelocity(0.6, 0.6, true));
-		oiButton(port, 2).whileHeld(new PushHatch());
-		oiButton(port, 4).whenPressed(new ChangeVelocity(0.75, 0.75, false));
+		oiButton(joystickName, 1).whenPressed(new ChangeVelocity(0.6, 0.6, true));
+		oiButton(joystickName, 2).whileHeld(new PushHatch());
+		oiButton(joystickName, 4).whenPressed(new ChangeVelocity(0.75, 0.75, false));
 
-		oiButton(port, 5).whileHeld(new MoveBall(Direction.IN, 0.7));
-		oiButton(port, 6).whileHeld(new MoveBall(Direction.OUT, 0.7));
+		oiButton(joystickName, 5).whileHeld(new MoveBall(Direction.IN, 0.7));
+		oiButton(joystickName, 6).whileHeld(new MoveBall(Direction.OUT, 0.7));
 
-		oiButton(port, 7).whileHeld(new Slide(Direction.LEFT));
-		oiButton(port, 8).whileHeld(new Slide(Direction.RIGHT));
+		oiButton(joystickName, 7).whileHeld(new Slide(Direction.LEFT));
+		oiButton(joystickName, 8).whileHeld(new Slide(Direction.RIGHT));
 
-		oiButton(port, 9).whenPressed(new ZeroYaw());
-		oiButton(port, 10).toggleWhenPressed(new GyroAlign());
+		oiButton(joystickName, 9).whenPressed(new ZeroYaw());
+		oiButton(joystickName, 10).toggleWhenPressed(new GyroAlign());
 
-		oiButton(port, "dPad", 0, 0).whileHeld(new GyroAlign());
-		oiButton(port, "dPad", 0, 270).whileHeld(new AlignNext(Direction.LEFT));
-		oiButton(port, "dPad", 0, 90).whileHeld(new AlignNext(Direction.RIGHT));
-		oiButton(port, "dPad", 0, 180).whileHeld(new GyroAlign());
+		oiButton(joystickName, "dPad", 0, 0).whileHeld(new GyroAlign());
+		oiButton(joystickName, "dPad", 0, 270).whileHeld(new AlignNext(Direction.LEFT));
+		oiButton(joystickName, "dPad", 0, 90).whileHeld(new AlignNext(Direction.RIGHT));
+		oiButton(joystickName, "dPad", 0, 180).whileHeld(new GyroAlign());
 
-		joysticks.get(port).setLeftRightAxis(1, 4);
+		joysticks.get(joystickName).setLeftRightAxis(1, 4);
 	}
 
 	/**

@@ -40,10 +40,10 @@ public class Slide extends Command {
 	protected void execute() {
 		switch (direction) {
 		case LEFT:
-			ChassisH.getInstance().moveHWheel(((OI.getInstance().joysticks.get(0).getRawAxis(3) + 1) / 2) * 0.7);
+			ChassisH.getInstance().moveHWheel(((OI.getInstance().joysticks.get("Driver1").getRawAxis(3) + 1) / 2) * 0.7);
 			break;
 		case RIGHT:
-			ChassisH.getInstance().moveHWheel(((OI.getInstance().joysticks.get(0).getRawAxis(4) + 1) / 2) * -0.7);
+			ChassisH.getInstance().moveHWheel(((OI.getInstance().joysticks.get("Driver1").getRawAxis(4) + 1) / 2) * -0.7);
 			break;
 		default:
 			end();
