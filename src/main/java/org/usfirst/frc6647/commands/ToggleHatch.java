@@ -12,15 +12,15 @@ import org.usfirst.frc6647.subsystems.Intake;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command for pushing/retracting the H.
+ * Command for toggling the H solenoid.
  */
-public class PushHatch extends Command {
+public class ToggleHatch extends Command {
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
 	 */
-	public PushHatch() {
+	public ToggleHatch() {
 		requires(Intake.getInstance());
 	}
 
@@ -38,13 +38,12 @@ public class PushHatch extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Intake.getInstance().toggleH();
 	}
 
 	// Called when another command which requires one or more of the same

@@ -25,22 +25,6 @@
 		"RStickUp": "Stick4_-1",
 		"RStickDown": "Stick4_1"
 	},
-	"Controller (Gamepad F310)": {
-		"A": "Button1",
-		"B": "Button2",
-		"X": "Button3",
-		"Y": "Button4",
-		"LTrigger": "Button5",
-		"RTrigger": "Button6",
-		"Back": "Button7",
-		"Start": "Button8",
-		"LStickBtn": "Button9",
-		"RStickBtn": "Button10",
-		"dPadUp": "dPad0_0",
-		"dPadDown": "dPad0_180",
-		"dPadLeft": "dPad0_270",
-		"dPadRight": "dPad0_90"
-	},
 	"Wireless Controller": {
 		"Square": "Button1",
 		"X": "Button2",
@@ -59,6 +43,10 @@
 		"dPadUp": "dPad0_0",
 		"dPadDown": "dPad0_180",
 		"dPadLeft": "dPad0_270",
-		"dPadRight": "dPad0_90"
+		"dPadRight": "dPad0_90",
+		"LStickUp": "Stick1_-1",
+		"LStickDown": "Stick1_1",
+		"RStickUp": "Stick5_-1",
+		"RStickDown": "Stick5_1"
 	}
 }
