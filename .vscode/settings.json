@@ -13,5 +13,6 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
-  }
+  },
+  "java.home": "C:\\Users\\Public\\frc2019\\jdk"
 }
