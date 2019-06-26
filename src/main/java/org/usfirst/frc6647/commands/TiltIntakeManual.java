@@ -41,12 +41,10 @@ public class TiltIntakeManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			TiltIntake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get("Driver2").getRawAxis(4) + 1) * 0.5)
-					* ((OI.getInstance().joysticks.get("Driver2").getRawAxis(4) + 1) * 0.5) * 0.8);
+			TiltIntake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get("Driver2").getRawAxis(4) + 1) / 2) * 0.4);
 			break;
 		case DOWN:
-			TiltIntake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get("Driver2").getRawAxis(3) + 1) * 0.5)
-					* ((OI.getInstance().joysticks.get("Driver2").getRawAxis(3) + 1) * 0.5) * -0.6);
+			TiltIntake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get("Driver2").getRawAxis(3) + 1) / 2) * -0.5);
 			break;
 		case NONE:
 			if (OI.getInstance().joysticks.get("Driver2").getRightAxis() > 0)
@@ -54,7 +52,7 @@ public class TiltIntakeManual extends Command {
 			else if (OI.getInstance().joysticks.get("Driver2").getRightAxis() < 0)
 				TiltIntake.getInstance().setTiltIntake(OI.getInstance().joysticks.get("Driver2").getRightAxis() * -0.6);
 			else
-				TiltIntake.getInstance().stopTiltIntake();
+				end();
 			break;
 		default:
 			end();

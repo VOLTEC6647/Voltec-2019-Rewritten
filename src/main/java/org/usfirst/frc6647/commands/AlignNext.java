@@ -33,13 +33,9 @@ public class AlignNext extends Command {
 	protected void initialize() {
 		if (!NavX.getInstance().getPIDController().isEnabled())
 			end();
-	}
 
-	// Called repeatedly when this Command is scheduled to run
-	@Override
-	protected void execute() {
 		double yaw = NavX.getInstance().getSetpoint();
-
+		//TODO: Adjust PID values for sharp turns.
 		switch (direction) {
 		case LEFT:
 			if (yaw == -180 || yaw == 180)
@@ -80,6 +76,14 @@ public class AlignNext extends Command {
 		default:
 			end();
 		}
+
+		NavX.getInstance().resetAccel();
+	}
+
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute() {
+		NavX.getInstance().resetAccel();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -91,6 +95,7 @@ public class AlignNext extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		NavX.getInstance().resetAccel();
 	}
 
 	// Called when another command which requires one or more of the same
