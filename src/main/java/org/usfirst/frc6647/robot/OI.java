@@ -106,8 +106,10 @@ public class OI extends ButtonHelper {
 				oiButton("Driver2", "L2").whileHeld(new TiltIntakeManual(Direction.UP));
 				oiButton("Driver2", "R2").whileHeld(new TiltIntakeManual(Direction.DOWN));
 
+				oiButton("Driver2", "RStickBtn").whenPressed(new ToggleHatch());
+
 				oiButton("Driver2", "PS4Btn").whenPressed(new ResetEncoders());
-				oiButton("Driver2", "Touchpad").whileHeld(new MoveLiftPID(Target.HATCH, Height.FLOOR));
+				oiButton("Driver2", "Touchpad").whileHeld(new MoveLiftPID(Target.CARGO, Height.FLOOR));
 
 				oiButton("Driver2", "dPadUp").whileHeld(new MoveLiftPID(Target.HATCH, Height.HIGH));
 				oiButton("Driver2", "dPadLeft").whileHeld(new MoveLiftPID(Target.HATCH, Height.MID));

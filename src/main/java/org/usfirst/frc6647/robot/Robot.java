@@ -7,19 +7,13 @@
 
 package org.usfirst.frc6647.robot;
 
-import org.usfirst.frc6647.commands.MoveLiftManual;
-import org.usfirst.frc6647.commands.MoveLiftPID;
-import org.usfirst.frc6647.commands.MoveLiftPID.Height;
-import org.usfirst.frc6647.commands.MoveLiftPID.Target;
 import org.usfirst.frc6647.commands.ResetEncoders;
-import org.usfirst.frc6647.commands.TiltIntakeManual;
 import org.usfirst.frc6647.commands.ZeroYaw;
 import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.ChassisH;
 import org.usfirst.frc6647.subsystems.Intake;
 import org.usfirst.frc6647.subsystems.Lift;
 import org.usfirst.frc6647.subsystems.NavX;
-import org.usfirst.lib6647.util.Direction;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -55,6 +49,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
+		NavX.getInstance().zeroYaw();
 	}
 
 	@Override
@@ -64,18 +59,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		// Debug commands.
-		SmartDashboard.putData("LiftBallLow", new MoveLiftPID(Target.CARGO, Height.LOW));
-		SmartDashboard.putData("LiftBallShip", new MoveLiftPID(Target.CARGO, Height.SHIP));
-		SmartDashboard.putData("LiftBallFloor", new MoveLiftPID(Target.CARGO, Height.FLOOR));
-		SmartDashboard.putData("LiftBallMid", new MoveLiftPID(Target.CARGO, Height.MID));
-		SmartDashboard.putData("LiftBallHigh", new MoveLiftPID(Target.CARGO, Height.HIGH));
-
-		SmartDashboard.putData("LiftDownManual", new MoveLiftManual(Direction.DOWN));
-		SmartDashboard.putData("TiltIntakeUpManual", new TiltIntakeManual(Direction.UP));
-		SmartDashboard.putData("TiltIntakeDownManual", new TiltIntakeManual(Direction.DOWN));
-
 		SmartDashboard.putData("ResetEncoders", new ResetEncoders());
-		SmartDashboard.putData("LowerHatch", new MoveLiftPID(Target.HATCH, Height.FLOOR));
 		SmartDashboard.putData("ZeroYaw", new ZeroYaw());
 	}
 
