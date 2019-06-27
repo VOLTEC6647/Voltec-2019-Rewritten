@@ -13,7 +13,7 @@ import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
 
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -52,7 +52,7 @@ public class NavX extends PIDSuperSubsystem {
 		super("navX", Filesystem.getDeployDirectory() + "/RobotMap.json");
 		finishedJSONInit();
 
-		ahrs = new AHRS(SPI.Port.kMXP);
+		ahrs = new AHRS(Port.kUSB);
 		ahrs.reset();
 	}
 
@@ -89,13 +89,13 @@ public class NavX extends PIDSuperSubsystem {
 		SmartDashboard.putNumber(getName() + "Output", output);
 
 		if (OI.getInstance().oiButton("Driver1", "dPadUp").get())
-			Chassis.getInstance().setBothTalons(((-0.5 - (accel * accelMult)) * padLimiter) + output,
+			Chassis.getInstance().setLeftRight(((-0.5 - (accel * accelMult)) * padLimiter) + output,
 					((-0.45 - (accel * accelMult)) * padLimiter) - output);
 		else if (OI.getInstance().oiButton("Driver1", "dPadDown").get())
-			Chassis.getInstance().setBothTalons(((0.5 + (accel * accelMult)) * padLimiter) + output,
+			Chassis.getInstance().setLeftRight(((0.5 + (accel * accelMult)) * padLimiter) + output,
 					((0.45 + (accel * accelMult)) * padLimiter) - output);
 		else
-			Chassis.getInstance().setBothTalons(output, -output);
+			Chassis.getInstance().setLeftRight(output, -output);
 	}
 
 	/**

@@ -11,18 +11,21 @@ import java.util.function.Function;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
+import org.usfirst.lib6647.subsystem.components.SuperCompressor;
 import org.usfirst.lib6647.subsystem.components.SuperTalon;
 import org.usfirst.lib6647.subsystem.components.SuperVictor;
 
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Subsystem for the Chassis.
  */
-public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
+public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor, SuperCompressor {
 
 	private double joyTolerance = 0.15, driveLimiter = 0.75;
 
@@ -55,10 +58,11 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 
 		initTalons(robotMap, getName());
 		initVictors(robotMap, getName());
+		initCompressors(robotMap, getName());
 
 		finishedJSONInit();
 
-		victors.get("backLeft").follow(talons.get("frontLeft"));
+		talons.get("backLeft").follow(victors.get("frontLeft"));
 		victors.get("backRight").follow(talons.get("frontRight"));
 	}
 
@@ -78,8 +82,10 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 					.apply(OI.getInstance().joysticks.get("Driver1").getLeftAxis() * driveLimiter),
 					rightStickY = mapDoubleT
 							.apply(OI.getInstance().joysticks.get("Driver1").getRightAxis() * driveLimiter);
-			Chassis.getInstance().setBothTalons(leftStickY, rightStickY);
+			Chassis.getInstance().setLeftRight(leftStickY, rightStickY);
 		}
+
+		SmartDashboard.putNumber("Compressor Current", compressors.get("compressor").getCompressorCurrent());
 	}
 
 	@Override
@@ -91,8 +97,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 * 
 	 * @return frontLeft
 	 */
-	public WPI_TalonSRX getLeftTalon() {
-		return talons.get("frontLeft");
+	public WPI_VictorSPX getLeftVictor() {
+		return victors.get("frontLeft");
 	}
 
 	/**
@@ -109,8 +115,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 * 
 	 * @param speed
 	 */
-	public void setLeftTalon(double speed) {
-		talons.get("frontLeft").set(ControlMode.PercentOutput, speed);
+	public void setLeftVictor(double speed) {
+		victors.get("frontLeft").set(ControlMode.PercentOutput, speed);
 	}
 
 	/**
@@ -128,8 +134,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 * @param leftSpeed
 	 * @param rightSpeed
 	 */
-	public void setBothTalons(double leftSpeed, double rightSpeed) {
-		setLeftTalon(leftSpeed);
+	public void setLeftRight(double leftSpeed, double rightSpeed) {
+		setLeftVictor(leftSpeed);
 		setRightTalon(rightSpeed);
 	}
 
@@ -137,7 +143,7 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 * Stops both Talons dead in their tracks.
 	 */
 	public void stopTalons() {
-		setBothTalons(0, 0);
+		setLeftRight(0, 0);
 	}
 
 	/**

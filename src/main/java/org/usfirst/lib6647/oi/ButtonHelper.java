@@ -9,7 +9,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.buttons.Button;
 
 /**
@@ -53,15 +52,12 @@ public class ButtonHelper {
 
 			return button;
 		} catch (IOException e) {
-			DriverStation.reportError("[!] OIBUTTON " + buttonName + " IO ERROR: " + e.getMessage(), false);
 			System.out.println("[!] OIBUTTON " + buttonName + " IO ERROR: " + e.getMessage());
 			System.exit(1);
 		} catch (ParseException e) {
-			DriverStation.reportError("[!] OIBUTTON " + buttonName + " PARSE ERROR: " + e.getMessage(), false);
 			System.out.println("[!] OIBUTTON " + buttonName + " PARSE ERROR: " + e.getMessage());
 			System.exit(1);
 		} catch (Exception e) {
-			DriverStation.reportError("[!] OIBUTTON " + buttonName + " ERROR: " + e.getMessage(), false);
 			System.out.println("[!] OIBUTTON " + buttonName + " ERROR: " + e.getMessage());
 			System.exit(1);
 		}

@@ -12,7 +12,6 @@ import org.usfirst.frc6647.commands.ZeroYaw;
 import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.ChassisH;
 import org.usfirst.frc6647.subsystems.Intake;
-import org.usfirst.frc6647.subsystems.Lift;
 import org.usfirst.frc6647.subsystems.NavX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -37,9 +36,12 @@ public class Robot extends TimedRobot {
 		ChassisH.createInstance();
 		NavX.createInstance();
 		Intake.createInstance();
-		Lift.createInstance();
+		// Lift.createInstance();
 
 		OI.createInstance();
+
+		NavX.getInstance().zeroYaw();
+		
 	}
 
 	@Override
@@ -49,7 +51,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
-		NavX.getInstance().zeroYaw();
 	}
 
 	@Override

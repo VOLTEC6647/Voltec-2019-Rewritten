@@ -3,10 +3,8 @@ package org.usfirst.frc6647.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.components.SuperCompressor;
-import org.usfirst.lib6647.subsystem.components.SuperDigitalInput;
 import org.usfirst.lib6647.subsystem.components.SuperSolenoid;
-import org.usfirst.lib6647.subsystem.components.SuperVictor;
+import org.usfirst.lib6647.subsystem.components.SuperTalon;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Servo;
@@ -14,7 +12,7 @@ import edu.wpi.first.wpilibj.Servo;
 /**
  * Subsystem for the Intake.
  */
-public class Intake extends SuperSubsystem implements SuperVictor, SuperCompressor, SuperSolenoid, SuperDigitalInput {
+public class Intake extends SuperSubsystem implements SuperTalon, SuperSolenoid {
 
 	private Servo camServo;
 
@@ -44,10 +42,8 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperCompress
 	public Intake() {
 		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
-		initVictors(robotMap, getName());
-		initCompressors(robotMap, getName());
+		initTalons(robotMap, getName());
 		initSolenoids(robotMap, getName());
-		initDigitalInputs(robotMap, getName());
 
 		finishedJSONInit();
 	}
@@ -57,37 +53,39 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperCompress
 	}
 
 	/**
-	 * Sets both Intake Victors to the given speed, in PercentOutput.
+	 * Sets both Intake Talons to the given speed, in PercentOutput.
 	 * 
 	 * @param speedLeft
 	 * @param speedRight
 	 */
 	public void setIntake(double speedLeft, double speedRight) {
-		victors.get("intakeLeft").set(ControlMode.PercentOutput, speedLeft);
-		victors.get("intakeRight").set(ControlMode.PercentOutput, speedRight);
+		talons.get("intakeLeft").set(ControlMode.PercentOutput, speedLeft);
+		talons.get("intakeRight").set(ControlMode.PercentOutput, speedRight);
 	}
 
 	/**
-	 * Stops both Intake Victors dead in their tracks.
+	 * Stops both Intake Talons dead in their tracks.
 	 */
 	public void stopIntake() {
 		setIntake(0.0, 0.0);
 	}
 
 	/**
-	 * Sets value of pushHatch solenoid.
+	 * Sets value of pushHatch solenoids.
 	 * 
 	 * @param boolean
+	 * @param boolean
 	 */
-	public void setH(boolean value) {
-		solenoids.get("pushHatch").set(value);
+	public void setH(boolean value0, boolean value1) {
+		solenoids.get("pushHatch0").set(value0);
+		solenoids.get("pushHatch1").set(value1);
 	}
 
 	/**
 	 * Toggles H.
 	 */
 	public void toggleH() {
-		setH(!solenoids.get("pushHatch").get());
+		setH(!solenoids.get("pushHatch0").get(), !solenoids.get("pushHatch1").get());
 	}
 
 	/**

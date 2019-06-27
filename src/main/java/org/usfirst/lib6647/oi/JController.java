@@ -31,16 +31,15 @@ public class JController extends Joystick {
 		}
 
 		for (int i = 0; i < this.getPOVCount(); i++) {
-			buttons.put("dPad" + i, axisButton(this, AxisType.dPad, i));
+			buttons.put("dPad" + i, buttonFromPOV(this, i));
 			for (int j = 0; j <= 315; j += 45) {
-				buttons.put("dPad" + i + "_" + j, axisButton(this, AxisType.dPad, i, j));
+				buttons.put("dPad" + i + "_" + j, buttonFromPOV(this, i, j));
 			}
 		}
 
 		for (int i = 0; i < this.getAxisCount(); i++) {
-			buttons.put("Stick" + i, axisButton(this, AxisType.Stick, i));
-			buttons.put("Stick" + i + "_1", axisButton(this, AxisType.Stick, 1));
-			buttons.put("Stick" + i + "_-1", axisButton(this, AxisType.Stick, -1));
+			buttons.put("Stick" + i + "_1", buttonFromAxisPositive(this, i));
+			buttons.put("Stick" + i + "_-1", buttonFromAxisNegative(this, i));
 		}
 	}
 
@@ -74,66 +73,67 @@ public class JController extends Joystick {
 	}
 
 	/**
-	 * Enum listing possible axis types.
+	 * Method for getting a pov button at any angle.
+	 * 
+	 * @param controller
+	 * @param pov
+	 * @return axisButton
 	 */
-	private enum AxisType {
-		dPad, Stick
+	private Button buttonFromPOV(GenericHID controller, int pov) {
+		return new Button() {
+			@Override
+			public boolean get() {
+				return controller.getPOV(pov) > -1;
+			}
+		};
 	}
 
 	/**
-	 * Method for creating a button out of Joystick axes.
+	 * Method for getting a pov button at a specific angle.
 	 * 
 	 * @param controller
-	 * @param type
-	 * @param axis
-	 * @return Button from the given axis
-	 */
-	private Button axisButton(GenericHID controller, AxisType type, int axis) {
-		switch (type) {
-		case dPad:
-			return new Button() {
-				@Override
-				public boolean get() {
-					return controller.getPOV(axis) > -1;
-				}
-			};
-		case Stick:
-			return new Button() {
-				@Override
-				public boolean get() {
-					return controller.getRawAxis(axis) != 0;
-				}
-			};
-		}
-		return null;
-	}
-
-	/**
-	 * Method for creating a button out of Joystick axes, at a specific angle.
-	 * 
-	 * @param controller
-	 * @param type
-	 * @param axis
+	 * @param pov
 	 * @param angle
-	 * @return Button from the given axis, at the given angle
+	 * @return povButton
 	 */
-	private Button axisButton(GenericHID controller, AxisType type, int axis, int angle) {
-		switch (type) {
-		case dPad:
-			return new Button() {
-				@Override
-				public boolean get() {
-					return controller.getPOV(axis) == angle;
-				}
-			};
-		case Stick:
-			return new Button() {
-				@Override
-				public boolean get() {
-					return controller.getRawAxis(axis) == angle;
-				}
-			};
-		}
-		return null;
+	private Button buttonFromPOV(GenericHID controller, int pov, int angle) {
+		return new Button() {
+			@Override
+			public boolean get() {
+				return controller.getPOV(pov) == angle;
+			}
+		};
+	}
+
+	/**
+	 * Method for getting a negative input from an axis.
+	 * 
+	 * @param controller
+	 * @param axis
+	 * @return axisButton
+	 */
+	private Button buttonFromAxisNegative(GenericHID controller, int axis) {
+		return new Button() {
+			@Override
+			public boolean get() {
+				return controller.getRawAxis(axis) < -0.15;
+			}
+		};
+	}
+
+	/**
+	 * Method for getting a positive input from an axis.
+	 * 
+	 * @param controller
+	 * @param axis
+	 * @return axisButton
+	 */
+	private Button buttonFromAxisPositive(GenericHID controller, int axis) {
+		return new Button() {
+			@Override
+			public boolean get() {
+				return controller.getRawAxis(axis) > 0.15;
+			}
+		};
 	}
 }

@@ -3,11 +3,11 @@ package org.usfirst.frc6647.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.components.SuperVictor;
+import org.usfirst.lib6647.subsystem.components.SuperTalon;
 
 import edu.wpi.first.wpilibj.Filesystem;
 
-public class TiltIntake extends SuperSubsystem implements SuperVictor {
+public class TiltIntake extends SuperSubsystem implements SuperTalon {
 
 	private static TiltIntake m_instance = null;
 
@@ -35,7 +35,7 @@ public class TiltIntake extends SuperSubsystem implements SuperVictor {
 	public TiltIntake() {
 		super("tiltIntake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
-		initVictors(robotMap, getName());
+		initTalons(robotMap, getName());
 
 		finishedJSONInit();
 	}
@@ -45,16 +45,16 @@ public class TiltIntake extends SuperSubsystem implements SuperVictor {
 	}
 
 	/**
-	 * Set Intake tilt Victor speed.
+	 * Set Intake tilt Talon speed.
 	 * 
 	 * @param speedTilt
 	 */
 	public void setTiltIntake(double speedTilt) {
-		victors.get("intakeTilt").set(ControlMode.PercentOutput, speedTilt);
+		talons.get("intakeTilt").set(ControlMode.PercentOutput, speedTilt);
 	}
 
 	/**
-	 * Stop Intake tilt Victor dead in its tracks.
+	 * Stop Intake tilt Talon dead in its tracks.
 	 */
 	public void stopTiltIntake() {
 		setTiltIntake(0.0);
