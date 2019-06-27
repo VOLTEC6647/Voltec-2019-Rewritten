@@ -65,8 +65,7 @@ public class OI extends ButtonHelper {
 		if (!joysticks.get("Driver1").getName().isEmpty()) {
 			System.out.println("[!] Controller 1 found!");
 
-			if (joysticks.get("Driver1").getName().equals("Wireless Controller")
-					|| joysticks.get("Driver2").getName().equals("Controller (Xbox One For Windows)")) {
+			if (joysticks.get("Driver1").getName().equals("Wireless Controller")) {
 				oiButton("Driver1", "Square").whenPressed(new ChangeVelocity(0.6, 0.6, true));
 				oiButton("Driver1", "Triangle").whenPressed(new ChangeVelocity(0.75, 0.9, false));
 
@@ -111,8 +110,7 @@ public class OI extends ButtonHelper {
 		if (!joysticks.get("Driver2").getName().isEmpty()) {
 			System.out.println("[!] Controller 2 found!");
 
-			if (joysticks.get("Driver2").getName().equals("Wireless Controller")
-					|| joysticks.get("Driver2").getName().equals("Controller (Xbox One For Windows)")) {
+			if (joysticks.get("Driver2").getName().equals("Wireless Controller")) {
 				oiButton("Driver2", "Square").whileHeld(new MoveLiftPID(Target.CARGO, Height.SHIP));
 				oiButton("Driver2", "X").whileHeld(new MoveLiftPID(Target.CARGO, Height.LOW));
 				oiButton("Driver2", "Circle").whileHeld(new MoveLiftPID(Target.CARGO, Height.MID));
