@@ -11,6 +11,7 @@ import org.usfirst.frc6647.robot.OI;
 import org.usfirst.frc6647.subsystems.ChassisH;
 import org.usfirst.lib6647.util.Direction;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -70,6 +71,17 @@ public class Slide extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		switch (direction) {
+		case LEFT:
+			OI.getInstance().joysticks.get("Driver1").setRumble(RumbleType.kLeftRumble, 1);
+			break;
+		case RIGHT:
+			OI.getInstance().joysticks.get("Driver1").setRumble(RumbleType.kRightRumble, 1);
+			break;
+		default:
+			end();
+			break;
+		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -115,6 +127,8 @@ public class Slide extends Command {
 	@Override
 	protected void end() {
 		ChassisH.getInstance().stopHWheel();
+		OI.getInstance().joysticks.get("Driver1").setRumble(RumbleType.kLeftRumble, 0);
+		OI.getInstance().joysticks.get("Driver1").setRumble(RumbleType.kRightRumble, 0);
 	}
 
 	// Called when another command which requires one or more of the same
