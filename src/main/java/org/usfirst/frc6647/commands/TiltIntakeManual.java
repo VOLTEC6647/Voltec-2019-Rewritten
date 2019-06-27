@@ -7,7 +7,6 @@
 
 package org.usfirst.frc6647.commands;
 
-import org.usfirst.frc6647.robot.OI;
 import org.usfirst.frc6647.subsystems.TiltIntake;
 import org.usfirst.lib6647.util.Direction;
 
@@ -41,18 +40,10 @@ public class TiltIntakeManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			TiltIntake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get("Driver2").getRawAxis(4) + 1) / 2) * 0.4);
+			TiltIntake.getInstance().setTiltIntake(0.4);
 			break;
 		case DOWN:
-			TiltIntake.getInstance().setTiltIntake(((OI.getInstance().joysticks.get("Driver2").getRawAxis(3) + 1) / 2) * -0.5);
-			break;
-		case NONE:
-			if (OI.getInstance().joysticks.get("Driver2").getRightAxis() > 0)
-				TiltIntake.getInstance().setTiltIntake(OI.getInstance().joysticks.get("Driver2").getRightAxis() * 0.8);
-			else if (OI.getInstance().joysticks.get("Driver2").getRightAxis() < 0)
-				TiltIntake.getInstance().setTiltIntake(OI.getInstance().joysticks.get("Driver2").getRightAxis() * -0.6);
-			else
-				end();
+			TiltIntake.getInstance().setTiltIntake(-0.4);
 			break;
 		default:
 			end();
