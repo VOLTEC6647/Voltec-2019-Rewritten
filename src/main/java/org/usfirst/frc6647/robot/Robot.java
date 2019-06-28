@@ -11,6 +11,7 @@ import org.usfirst.frc6647.commands.ResetEncoders;
 import org.usfirst.frc6647.commands.ZeroYaw;
 import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.ChassisH;
+import org.usfirst.frc6647.subsystems.Climb;
 import org.usfirst.frc6647.subsystems.Intake;
 import org.usfirst.frc6647.subsystems.Lift;
 import org.usfirst.frc6647.subsystems.NavX;
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
 		NavX.createInstance();
 		Intake.createInstance();
 		Lift.createInstance();
+		Climb.createInstance();
 
 		OI.createInstance();
 	}

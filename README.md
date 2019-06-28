@@ -23,7 +23,7 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 		- [X] Add axis speed functionality for non-PS4 controllers.
 	- [X] Gyro.
 		- [X] Add command to align to closest left or right angle.
-		- [X] Add command to align to next closest left or right angle.
+		- [ ] Add command to align to next closest left or right angle. (Needs PID adjustments).
 	- [X] Elevator.
 		- [X] Merge Lift PID commands into one.
 		- [X] Merge Lift Manual commands into one.
@@ -34,7 +34,9 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 	- [X] TiltIntake.
 		- [X] Merge Tilt commands into one.
 		- [X] Add tilt functionality for non-PS4 controllers.
-	- [ ] Climb.
+	- [X] Climb.
+		- [X] Merge Climb commands into one.
+		- [X] Remove need of arcade thingy.
 	- [ ] Vision (RIP).
 - [X] Generic subsystem object creation and configuration through JSON.
 	- [X] SuperTalon
