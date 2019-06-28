@@ -302,6 +302,30 @@
 					"channel": 2
 				}
 			]
+		},
+		"climb": {
+			"solenoids": [
+				{
+					"name": "frontSolenoidForward",
+					"channel": 6,
+					"initialValue": false
+				},
+				{
+					"name": "frontSolenoidBackward",
+					"channel": 7,
+					"initialValue": false
+				},
+				{
+					"name": "backSolenoidForward",
+					"channel": 5,
+					"initialValue": false
+				},
+				{
+					"name": "backSolenoidBackward",
+					"channel": 4,
+					"initialValue": false
+				}
+			]
 		}
 	}
 }
