@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class JController extends Joystick {
 
 	public HashMap<String, Button> buttons = new HashMap<String, Button>();
+	private int leftAxis = 1, rightAxis = 5;
 
 	/**
 	 * Constructor for the controller.
@@ -30,80 +31,109 @@ public class JController extends Joystick {
 		}
 
 		for (int i = 0; i < this.getPOVCount(); i++) {
-			buttons.put("dPad" + i, axisButton(this, AxisType.dPad, i));
+			buttons.put("dPad" + i, buttonFromPOV(this, i));
 			for (int j = 0; j <= 315; j += 45) {
-				buttons.put("dPad" + i + "_" + j, axisButton(this, AxisType.dPad, i, j));
+				buttons.put("dPad" + i + "_" + j, buttonFromPOV(this, i, j));
 			}
 		}
 
-		for (int i = 0; i <= this.getAxisCount(); i++) {
-			buttons.put("Stick" + i, axisButton(this, AxisType.Stick, i));
-			buttons.put("Stick" + i + "_1", axisButton(this, AxisType.Stick, 1));
-			buttons.put("Stick" + i + "_-1", axisButton(this, AxisType.Stick, -1));
+		for (int i = 0; i < this.getAxisCount(); i++) {
+			buttons.put("Stick" + i + "_1", buttonFromAxisPositive(this, i));
+			buttons.put("Stick" + i + "_-1", buttonFromAxisNegative(this, i));
 		}
 	}
 
 	/**
-	 * Enum listing possible axis types.
+	 * Method to set left and right axis.
+	 * 
+	 * @param leftAxis
+	 * @param rightAxis
 	 */
-	private enum AxisType {
-		dPad, Stick
+	public void setLeftRightAxis(int leftAxis, int rightAxis) {
+		this.leftAxis = leftAxis;
+		this.rightAxis = rightAxis;
 	}
 
 	/**
-	 * Method for creating a button out of Joystick axes.
+	 * Method to get left-most Stick raw value.
 	 * 
-	 * @param controller
-	 * @param type
-	 * @param axis
-	 * @return Button from the given axis
+	 * @return leftAxis
 	 */
-	private Button axisButton(GenericHID controller, AxisType type, int axis) {
-		switch (type) {
-		case dPad:
-			return new Button() {
-				@Override
-				public boolean get() {
-					return controller.getPOV(axis) > -1;
-				}
-			};
-		case Stick:
-			return new Button() {
-				@Override
-				public boolean get() {
-					return controller.getRawAxis(axis) != 0;
-				}
-			};
-		}
-		return null;
+	public double getLeftAxis() {
+		return getRawAxis(leftAxis);
 	}
 
 	/**
-	 * Method for creating a button out of Joystick axes, at a specific angle.
+	 * Method to get right-most Stick raw value.
+	 * 
+	 * @return rightAxis
+	 */
+	public double getRightAxis() {
+		return getRawAxis(rightAxis);
+	}
+
+	/**
+	 * Method for getting a pov button at any angle.
 	 * 
 	 * @param controller
-	 * @param type
-	 * @param axis
+	 * @param pov
+	 * @return axisButton
+	 */
+	private Button buttonFromPOV(GenericHID controller, int pov) {
+		return new Button() {
+			@Override
+			public boolean get() {
+				return controller.getPOV(pov) > -1;
+			}
+		};
+	}
+
+	/**
+	 * Method for getting a pov button at a specific angle.
+	 * 
+	 * @param controller
+	 * @param pov
 	 * @param angle
-	 * @return Button from the given axis, at the given angle
+	 * @return povButton
 	 */
-	private Button axisButton(GenericHID controller, AxisType type, int axis, int angle) {
-		switch (type) {
-		case dPad:
-			return new Button() {
-				@Override
-				public boolean get() {
-					return controller.getPOV(axis) == angle;
-				}
-			};
-		case Stick:
-			return new Button() {
-				@Override
-				public boolean get() {
-					return controller.getRawAxis(axis) == angle;
-				}
-			};
-		}
-		return null;
+	private Button buttonFromPOV(GenericHID controller, int pov, int angle) {
+		return new Button() {
+			@Override
+			public boolean get() {
+				return controller.getPOV(pov) == angle;
+			}
+		};
+	}
+
+	/**
+	 * Method for getting a negative input from an axis.
+	 * 
+	 * @param controller
+	 * @param axis
+	 * @return axisButton
+	 */
+	private Button buttonFromAxisNegative(GenericHID controller, int axis) {
+		return new Button() {
+			@Override
+			public boolean get() {
+				return controller.getRawAxis(axis) < -0.15;
+			}
+		};
+	}
+
+	/**
+	 * Method for getting a positive input from an axis.
+	 * 
+	 * @param controller
+	 * @param axis
+	 * @return axisButton
+	 */
+	private Button buttonFromAxisPositive(GenericHID controller, int axis) {
+		return new Button() {
+			@Override
+			public boolean get() {
+				return controller.getRawAxis(axis) > 0.15;
+			}
+		};
 	}
 }

@@ -10,21 +10,18 @@ package org.usfirst.frc6647.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc6647.robot.OI;
-import org.usfirst.lib6647.util.PID;
+import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Subsystem for the NavX sensor.
  */
-public class NavX extends PIDSubsystem implements PID {
-
-	private double p = 0.0, i = 0.0, d = 0.0;
+public class NavX extends PIDSuperSubsystem {
 	private AHRS ahrs;
-
-	public double acceleration, accelerationMultiplier = 1.0, padLimiter = 0.6;
+	private double accel = 0.0, accelMult = 1.0, padLimiter = 0.6;
 
 	private static NavX m_instance = null;
 
@@ -41,9 +38,8 @@ public class NavX extends PIDSubsystem implements PID {
 	 * @return static NavX instance
 	 */
 	public static NavX getInstance() {
-		if (m_instance == null) {
+		if (m_instance == null)
 			createInstance();
-		}
 		return m_instance;
 	}
 
@@ -53,19 +49,11 @@ public class NavX extends PIDSubsystem implements PID {
 	 * Initializes PID subsystem and resets NavX sensor.
 	 */
 	public NavX() {
-		super("NavX", 0, 0, 0);
-
-		getPIDController().setPID(p, i, d);
-
-		setInputRange(-180, 180);
-		setOutputRange(-0.70, 0.70);
-		setAbsoluteTolerance(0.5);
-		getPIDController().setContinuous(true);
+		super("navX", Filesystem.getDeployDirectory() + "/RobotMap.json");
+		finishedJSONInit();
 
 		ahrs = new AHRS(SPI.Port.kMXP);
 		ahrs.reset();
-
-		outputPIDValues(getName(), p, i, d);
 	}
 
 	/**
@@ -73,8 +61,6 @@ public class NavX extends PIDSubsystem implements PID {
 	 */
 	@Override
 	public void periodic() {
-		updatePIDValues();
-
 		SmartDashboard.putNumber("NavXYaw", ahrs.getYaw());
 		SmartDashboard.putNumber("Goal", getPIDController().getSetpoint());
 	}
@@ -95,16 +81,19 @@ public class NavX extends PIDSubsystem implements PID {
 
 	/**
 	 * Adds or substracts calculated speed to its respective Talon.
+	 * 
+	 * @param PIDoutput
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		int angle = OI.getInstance().joysticks.get(0).getPOV(0);
-		double speed = 0.5 + (acceleration * accelerationMultiplier) * padLimiter;
+		SmartDashboard.putNumber(getName() + "Output", output);
 
-		if (angle == 0)
-			Chassis.getInstance().setBothTalons(-speed + output, -speed - output);
-		else if (angle == 180)
-			Chassis.getInstance().setBothTalons(speed + output, speed - output);
+		if (OI.getInstance().oiButton("Driver1", "dPadUp").get())
+			Chassis.getInstance().setBothTalons(((-0.5 - (accel * accelMult)) * padLimiter) + output,
+					((-0.45 - (accel * accelMult)) * padLimiter) - output);
+		else if (OI.getInstance().oiButton("Driver1", "dPadDown").get())
+			Chassis.getInstance().setBothTalons(((0.5 + (accel * accelMult)) * padLimiter) + output,
+					((0.45 + (accel * accelMult)) * padLimiter) - output);
 		else
 			Chassis.getInstance().setBothTalons(output, -output);
 	}
@@ -119,11 +108,39 @@ public class NavX extends PIDSubsystem implements PID {
 	}
 
 	/**
-	 * Method to update PID values from the SmartDashboard.
+	 * Method to zero the NavX's yaw.
 	 */
-	public void updatePIDValues() {
-		p = SmartDashboard.getNumber(getName() + "P", p);
-		i = SmartDashboard.getNumber(getName() + "I", i);
-		d = SmartDashboard.getNumber(getName() + "D", d);
+	public void zeroYaw() {
+		ahrs.zeroYaw();
+	}
+
+	/**
+	 * Sets padLimiter and acceleration.
+	 * 
+	 * @param padLimiter
+	 * @param accel
+	 */
+	public void setPadLimiter(double padLimiter, boolean accel) {
+		if (accel)
+			accelMult = 1;
+		else
+			accelMult = 0;
+		this.padLimiter = padLimiter;
+	}
+
+	/**
+	 * Increases Gyro acceleration by a specified amount.
+	 * 
+	 * @param accel
+	 */
+	public void increaseAccel(double accel) {
+		this.accel += accel;
+	}
+
+	/**
+	 * Resets Gyro acceleration amount.
+	 */
+	public void resetAccel() {
+		this.accel = 0;
 	}
 }

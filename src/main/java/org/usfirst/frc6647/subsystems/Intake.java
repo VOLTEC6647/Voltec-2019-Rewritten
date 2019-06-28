@@ -2,16 +2,21 @@ package org.usfirst.frc6647.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import org.usfirst.lib6647.subsystem.SuperSolenoid;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.SuperVictor;
+import org.usfirst.lib6647.subsystem.components.SuperCompressor;
+import org.usfirst.lib6647.subsystem.components.SuperDigitalInput;
+import org.usfirst.lib6647.subsystem.components.SuperSolenoid;
+import org.usfirst.lib6647.subsystem.components.SuperVictor;
 
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.Servo;
 
 /**
  * Subsystem for the Intake.
  */
-public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid {
+public class Intake extends SuperSubsystem implements SuperVictor, SuperCompressor, SuperSolenoid, SuperDigitalInput {
+
+	private Servo camServo;
 
 	private static Intake m_instance = null;
 
@@ -28,9 +33,8 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid
 	 * @return static Intake instance
 	 */
 	public static Intake getInstance() {
-		if (m_instance == null) {
+		if (m_instance == null)
 			createInstance();
-		}
 		return m_instance;
 	}
 
@@ -38,9 +42,14 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid
 	 * Constructor for the subsystem.
 	 */
 	public Intake() {
-		super("name", Filesystem.getDeployDirectory() + "/RobotMap.json");
+		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initVictors(robotMap, getName());
+		initCompressors(robotMap, getName());
+		initSolenoids(robotMap, getName());
+		initDigitalInputs(robotMap, getName());
+
+		finishedJSONInit();
 	}
 
 	@Override
@@ -66,38 +75,27 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperSolenoid
 	}
 
 	/**
-	 * Sets value of H solenoids.
-	 * 
-	 * @param value
-	 */
-	public void setH(boolean value) {
-		setH(value, !value);
-	}
-
-	/**
-	 * Sets value of each H solenoid.
-	 * 
-	 * @param cylinderH
-	 * @param cylinderHReverse
-	 */
-	public void setH(boolean cylinderH, boolean cylinderHReverse) {
-		solenoids.get("cylinderH").set(cylinderH);
-		solenoids.get("cylinderHReverse").set(cylinderHReverse);
-	}
-
-	/**
-	 * Sets both H solenoids to false.
-	 */
-	public void stopH() {
-		setH(false, false);
-	}
-
-	/**
 	 * Sets value of pushHatch solenoid.
 	 * 
-	 * @param value
+	 * @param boolean
 	 */
-	public void pushHatch(boolean value) {
+	public void setH(boolean value) {
 		solenoids.get("pushHatch").set(value);
+	}
+
+	/**
+	 * Toggles H.
+	 */
+	public void toggleH() {
+		setH(!solenoids.get("pushHatch").get());
+	}
+
+	/**
+	 * Gets camServo object.
+	 * 
+	 * @return camServo
+	 */
+	public Servo getCamServo() {
+		return camServo;
 	}
 }

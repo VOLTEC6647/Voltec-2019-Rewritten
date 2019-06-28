@@ -1,13 +1,12 @@
 package org.usfirst.lib6647.subsystem;
 
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.Reader;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public abstract class SuperSubsystem extends Subsystem {
 
-	public JSONObject robotMap;
+	protected JSONObject robotMap;
 
 	/**
 	 * Constructor for the class.
@@ -34,13 +33,24 @@ public abstract class SuperSubsystem extends Subsystem {
 	 * 
 	 * @param fileName
 	 */
-	public void initJSON(String fileName) {
-		JSONParser parser = new JSONParser();
-		try (Reader file = new FileReader(fileName)) {
+	private void initJSON(String fileName) {
+		try {
+			JSONParser parser = new JSONParser();
+			Reader file = new FileReader(fileName);
 			robotMap = (JSONObject) parser.parse(file);
-		} catch (IOException | ParseException | NullPointerException e) {
-			System.out.println("[!] ROBOTMAP FILE ERROR: " + e.getMessage());
+			file.close();
+		} catch (Exception e) {
+			DriverStation.reportError(
+					"[!] SUBSYSTEM '" + getName().toUpperCase() + "' JSON INIT ERROR: " + e.getMessage(), false);
+			System.out.println("[!] SUBSYSTEM '" + getName().toUpperCase() + "' JSON INIT ERROR: " + e.getMessage());
 			System.exit(1);
 		}
+	}
+
+	/**
+	 * Method to clear JSONObject.
+	 */
+	public void finishedJSONInit() {
+		robotMap.clear();
 	}
 }

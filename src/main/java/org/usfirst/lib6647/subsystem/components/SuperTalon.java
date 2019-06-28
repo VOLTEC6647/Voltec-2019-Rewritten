@@ -1,4 +1,4 @@
-package org.usfirst.lib6647.subsystem;
+package org.usfirst.lib6647.subsystem.components;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.usfirst.lib6647.util.MotorUtils;
+
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * Interface to allow Talon initialization via JSON file. Subsystem needs to
@@ -52,13 +54,22 @@ public interface SuperTalon extends MotorUtils {
 
 					talons.put(json.get("name").toString(), talon);
 				} catch (Exception e) {
-					System.out.println("[!] TALON '" + json.get("name").toString().toUpperCase() + "' INIT ERROR: "
-							+ e.getMessage());
+					DriverStation.reportError(
+							"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' TALON INIT ERROR: " + e.getMessage(),
+							false);
+					System.out.println(
+							"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' TALON INIT ERROR: " + e.getMessage());
 					System.exit(1);
+				} finally {
+					json.clear();
 				}
 			});
+			talonArray.clear();
 		} catch (Exception e) {
-			System.out.println("[!] TALON INIT ERROR: " + e.getMessage());
+			DriverStation.reportError(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' TALON INIT ERROR: " + e.getMessage(), false);
+			System.out
+					.println("[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' TALON INIT ERROR: " + e.getMessage());
 			System.exit(1);
 		}
 	}

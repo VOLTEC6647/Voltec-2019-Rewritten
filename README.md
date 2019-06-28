@@ -8,35 +8,55 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 
 - [ ] Improve OI class.
 	- [X] Simplify Button initialization and calling.
-	- [ ] Add different functionality for different controllers.
-		- [X] Config file for controls through JSON.
-		- [ ] Add PS4 axis bumper acceleration to other controllers.
+	- [X] Allow config file for controls through JSON.
+	- [ ] Add different functionality for non-PS4 controllers.
 		- [ ] Add Joycon support (now easily done thanks to JSON functionality).
+		- [ ] Add Guitar Hero controller support.
 - [ ] Implement and improve upon other robot subsystems.
-	- [X] General.
-		- [X] Create interface for PID subsystems, for updating and outputting values.
-	- [ ] Chassis.
+	- [X] Chassis.
 		- [X] Improve Talon building functionality.
-		- [ ] Clean up the eyesore that is the mapDoubleT method.
+		- [X] Merge Drive velocity-changing commands into one.
+		- [X] Clean up the eyesore that is the mapDoubleT method.
 	- [X] Midwheel.
 		- [X] Move the midwheel to its own subsystem.
 		- [X] Merge Slide commands into one.
+		- [X] Add axis speed functionality for non-PS4 controllers.
 	- [X] Gyro.
 		- [X] Add command to align to closest left or right angle.
-		- [X] Add command to align to next closest left or right angle.
-	- [ ] Elevator.
-	- [ ] Intake.
-	- [ ] Climb.
-	- [ ] Pneumatics.
+		- [ ] Add command to align to next closest left or right angle. (Needs PID adjustments).
+	- [X] Elevator.
+		- [X] Merge Lift PID commands into one.
+		- [X] Merge Lift Manual commands into one.
+	- [X] Intake.
+		- [X] Merge H control commands into one.
+		- [X] Merge Ball in/out commands into one.
+		- [X] Remove Unused PID functionality.
+	- [X] TiltIntake.
+		- [X] Merge Tilt commands into one.
+		- [X] Add tilt functionality for non-PS4 controllers.
+	- [X] Climb.
+		- [X] Merge Climb commands into one.
+		- [X] Remove need of arcade thingy.
 	- [ ] Vision (RIP).
-- [ ] Generic subsystem object creation through JSON.
+- [X] Generic subsystem object creation and configuration through JSON.
 	- [X] SuperTalon
+		- [X] Allow optional configuration values.
 	- [X] SuperVictor
+		- [X] Allow optional configuration values.
 	- [X] SuperSolenoid
-	- [ ] SuperEncoder
-	- ...
-- [X] Everything commented (keep it that way!).
-- [X] Everything tested.
+	- [X] SuperEncoder
+	- [X] SuperDigitalInput
+	- [X] SuperCompressor (Not really necessary).
+	- [X] SuperPDP (Not really necessary).
+- [X] PIDSuperSubsystem creation and configuration through JSON.
+	- [X] Add float support for PID values.
+	- [X] Add SmartDashboard input and output methods.
+- [ ] Overall code optimization.
+	- [X] Restrict PID update loops to run only when enabled.
+	- [X] Remove any and all instances of memory leaks.
+	- [ ] Do proper Exception handling.
+- [X] Add comments.
+- [ ] Test everything.
 
 ## License
 

@@ -7,24 +7,24 @@
 
 package org.usfirst.frc6647.subsystems;
 
+import java.util.function.Function;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.SuperTalon;
-import org.usfirst.lib6647.subsystem.SuperVictor;
+import org.usfirst.lib6647.subsystem.components.SuperTalon;
+import org.usfirst.lib6647.subsystem.components.SuperVictor;
 
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Subsystem for the Chassis.
  */
 public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 
-	private double TOLERANCE = 0.15, LIMITER = 0.75;
-	private double leftStickY, rightStickY;
+	private double joyTolerance = 0.15, driveLimiter = 0.75;
 
 	private static Chassis m_instance = null;
 
@@ -41,9 +41,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 * @return static Chassis instance
 	 */
 	public static Chassis getInstance() {
-		if (m_instance == null) {
+		if (m_instance == null)
 			createInstance();
-		}
 		return m_instance;
 	}
 
@@ -57,22 +56,30 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 		initTalons(robotMap, getName());
 		initVictors(robotMap, getName());
 
+		finishedJSONInit();
+
 		victors.get("backLeft").follow(talons.get("frontLeft"));
 		victors.get("backRight").follow(talons.get("frontRight"));
-
-		SmartDashboard.putBoolean("Gyro", false);
 	}
+
+	/**
+	 * Lambda for joystick mapping.
+	 */
+	private Function<Double, Double> mapDoubleT = x -> Math.abs(x) < joyTolerance ? 0
+			: x < 0 ? (x + joyTolerance) / (1 - joyTolerance) : (x - joyTolerance) / (1 - joyTolerance);
 
 	/**
 	 * Runs every time Scheduler.getInstance().run() is called.
 	 */
 	@Override
 	public void periodic() {
-		leftStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(0).getRawAxis(1), TOLERANCE, 1, 0, 1);
-		rightStickY = joystickMap.mapDoubleT(OI.getInstance().joysticks.get(0).getRawAxis(5), TOLERANCE, 1, 0, 1);
-
-		if (!SmartDashboard.getBoolean("Gyro", true))
+		if (!NavX.getInstance().getPIDController().isEnabled()) {
+			double leftStickY = mapDoubleT
+					.apply(OI.getInstance().joysticks.get("Driver1").getLeftAxis() * driveLimiter),
+					rightStickY = mapDoubleT
+							.apply(OI.getInstance().joysticks.get("Driver1").getRightAxis() * driveLimiter);
 			Chassis.getInstance().setBothTalons(leftStickY, rightStickY);
+		}
 	}
 
 	@Override
@@ -122,8 +129,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 * @param rightSpeed
 	 */
 	public void setBothTalons(double leftSpeed, double rightSpeed) {
-		setLeftTalon(leftSpeed * LIMITER);
-		setRightTalon(rightSpeed * LIMITER);
+		setLeftTalon(leftSpeed);
+		setRightTalon(rightSpeed);
 	}
 
 	/**
@@ -134,26 +141,11 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	}
 
 	/**
-	 * Functional interface for Joystick mapping.
+	 * Set driveLimiter.
+	 * 
+	 * @param driveLimiter
 	 */
-	private interface MapDoubleT {
-		/**
-		 * Abstract method for Joystick mapping.
-		 * 
-		 * @param rawAxis
-		 * @param in_min
-		 * @param in_max
-		 * @param out_min
-		 * @param out_max
-		 * @return mapDoubleT
-		 */
-		double mapDoubleT(double rawAxis, double in_min, double in_max, double out_min, double out_max);
+	public void setDriveLimiter(double driveLimiter) {
+		this.driveLimiter = driveLimiter;
 	}
-
-	/**
-	 * Lambda declaration for mapping joystick input.
-	 */
-	private MapDoubleT joystickMap = (x, in_min, in_max, out_min, out_max) -> Math.abs(x) < in_min ? 0
-			: x < 0 ? (x + in_min) * (-out_max + out_min) / (-in_max + in_min) - out_min
-					: (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }

@@ -10,7 +10,7 @@ package org.usfirst.frc6647.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.SuperTalon;
+import org.usfirst.lib6647.subsystem.components.SuperTalon;
 
 import edu.wpi.first.wpilibj.Filesystem;
 
@@ -34,9 +34,8 @@ public class ChassisH extends SuperSubsystem implements SuperTalon {
 	 * @return static ChassisH instance
 	 */
 	public static ChassisH getInstance() {
-		if (m_instance == null) {
+		if (m_instance == null)
 			createInstance();
-		}
 		return m_instance;
 	}
 
@@ -47,6 +46,8 @@ public class ChassisH extends SuperSubsystem implements SuperTalon {
 		super("chassisH", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initTalons(robotMap, getName());
+
+		finishedJSONInit();
 	}
 
 	@Override

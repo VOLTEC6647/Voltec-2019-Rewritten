@@ -7,9 +7,10 @@
 
 package org.usfirst.frc6647.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc6647.subsystems.NavX;
 import org.usfirst.lib6647.util.Direction;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Command for changing the Gyro alignment to the next desired angle.
@@ -17,7 +18,6 @@ import org.usfirst.lib6647.util.Direction;
 public class AlignNext extends Command {
 
 	private Direction direction;
-	private double yaw;
 
 	/**
 	 * Constructor for the command.
@@ -34,32 +34,10 @@ public class AlignNext extends Command {
 		if (!NavX.getInstance().getPIDController().isEnabled())
 			end();
 
-		yaw = NavX.getInstance().getPIDController().getSetpoint();
-	}
-
-	// Called repeatedly when this Command is scheduled to run
-	@Override
-	protected void execute() {
+		double yaw = NavX.getInstance().getSetpoint();
+		//TODO: Adjust PID values for sharp turns.
 		switch (direction) {
 		case LEFT:
-			if (yaw == -180 || yaw == 180)
-				NavX.getInstance().setSetpoint(151.25);
-			else if (yaw == -151.25)
-				NavX.getInstance().setSetpoint(-180);
-			else if (yaw == -90)
-				NavX.getInstance().setSetpoint(-151.25);
-			else if (yaw == -28.75)
-				NavX.getInstance().setSetpoint(-90);
-			else if (yaw == 0)
-				NavX.getInstance().setSetpoint(-28.75);
-			else if (yaw == 28.75)
-				NavX.getInstance().setSetpoint(0);
-			else if (yaw == 90)
-				NavX.getInstance().setSetpoint(28.75);
-			else if (yaw == 151.25)
-				NavX.getInstance().setSetpoint(90);
-			break;
-		case RIGHT:
 			if (yaw == -180 || yaw == 180)
 				NavX.getInstance().setSetpoint(-151.25);
 			else if (yaw == -151.25)
@@ -77,9 +55,35 @@ public class AlignNext extends Command {
 			else if (yaw == 151.25)
 				NavX.getInstance().setSetpoint(180);
 			break;
+		case RIGHT:
+			if (yaw == -180 || yaw == 180)
+				NavX.getInstance().setSetpoint(151.25);
+			else if (yaw == 151.25)
+				NavX.getInstance().setSetpoint(90);
+			else if (yaw == 90)
+				NavX.getInstance().setSetpoint(28.75);
+			else if (yaw == 28.75)
+				NavX.getInstance().setSetpoint(0);
+			else if (yaw == 0)
+				NavX.getInstance().setSetpoint(-28.75);
+			else if (yaw == -28.75)
+				NavX.getInstance().setSetpoint(-90);
+			else if (yaw == -90)
+				NavX.getInstance().setSetpoint(-151.25);
+			else if (yaw == -151.25)
+				NavX.getInstance().setSetpoint(180);
+			break;
 		default:
 			end();
 		}
+
+		NavX.getInstance().resetAccel();
+	}
+
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute() {
+		NavX.getInstance().resetAccel();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -91,6 +95,7 @@ public class AlignNext extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		NavX.getInstance().resetAccel();
 	}
 
 	// Called when another command which requires one or more of the same

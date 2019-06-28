@@ -1,4 +1,4 @@
-package org.usfirst.lib6647.subsystem;
+package org.usfirst.lib6647.subsystem.components;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.usfirst.lib6647.util.MotorUtils;
+
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * Interface to allow Victor initialization via JSON file. Subsystem needs to
@@ -46,13 +48,22 @@ public interface SuperVictor extends MotorUtils {
 
 					victors.put(json.get("name").toString(), victor);
 				} catch (Exception e) {
-					System.out.println("[!] VICTOR '" + json.get("name").toString().toUpperCase() + "' INIT ERROR: "
-							+ e.getMessage());
+					DriverStation.reportError(
+							"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' VICTOR INIT ERROR: " + e.getMessage(),
+							false);
+					System.out.println(
+							"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' VICTOR INIT ERROR: " + e.getMessage());
 					System.exit(1);
+				} finally {
+					json.clear();
 				}
 			});
+			victorArray.clear();
 		} catch (Exception e) {
-			System.out.println("[!] VICTOR INIT ERROR: " + e.getMessage());
+			DriverStation.reportError(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' VICTOR INIT ERROR: " + e.getMessage(), false);
+			System.out.println(
+					"[!] SUBSYSTEM '" + subsystemName.toUpperCase() + "' VICTOR INIT ERROR: " + e.getMessage());
 			System.exit(1);
 		}
 	}

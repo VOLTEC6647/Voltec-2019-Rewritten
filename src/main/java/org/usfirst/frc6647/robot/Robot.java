@@ -7,13 +7,18 @@
 
 package org.usfirst.frc6647.robot;
 
+import org.usfirst.frc6647.commands.ResetEncoders;
+import org.usfirst.frc6647.commands.ZeroYaw;
 import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.ChassisH;
-// import org.usfirst.frc6647.subsystems.Intake;
+import org.usfirst.frc6647.subsystems.Climb;
+import org.usfirst.frc6647.subsystems.Intake;
+import org.usfirst.frc6647.subsystems.Lift;
 import org.usfirst.frc6647.subsystems.NavX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,13 +37,21 @@ public class Robot extends TimedRobot {
 		Chassis.createInstance();
 		ChassisH.createInstance();
 		NavX.createInstance();
-		// Intake.createInstance(); Not ready yet.
+		Intake.createInstance();
+		Lift.createInstance();
+		Climb.createInstance();
 
 		OI.createInstance();
 	}
 
 	@Override
+	public void robotPeriodic() {
+		Scheduler.getInstance().run();
+	}
+
+	@Override
 	public void autonomousInit() {
+		NavX.getInstance().zeroYaw();
 	}
 
 	@Override
@@ -47,11 +60,13 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		// Debug commands.
+		SmartDashboard.putData("ResetEncoders", new ResetEncoders());
+		SmartDashboard.putData("ZeroYaw", new ZeroYaw());
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
 	}
 
 	@Override
