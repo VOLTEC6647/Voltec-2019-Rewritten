@@ -74,18 +74,10 @@ public class Intake extends SuperSubsystem implements SuperTalon, SuperSolenoid 
 	 * Sets value of pushHatch solenoids.
 	 * 
 	 * @param boolean
-	 * @param boolean
 	 */
-	public void setH(boolean value0, boolean value1) {
-		solenoids.get("pushHatch0").set(value0);
-		solenoids.get("pushHatch1").set(value1);
-	}
-
-	/**
-	 * Toggles H.
-	 */
-	public void toggleH() {
-		setH(!solenoids.get("pushHatch0").get(), !solenoids.get("pushHatch1").get());
+	public void setH(boolean value) {
+		solenoids.get("pushHatchForward").set(value);
+		solenoids.get("pushHatchBackward").set(!value);
 	}
 
 	/**

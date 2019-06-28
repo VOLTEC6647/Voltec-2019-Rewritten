@@ -74,8 +74,10 @@ public class Slide extends Command {
 		switch (direction) {
 		case LEFT:
 			OI.getInstance().joysticks.get("Driver1").setRumble(RumbleType.kLeftRumble, 1);
+			break;
 		case RIGHT:
 			OI.getInstance().joysticks.get("Driver1").setRumble(RumbleType.kRightRumble, 1);
+			break;
 		default:
 			end();
 		}

@@ -235,12 +235,12 @@
 			],
 			"solenoids": [
 				{
-					"name": "pushHatch0",
+					"name": "pushHatchForward",
 					"channel": 0,
 					"initialValue": false
 				},
 				{
-					"name": "pushHatch1",
+					"name": "pushHatchForward",
 					"channel": 1,
 					"initialValue": false
 				}

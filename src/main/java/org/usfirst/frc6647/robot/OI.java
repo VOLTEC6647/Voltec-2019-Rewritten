@@ -69,7 +69,7 @@ public class OI extends ButtonHelper {
 				oiButton("Driver1", "Square").whenPressed(new ChangeVelocity(0.6, 0.6, true));
 				oiButton("Driver1", "Triangle").whenPressed(new ChangeVelocity(0.75, 0.9, false));
 
-				oiButton("Driver1", "L1").whenPressed(new ToggleHatch());
+				oiButton("Driver1", "L1").toggleWhenPressed(new ToggleHatch());
 				oiButton("Driver1", "R1").whileHeld(new GyroAlign());
 
 				oiButton("Driver1", "L2").whileHeld(new Slide(Direction.LEFT, 3, 4, false, "Driver1", 0.7));
@@ -84,11 +84,11 @@ public class OI extends ButtonHelper {
 				 */
 				oiButton("Driver1", "dPadDown").whileHeld(new GyroMove());
 			} else if (joysticks.get("Driver1").getName().equals("Controller (XBOX 360 For Windows)")
-					|| joysticks.get("Driver2").getName().equals("Controller (Xbox One For Windows)")) {
+					|| joysticks.get("Driver1").getName().equals("Controller (Xbox One For Windows)")) {
 				oiButton("Driver1", "Y").whenPressed(new ChangeVelocity(0.6, 0.6, true));
 				oiButton("Driver1", "X").whenPressed(new ChangeVelocity(0.75, 0.9, false));
 
-				oiButton("Driver1", "LBumper").whenPressed(new ToggleHatch());
+				oiButton("Driver1", "LBumper").toggleWhenPressed(new ToggleHatch());
 				oiButton("Driver1", "RBumper").whileHeld(new GyroAlign());
 
 				oiButton("Driver1", "LTrigger").whileHeld(new Slide(Direction.LEFT, 3, 4, false, "Driver1", 0.7));
