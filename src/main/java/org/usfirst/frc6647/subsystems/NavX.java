@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
@@ -88,14 +89,19 @@ public class NavX extends PIDSuperSubsystem {
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber(getName() + "Output", output);
 
-		if (OI.getInstance().oiButton("Driver1", "dPadUp").get())
-			Chassis.getInstance().setBothTalons(((-0.5 - (accel * accelMult)) * padLimiter) + output,
-					((-0.45 - (accel * accelMult)) * padLimiter) - output);
-		else if (OI.getInstance().oiButton("Driver1", "dPadDown").get())
-			Chassis.getInstance().setBothTalons(((0.5 + (accel * accelMult)) * padLimiter) + output,
-					((0.45 + (accel * accelMult)) * padLimiter) - output);
-		else
-			Chassis.getInstance().setBothTalons(output, -output);
+		HyperTalon frontLeft = Chassis.getInstance().getTalon("frontLeft"),
+				frontRight = Chassis.getInstance().getTalon("frontRight");
+
+		if (OI.getInstance().oiButton("Driver1", "dPadUp").get()) {
+			frontLeft.setTalon(((-0.5 - (accel * accelMult)) * padLimiter) + output, false);
+			frontRight.setTalon(((-0.45 - (accel * accelMult)) * padLimiter) - output, false);
+		} else if (OI.getInstance().oiButton("Driver1", "dPadDown").get()) {
+			frontLeft.setTalon(((0.5 + (accel * accelMult)) * padLimiter) + output, false);
+			frontRight.setTalon(((0.45 + (accel * accelMult)) * padLimiter) - output, false);
+		} else {
+			frontLeft.setTalon(output, false);
+			frontRight.setTalon(-output, false);
+		}
 	}
 
 	/**

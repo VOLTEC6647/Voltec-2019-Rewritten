@@ -37,7 +37,8 @@ public class ChangeVelocity extends Command {
 	@Override
 	protected void initialize() {
 		NavX.getInstance().resetAccel();
-		Chassis.getInstance().setDriveLimiter(driveLimiter);
+		Chassis.getInstance().getTalon("frontLeft").setLimiter(driveLimiter);
+		Chassis.getInstance().getTalon("frontRight").setLimiter(driveLimiter);
 		NavX.getInstance().setPadLimiter(padLimiter, acceleration);
 	}
 

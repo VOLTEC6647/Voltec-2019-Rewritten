@@ -9,13 +9,10 @@ package org.usfirst.frc6647.subsystems;
 
 import java.util.function.Function;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.components.SuperTalon;
-import org.usfirst.lib6647.subsystem.components.SuperVictor;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperTalon;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperVictor;
 
 import edu.wpi.first.wpilibj.Filesystem;
 
@@ -23,8 +20,6 @@ import edu.wpi.first.wpilibj.Filesystem;
  * Subsystem for the Chassis.
  */
 public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
-
-	private double joyTolerance = 0.15, driveLimiter = 0.75;
 
 	private static Chassis m_instance = null;
 
@@ -65,8 +60,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	/**
 	 * Lambda for joystick mapping.
 	 */
-	private Function<Double, Double> mapDoubleT = x -> Math.abs(x) < joyTolerance ? 0
-			: x < 0 ? (x + joyTolerance) / (1 - joyTolerance) : (x - joyTolerance) / (1 - joyTolerance);
+	private Function<Double, Double> mapDoubleT = x -> Math.abs(x) < 0.15 ? 0
+			: x < 0 ? (x + 0.15) / (1 - 0.15) : (x - 0.15) / (1 - 0.15);
 
 	/**
 	 * Runs every time Scheduler.getInstance().run() is called.
@@ -74,78 +69,14 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	@Override
 	public void periodic() {
 		if (!NavX.getInstance().getPIDController().isEnabled()) {
-			double leftStickY = mapDoubleT
-					.apply(OI.getInstance().joysticks.get("Driver1").getLeftAxis() * driveLimiter),
-					rightStickY = mapDoubleT
-							.apply(OI.getInstance().joysticks.get("Driver1").getRightAxis() * driveLimiter);
-			Chassis.getInstance().setBothTalons(leftStickY, rightStickY);
+			double leftStickY = mapDoubleT.apply(OI.getInstance().joysticks.get("Driver1").getLeftAxis()),
+					rightStickY = mapDoubleT.apply(OI.getInstance().joysticks.get("Driver1").getRightAxis());
+			talons.get("frontLeft").setTalon(leftStickY, true);
+			talons.get("frontRight").setTalon(rightStickY, true);
 		}
 	}
 
 	@Override
 	public void initDefaultCommand() {
-	}
-
-	/**
-	 * Gets frontLeft Talon, with backLeft Victor as follower.
-	 * 
-	 * @return frontLeft
-	 */
-	public WPI_TalonSRX getLeftTalon() {
-		return talons.get("frontLeft");
-	}
-
-	/**
-	 * Gets frontRight Talon, with backRight Victor as follower.
-	 * 
-	 * @return frontRight
-	 */
-	public WPI_TalonSRX getRightTalon() {
-		return talons.get("frontRight");
-	}
-
-	/**
-	 * Sets leftTalon to the given speed, in PercentOutput.
-	 * 
-	 * @param speed
-	 */
-	public void setLeftTalon(double speed) {
-		talons.get("frontLeft").set(ControlMode.PercentOutput, speed);
-	}
-
-	/**
-	 * Sets rightTalon to the given speed, in PercentOutput.
-	 * 
-	 * @param speed
-	 */
-	public void setRightTalon(double speed) {
-		talons.get("frontRight").set(ControlMode.PercentOutput, speed);
-	}
-
-	/**
-	 * Sets both Talons to the given speed, in PercentOutput.
-	 * 
-	 * @param leftSpeed
-	 * @param rightSpeed
-	 */
-	public void setBothTalons(double leftSpeed, double rightSpeed) {
-		setLeftTalon(leftSpeed);
-		setRightTalon(rightSpeed);
-	}
-
-	/**
-	 * Stops both Talons dead in their tracks.
-	 */
-	public void stopTalons() {
-		setBothTalons(0, 0);
-	}
-
-	/**
-	 * Set driveLimiter.
-	 * 
-	 * @param driveLimiter
-	 */
-	public void setDriveLimiter(double driveLimiter) {
-		this.driveLimiter = driveLimiter;
 	}
 }

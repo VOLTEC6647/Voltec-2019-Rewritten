@@ -8,15 +8,15 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Climb;
-import org.usfirst.lib6647.util.Direction;
+import org.usfirst.lib6647.util.MoveDirection;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimbHab extends Command {
 
-	Direction direction;
+	MoveDirection direction;
 
-	public ClimbHab(Direction direction) {
+	public ClimbHab(MoveDirection direction) {
 		this.direction = direction;
 	}
 
@@ -25,13 +25,15 @@ public class ClimbHab extends Command {
 	protected void initialize() {
 		switch (direction) {
 		case FRONT:
-			Climb.getInstance().setFront(true);
+			Climb.getInstance().getSolenoid("frontSolenoidForward").set(true);
+			Climb.getInstance().getSolenoid("frontSolenoidBackward").set(false);
 			break;
 		case BACK:
-			Climb.getInstance().setBack(true);
+			Climb.getInstance().getSolenoid("backSolenoidForward").set(true);
+			Climb.getInstance().getSolenoid("backSolenoidBackward").set(false);
 			break;
 		default:
-			end();
+			break;
 		}
 	}
 
@@ -51,10 +53,12 @@ public class ClimbHab extends Command {
 	protected void end() {
 		switch (direction) {
 		case FRONT:
-			Climb.getInstance().setFront(false);
+			Climb.getInstance().getSolenoid("frontSolenoidForward").set(false);
+			Climb.getInstance().getSolenoid("frontSolenoidBackward").set(true);
 			break;
 		case BACK:
-			Climb.getInstance().setBack(false);
+			Climb.getInstance().getSolenoid("backSolenoidForward").set(false);
+			Climb.getInstance().getSolenoid("backSolenoidBackward").set(true);
 			break;
 		default:
 			break;

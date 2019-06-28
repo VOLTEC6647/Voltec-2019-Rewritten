@@ -8,7 +8,7 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.TiltIntake;
-import org.usfirst.lib6647.util.Direction;
+import org.usfirst.lib6647.util.MoveDirection;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,14 +17,14 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TiltIntakeManual extends Command {
 
-	private Direction direction;
+	private MoveDirection direction;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
 	 */
-	public TiltIntakeManual(Direction direction) {
+	public TiltIntakeManual(MoveDirection direction) {
 		requires(TiltIntake.getInstance());
 
 		this.direction = direction;
@@ -40,10 +40,10 @@ public class TiltIntakeManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			TiltIntake.getInstance().setTiltIntake(0.4);
+			TiltIntake.getInstance().getVictor("tiltIntake").setVictor(0.4, false);
 			break;
 		case DOWN:
-			TiltIntake.getInstance().setTiltIntake(-0.4);
+			TiltIntake.getInstance().getVictor("tiltIntake").setVictor(-0.4, false);
 			break;
 		default:
 			end();
@@ -60,7 +60,7 @@ public class TiltIntakeManual extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		TiltIntake.getInstance().stopTiltIntake();
+		TiltIntake.getInstance().getVictor("tiltIntake");
 	}
 
 	// Called when another command which requires one or more of the same

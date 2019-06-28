@@ -87,7 +87,8 @@ public class MoveLiftPID extends Command {
 				Lift.getInstance().setSetpoint(350000);
 				break;
 			case FLOOR:
-				Lift.getInstance().setSetpoint(Lift.getInstance().getEncoderValue() - 20000);
+				Lift.getInstance().setSetpoint(Lift.getInstance().getEncoder("liftEncoder").get() - 20000);
+				break;
 			default:
 				end();
 				break;
@@ -117,7 +118,7 @@ public class MoveLiftPID extends Command {
 	@Override
 	protected void end() {
 		Lift.getInstance().disable();
-		Lift.getInstance().stopLift();
+		Lift.getInstance().getVictor("liftMain").stopVictor();
 	}
 
 	// Called when another command which requires one or more of the same
