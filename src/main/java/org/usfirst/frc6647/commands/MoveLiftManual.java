@@ -45,10 +45,10 @@ public class MoveLiftManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			liftMain.setTalon(0.6, false);
+			liftMain.setTalon(0.6);
 			break;
 		case DOWN:
-			liftMain.setTalon(-0.3, false);
+			liftMain.setTalon(-0.3);
 			break;
 		default:
 			end();

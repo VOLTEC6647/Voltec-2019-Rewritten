@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 /**
  * Subsystem for the Intake.
  */
-public class Intake extends SuperSubsystem implements SuperTalon, SuperSolenoid, SuperCompressor {
+public class Intake extends SuperSubsystem implements SuperCompressor, SuperTalon, SuperSolenoid {
 
 	private static Intake m_instance = null;
 
@@ -38,8 +38,8 @@ public class Intake extends SuperSubsystem implements SuperTalon, SuperSolenoid,
 	public Intake() {
 		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
-		initTalons(robotMap, getName());
 		initCompressors(robotMap, getName());
+		initTalons(robotMap, getName());
 		initSolenoids(robotMap, getName());
 
 		finishedJSONInit();
@@ -49,15 +49,26 @@ public class Intake extends SuperSubsystem implements SuperTalon, SuperSolenoid,
 	protected void initDefaultCommand() {
 	}
 
+	/**
+	 * Set H to a specific value.
+	 * 
+	 * @param value
+	 */
 	public void setH(boolean value) {
 		solenoids.get("pushHatchForward").set(value);
 		solenoids.get("pushHatchBackward").set(!value);
 	}
 
+	/**
+	 * Toggle H.
+	 */
 	public void toggleH() {
 		setH(!solenoids.get("pushHatchForward").get());
 	}
 
+	/**
+	 * Stop H movement.
+	 */
 	public void stopH() {
 		solenoids.get("pushHatchForward").set(false);
 		solenoids.get("pushHatchBackward").set(false);

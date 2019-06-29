@@ -50,12 +50,12 @@ public class MoveBall extends Command {
 	protected void execute() {
 		switch (direction) {
 		case IN:
-			intakeLeft.setTalon(speed, false);
-			intakeRight.setTalon(speed, false);
+			intakeLeft.setTalon(speed);
+			intakeRight.setTalon(speed);
 			break;
 		case OUT:
-			intakeLeft.setTalon(-speed, false);
-			intakeRight.setTalon(-speed, false);
+			intakeLeft.setTalon(-speed);
+			intakeRight.setTalon(-speed);
 			break;
 		default:
 			end();

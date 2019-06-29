@@ -25,11 +25,12 @@ public class TiltIntakeManual extends Command {
 	 * Constructor for the command.
 	 * 
 	 * @param direction
+	 * @param talonName
 	 */
-	public TiltIntakeManual(MoveDirection direction) {
+	public TiltIntakeManual(MoveDirection direction, String talonName) {
 		requires(TiltIntake.getInstance());
 
-		tiltIntake = TiltIntake.getInstance().getTalon("tiltIntake");
+		tiltIntake = TiltIntake.getInstance().getTalon(talonName);
 
 		this.direction = direction;
 	}

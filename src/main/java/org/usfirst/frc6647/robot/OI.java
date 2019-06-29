@@ -67,8 +67,10 @@ public class OI extends ButtonHelper {
 
 			if (joysticks.get("Driver1").getName().equals("Wireless Controller")) {
 
-				oiButton("Driver1", "Square").whenPressed(new ChangeVelocity(0.6, 0.6, true, "frontLeft", "frontRight"));
-				oiButton("Driver1", "Triangle").whenPressed(new ChangeVelocity(0.75, 0.9, false, "frontLeft", "frontRight"));
+				oiButton("Driver1", "Square")
+						.whenPressed(new ChangeVelocity(0.6, 0.6, true, "frontLeft", "frontRight"));
+				oiButton("Driver1", "Triangle")
+						.whenPressed(new ChangeVelocity(0.75, 0.9, false, "frontLeft", "frontRight"));
 
 				oiButton("Driver1", "L1").whenPressed(new ToggleHatch());
 				oiButton("Driver1", "R1").whileHeld(new GyroAlign("Driver1"));
@@ -129,8 +131,8 @@ public class OI extends ButtonHelper {
 				oiButton("Driver2", "L1").whileHeld(new MoveLiftManual(MoveDirection.UP, "liftMain"));
 				oiButton("Driver2", "R1").whileHeld(new MoveLiftManual(MoveDirection.DOWN, "liftMain"));
 
-				oiButton("Driver2", "L2").whileHeld(new TiltIntakeManual(MoveDirection.UP));
-				oiButton("Driver2", "R2").whileHeld(new TiltIntakeManual(MoveDirection.DOWN));
+				oiButton("Driver2", "L2").whileHeld(new TiltIntakeManual(MoveDirection.UP, "tiltIntake"));
+				oiButton("Driver2", "R2").whileHeld(new TiltIntakeManual(MoveDirection.DOWN, "tiltIntake"));
 
 				oiButton("Driver2", "RStickBtn").whenPressed(new ToggleHatch());
 
@@ -167,8 +169,8 @@ public class OI extends ButtonHelper {
 				oiButton("Driver2", "LBumper").whileHeld(new MoveLiftManual(MoveDirection.UP, "liftMain"));
 				oiButton("Driver2", "RBumper").whileHeld(new MoveLiftManual(MoveDirection.DOWN, "liftMain"));
 
-				oiButton("Driver2", "LTrigger").whileHeld(new TiltIntakeManual(MoveDirection.UP));
-				oiButton("Driver2", "RTrigger").whileHeld(new TiltIntakeManual(MoveDirection.DOWN));
+				oiButton("Driver2", "LTrigger").whileHeld(new TiltIntakeManual(MoveDirection.UP, "tiltIntake"));
+				oiButton("Driver2", "RTrigger").whileHeld(new TiltIntakeManual(MoveDirection.DOWN, "tiltIntake"));
 
 				oiButton("Driver2", "RStickBtn").whenPressed(new ToggleHatch());
 

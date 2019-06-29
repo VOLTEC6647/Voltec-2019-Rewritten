@@ -24,8 +24,9 @@ public class Slide extends Command {
 	private MoveDirection direction;
 	private int leftAxisId, rightAxisId;
 	private double leftAxis, rightAxis;
-	private boolean useAxes, startsAtZero;
 	private Joystick joystick;
+	private boolean useAxes, startsAtZero;
+
 	private double speed;
 	private HyperTalon hWheel;
 
@@ -86,6 +87,7 @@ public class Slide extends Command {
 			break;
 		default:
 			end();
+			break;
 		}
 		
 		hWheel = ChassisH.getInstance().getTalon("hWheel");
