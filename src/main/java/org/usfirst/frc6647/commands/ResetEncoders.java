@@ -21,6 +21,7 @@ public class ResetEncoders extends Command {
 
 	/**
 	 * Constructor for the command.
+	 * @param encoderName
 	 */
 	public ResetEncoders(String encoderName) {
 		requires(Lift.getInstance());

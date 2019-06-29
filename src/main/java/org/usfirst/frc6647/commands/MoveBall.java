@@ -27,6 +27,8 @@ public class MoveBall extends Command {
 	 * 
 	 * @param direction
 	 * @param speed
+	 * @param leftName
+	 * @param rightName
 	 */
 	public MoveBall(MoveDirection direction, double speed, String leftName, String rightName) {
 		requires(Intake.getInstance());

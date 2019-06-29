@@ -25,6 +25,7 @@ public class TiltIntakeManual extends Command {
 	 * Constructor for the command.
 	 * 
 	 * @param direction
+	 * @param victorName
 	 */
 	public TiltIntakeManual(MoveDirection direction, String victorName) {
 		requires(TiltIntake.getInstance());
@@ -44,10 +45,10 @@ public class TiltIntakeManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			victor.setVictor(0.4, false);
+			victor.setVictor(0.4);
 			break;
 		case DOWN:
-			victor.setVictor(-0.4, false);
+			victor.setVictor(-0.4);
 			break;
 		default:
 			end();

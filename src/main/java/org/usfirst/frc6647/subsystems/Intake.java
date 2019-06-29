@@ -2,7 +2,6 @@ package org.usfirst.frc6647.subsystems;
 
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperCompressor;
-import org.usfirst.lib6647.subsystem.supercomponents.SuperDigitalInput;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperSolenoid;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperVictor;
 
@@ -11,7 +10,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 /**
  * Subsystem for the Intake.
  */
-public class Intake extends SuperSubsystem implements SuperVictor, SuperCompressor, SuperSolenoid, SuperDigitalInput {
+public class Intake extends SuperSubsystem implements SuperCompressor, SuperVictor, SuperSolenoid {
 	private static Intake m_instance = null;
 
 	/**
@@ -38,10 +37,9 @@ public class Intake extends SuperSubsystem implements SuperVictor, SuperCompress
 	public Intake() {
 		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
-		initVictors(robotMap, getName());
 		initCompressors(robotMap, getName());
+		initVictors(robotMap, getName());
 		initSolenoids(robotMap, getName());
-		initDigitalInputs(robotMap, getName());
 
 		finishedJSONInit();
 	}

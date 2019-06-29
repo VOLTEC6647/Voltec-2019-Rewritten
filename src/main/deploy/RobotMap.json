@@ -207,20 +207,6 @@
 					"channel": 3,
 					"initialValue": false
 				}
-			],
-			"digitalInputs": [
-				{
-					"name": "ballPresent",
-					"channel": 5
-				},
-				{
-					"name": "topLimitTilt",
-					"channel": 4
-				},
-				{
-					"name": "lowLimitTilt",
-					"channel": 3
-				}
 			]
 		},
 		"tiltIntake": {
@@ -294,16 +280,6 @@
 					"channelB": 7,
 					"reverse": false,
 					"encodingType": "k4X"
-				}
-			],
-			"digitalInputs": [
-				{
-					"name": "lowLimitLift",
-					"channel": 1
-				},
-				{
-					"name": "topLimitLift",
-					"channel": 2
 				}
 			]
 		},

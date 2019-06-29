@@ -28,15 +28,17 @@ public class ChangeVelocity extends Command {
 	 * @param driveLimiter
 	 * @param padLimiter
 	 * @param acceleration
+	 * @param leftName
+	 * @param rightName
 	 */
-	public ChangeVelocity(double driveLimiter, double padLimiter, boolean acceleration, String leftTalon,
-			String rightTalon) {
+	public ChangeVelocity(double driveLimiter, double padLimiter, boolean acceleration, String leftName,
+			String rightName) {
 		this.driveLimiter = driveLimiter;
 		this.padLimiter = padLimiter;
 		this.acceleration = acceleration;
 
-		frontLeft = Chassis.getInstance().getTalon(leftTalon);
-		frontRight = Chassis.getInstance().getTalon(rightTalon);
+		frontLeft = Chassis.getInstance().getTalon(leftName);
+		frontRight = Chassis.getInstance().getTalon(rightName);
 	}
 
 	// Called just before this Command runs the first time

@@ -18,12 +18,14 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GyroAlign extends Command {
 
-	public JController joystick;
+	private JController joystick;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * Aligns the robot to the closest desired angle.
+	 * 
+	 * @param joystickName
 	 */
 	public GyroAlign(String joystickName) {
 		joystick = OI.getInstance().joysticks.get(joystickName);

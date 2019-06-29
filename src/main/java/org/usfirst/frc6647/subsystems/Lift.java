@@ -1,7 +1,6 @@
 package org.usfirst.frc6647.subsystems;
 
 import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
-import org.usfirst.lib6647.subsystem.supercomponents.SuperDigitalInput;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperEncoder;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperVictor;
 
@@ -11,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Subsystem for the Lift.
  */
-public class Lift extends PIDSuperSubsystem implements SuperVictor, SuperEncoder, SuperDigitalInput {
+public class Lift extends PIDSuperSubsystem implements SuperEncoder, SuperVictor  {
 
 	private static Lift m_instance = null;
 
@@ -39,9 +38,8 @@ public class Lift extends PIDSuperSubsystem implements SuperVictor, SuperEncoder
 	public Lift() {
 		super("lift", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
-		initVictors(robotMap, getName());
 		initEncoders(robotMap, getName());
-		initDigitalInputs(robotMap, getName());
+		initVictors(robotMap, getName());
 
 		finishedJSONInit();
 

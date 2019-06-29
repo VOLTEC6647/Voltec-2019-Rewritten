@@ -7,7 +7,6 @@
 
 package org.usfirst.frc6647.robot;
 
-import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.ChangeVelocity;
 import org.usfirst.frc6647.commands.GyroAlign;
 import org.usfirst.frc6647.commands.GyroMove;
@@ -25,7 +24,6 @@ import org.usfirst.lib6647.oi.ButtonHelper;
 import org.usfirst.lib6647.oi.JController;
 import org.usfirst.lib6647.util.MoveDirection;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 
 /**
@@ -65,7 +63,6 @@ public class OI extends ButtonHelper {
 		joysticks.put("Driver1", new JController(0));
 
 		if (!joysticks.get("Driver1").getName().isEmpty()) {
-			DriverStation.reportWarning("[!] Controller 1 found!", false);
 			System.out.println("[!] Controller 1 found!");
 
 			if (joysticks.get("Driver1").getName().equals("Wireless Controller")) {
@@ -84,8 +81,11 @@ public class OI extends ButtonHelper {
 				oiButton("Driver1", "PS4Btn").whenPressed(new ZeroYaw());
 
 				oiButton("Driver1", "dPadUp").whileHeld(new GyroMove());
-				oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(MoveDirection.LEFT));
-				oiButton("Driver1", "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
+				/*
+				 * oiButton("Driver1", "dPadLeft").whenPressed(new
+				 * AlignNext(MoveDirection.LEFT)); oiButton("Driver1",
+				 * "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
+				 */
 				oiButton("Driver1", "dPadDown").whileHeld(new GyroMove());
 
 			} else if (joysticks.get("Driver1").getName().equals("Controller (XBOX 360 For Windows)")
@@ -114,7 +114,6 @@ public class OI extends ButtonHelper {
 		joysticks.put("Driver2", new JController(1));
 
 		if (!joysticks.get("Driver2").getName().isEmpty()) {
-			DriverStation.reportWarning("[!] Controller 2 found!", false);
 			System.out.println("[!] Controller 2 found!");
 
 			if (joysticks.get("Driver2").getName().equals("Wireless Controller")) {
@@ -166,10 +165,8 @@ public class OI extends ButtonHelper {
 				oiButton("Driver2", "Y")
 						.whileHeld(new MoveLiftPID(Target.CARGO, Height.HIGH, "liftMain", "liftEncoder"));
 
-				oiButton("Driver2", "LBumper")
-						.whileHeld(new MoveLiftManual(MoveDirection.UP, "liftMain"));
-				oiButton("Driver2", "RBumper")
-						.whileHeld(new MoveLiftManual(MoveDirection.DOWN, "liftMain"));
+				oiButton("Driver2", "LBumper").whileHeld(new MoveLiftManual(MoveDirection.UP, "liftMain"));
+				oiButton("Driver2", "RBumper").whileHeld(new MoveLiftManual(MoveDirection.DOWN, "liftMain"));
 
 				oiButton("Driver2", "LTrigger").whileHeld(new TiltIntakeManual(MoveDirection.UP, "tiltIntake"));
 				oiButton("Driver2", "RTrigger").whileHeld(new TiltIntakeManual(MoveDirection.DOWN, "tiltIntake"));
