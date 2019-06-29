@@ -8,6 +8,7 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Intake;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperVictor;
 import org.usfirst.lib6647.util.MoveDirection;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -19,6 +20,7 @@ public class MoveBall extends Command {
 
 	private double speed;
 	private MoveDirection direction;
+	private HyperVictor intakeLeft, intakeRight;
 
 	/**
 	 * Constructor for the command.
@@ -26,11 +28,14 @@ public class MoveBall extends Command {
 	 * @param direction
 	 * @param speed
 	 */
-	public MoveBall(MoveDirection direction, double speed) {
+	public MoveBall(MoveDirection direction, double speed, String leftTalon, String rightTalon) {
 		requires(Intake.getInstance());
 
 		this.direction = direction;
 		this.speed = speed;
+
+		intakeLeft = Intake.getInstance().getVictor(leftTalon);
+		intakeRight = Intake.getInstance().getVictor(rightTalon);
 	}
 
 	// Called just before this Command runs the first time
@@ -43,12 +48,12 @@ public class MoveBall extends Command {
 	protected void execute() {
 		switch (direction) {
 		case IN:
-			Intake.getInstance().getVictor("intakeLeft").setVictor(speed, false);
-			Intake.getInstance().getVictor("intakeRight").setVictor(speed, false);
+			intakeLeft.setVictor(speed);
+			intakeRight.setVictor(speed);
 			break;
 		case OUT:
-			Intake.getInstance().getVictor("intakeLeft").setVictor(-speed, false);
-			Intake.getInstance().getVictor("intakeRight").setVictor(-speed, false);
+			intakeLeft.setVictor(-speed);
+			intakeRight.setVictor(-speed);
 			break;
 		default:
 			end();
@@ -65,8 +70,8 @@ public class MoveBall extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Intake.getInstance().getVictor("intakeLeft").stopVictor();
-		Intake.getInstance().getVictor("intakeRight").stopVictor();
+		intakeLeft.stopVictor();
+		intakeRight.stopVictor();
 	}
 
 	// Called when another command which requires one or more of the same

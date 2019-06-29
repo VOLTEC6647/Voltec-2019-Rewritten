@@ -9,6 +9,7 @@ package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.NavX;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,8 +18,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ChangeVelocity extends Command {
 
-	double driveLimiter, padLimiter;
-	boolean acceleration;
+	private HyperTalon frontLeft, frontRight;
+	private double driveLimiter, padLimiter;
+	private boolean acceleration;
 
 	/**
 	 * Constructor for the command.
@@ -27,18 +29,24 @@ public class ChangeVelocity extends Command {
 	 * @param padLimiter
 	 * @param acceleration
 	 */
-	public ChangeVelocity(double driveLimiter, double padLimiter, boolean acceleration) {
+	public ChangeVelocity(double driveLimiter, double padLimiter, boolean acceleration, String leftTalon,
+			String rightTalon) {
 		this.driveLimiter = driveLimiter;
 		this.padLimiter = padLimiter;
 		this.acceleration = acceleration;
+
+		frontLeft = Chassis.getInstance().getTalon(leftTalon);
+		frontRight = Chassis.getInstance().getTalon(rightTalon);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		NavX.getInstance().resetAccel();
-		Chassis.getInstance().getTalon("frontLeft").setLimiter(driveLimiter);
-		Chassis.getInstance().getTalon("frontRight").setLimiter(driveLimiter);
+
+		frontLeft.setLimiter(driveLimiter);
+		frontRight.setLimiter(driveLimiter);
+		
 		NavX.getInstance().setPadLimiter(padLimiter, acceleration);
 	}
 

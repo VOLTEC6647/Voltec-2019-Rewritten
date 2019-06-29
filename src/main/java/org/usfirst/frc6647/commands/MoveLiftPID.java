@@ -8,13 +8,18 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Lift;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperVictor;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Command for moving Lift with PID.
  */
 public class MoveLiftPID extends Command {
+
+	private Encoder liftEncoder;
+	private HyperVictor liftMain;
 
 	/**
 	 * Enum listing possible PID targets.
@@ -38,12 +43,17 @@ public class MoveLiftPID extends Command {
 	 * 
 	 * @param target
 	 * @param height
+	 * @param victorName
+	 * @param encoderName
 	 */
-	public MoveLiftPID(Target target, Height height) {
+	public MoveLiftPID(Target target, Height height, String victorName, String encoderName) {
 		requires(Lift.getInstance());
 
 		this.target = target;
 		this.height = height;
+
+		liftMain = Lift.getInstance().getVictor(victorName);
+		liftEncoder = Lift.getInstance().getEncoder(encoderName);
 	}
 
 	// Called just before this Command runs the first time
@@ -87,7 +97,7 @@ public class MoveLiftPID extends Command {
 				Lift.getInstance().setSetpoint(350000);
 				break;
 			case FLOOR:
-				Lift.getInstance().setSetpoint(Lift.getInstance().getEncoder("liftEncoder").get() - 20000);
+				Lift.getInstance().setSetpoint(liftEncoder.get() - 20000);
 				break;
 			default:
 				end();
@@ -118,7 +128,7 @@ public class MoveLiftPID extends Command {
 	@Override
 	protected void end() {
 		Lift.getInstance().disable();
-		Lift.getInstance().getVictor("liftMain").stopVictor();
+		liftMain.stopVictor();
 	}
 
 	// Called when another command which requires one or more of the same

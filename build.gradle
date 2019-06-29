@@ -62,7 +62,7 @@ dependencies {
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     
     // lib6647
-    implementation 'com.github.pacoito123:lib6647:f995f113e0'
+    implementation 'com.github.pacoito123:lib6647:0771e57540'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

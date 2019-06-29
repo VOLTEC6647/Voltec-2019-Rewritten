@@ -9,25 +9,31 @@ package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Intake;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Command for toggling the H solenoid.
  */
 public class ToggleHatch extends Command {
+
+	private Solenoid pushHatch;
+
 	/**
 	 * Constructor for the command.
 	 * 
-	 * @param direction
+	 * @param solenoidName
 	 */
-	public ToggleHatch() {
+	public ToggleHatch(String solenoidName) {
 		requires(Intake.getInstance());
+
+		pushHatch = Intake.getInstance().getSolenoid(solenoidName);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Intake.getInstance().getSolenoid("pushHatch").set(!Intake.getInstance().getSolenoid("pushHatch").get());
+		pushHatch.set(!pushHatch.get());
 	}
 
 	// Called repeatedly when this Command is scheduled to run

@@ -10,14 +10,23 @@ package org.usfirst.frc6647.commands;
 import org.usfirst.frc6647.subsystems.Climb;
 import org.usfirst.lib6647.util.MoveDirection;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimbHab extends Command {
 
 	MoveDirection direction;
+	private Solenoid frontSolenoidForward, frontSolenoidBackward, backSolenoidForward, backSolenoidBackward;
 
-	public ClimbHab(MoveDirection direction) {
+	public ClimbHab(MoveDirection direction, String frontSolenoidForward, String frontSolenoidBackward,
+			String backSolenoidForward, String backSolenoidBackward) {
 		this.direction = direction;
+
+		this.frontSolenoidForward = Climb.getInstance().getSolenoid(frontSolenoidForward);
+		this.frontSolenoidBackward = Climb.getInstance().getSolenoid(frontSolenoidBackward);
+		
+		this.backSolenoidForward = Climb.getInstance().getSolenoid(backSolenoidForward);
+		this.backSolenoidBackward = Climb.getInstance().getSolenoid(backSolenoidBackward);
 	}
 
 	// Called just before this Command runs the first time
@@ -25,12 +34,12 @@ public class ClimbHab extends Command {
 	protected void initialize() {
 		switch (direction) {
 		case FRONT:
-			Climb.getInstance().getSolenoid("frontSolenoidForward").set(true);
-			Climb.getInstance().getSolenoid("frontSolenoidBackward").set(false);
+			frontSolenoidForward.set(true);
+			frontSolenoidBackward.set(false);
 			break;
 		case BACK:
-			Climb.getInstance().getSolenoid("backSolenoidForward").set(true);
-			Climb.getInstance().getSolenoid("backSolenoidBackward").set(false);
+			backSolenoidForward.set(true);
+			backSolenoidBackward.set(false);
 			break;
 		default:
 			break;
@@ -53,12 +62,12 @@ public class ClimbHab extends Command {
 	protected void end() {
 		switch (direction) {
 		case FRONT:
-			Climb.getInstance().getSolenoid("frontSolenoidForward").set(false);
-			Climb.getInstance().getSolenoid("frontSolenoidBackward").set(true);
+			frontSolenoidForward.set(false);
+			frontSolenoidBackward.set(true);
 			break;
 		case BACK:
-			Climb.getInstance().getSolenoid("backSolenoidForward").set(false);
-			Climb.getInstance().getSolenoid("backSolenoidBackward").set(true);
+			backSolenoidForward.set(false);
+			backSolenoidBackward.set(true);
 			break;
 		default:
 			break;

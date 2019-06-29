@@ -9,6 +9,7 @@ package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.frc6647.subsystems.NavX;
+import org.usfirst.lib6647.oi.JController;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,12 +18,15 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GyroAlign extends Command {
 
+	public JController joystick;
+
 	/**
 	 * Constructor for the command.
 	 * 
 	 * Aligns the robot to the closest desired angle.
 	 */
-	public GyroAlign() {
+	public GyroAlign(String joystickName) {
+		joystick = OI.getInstance().joysticks.get(joystickName);
 	}
 
 	// Called just before this Command runs the first time
@@ -58,8 +62,7 @@ public class GyroAlign extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Math.abs(OI.getInstance().joysticks.get("Driver1").getLeftAxis()) > 0.1
-				&& Math.abs(OI.getInstance().joysticks.get("Driver1").getRightAxis()) > 0.1)
+		if (Math.abs(joystick.getLeftAxis()) > 0.1 && Math.abs(joystick.getRightAxis()) > 0.1)
 			end();
 	}
 
