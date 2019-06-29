@@ -5,6 +5,7 @@
 				{
 					"name": "backLeft",
 					"port": 4,
+					"limiter": 0.75,
 					"neutralMode": "Coast",
 					"inverted": true,
 					"loopRamp": {
@@ -39,6 +40,7 @@
 				{
 					"name": "frontRight",
 					"port": 9,
+					"limiter": 0.75,
 					"neutralMode": "Coast",
 					"inverted": false,
 					"loopRamp": {

@@ -12,8 +12,8 @@ import org.usfirst.frc6647.subsystems.ChassisH;
 import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
 import org.usfirst.lib6647.util.MoveDirection;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -55,7 +55,7 @@ public class Slide extends Command {
 	 * @param direction
 	 * @param leftAxis
 	 * @param rightAxis
-	 * @param startsAt
+	 * @param startsAtZero
 	 * @param joystickName
 	 * @param speed
 	 */
@@ -77,7 +77,6 @@ public class Slide extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		hWheel = ChassisH.getInstance().getTalon("hWheel");
 		switch (direction) {
 		case LEFT:
 			joystick.setRumble(RumbleType.kLeftRumble, 1);
@@ -88,6 +87,8 @@ public class Slide extends Command {
 		default:
 			end();
 		}
+		
+		hWheel = ChassisH.getInstance().getTalon("hWheel");
 
 		if (useAxes) {
 			leftAxis = joystick.getRawAxis(leftAxisId);

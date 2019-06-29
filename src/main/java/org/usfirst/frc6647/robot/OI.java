@@ -67,11 +67,11 @@ public class OI extends ButtonHelper {
 
 			if (joysticks.get("Driver1").getName().equals("Wireless Controller")) {
 
-				oiButton("Driver1", "Square").whenPressed(new ChangeVelocity(0.6, 0.6, true));
-				oiButton("Driver1", "Triangle").whenPressed(new ChangeVelocity(0.75, 0.9, false));
+				oiButton("Driver1", "Square").whenPressed(new ChangeVelocity(0.6, 0.6, true, "frontLeft", "frontRight"));
+				oiButton("Driver1", "Triangle").whenPressed(new ChangeVelocity(0.75, 0.9, false, "frontLeft", "frontRight"));
 
 				oiButton("Driver1", "L1").whenPressed(new ToggleHatch());
-				oiButton("Driver1", "R1").whileHeld(new GyroAlign());
+				oiButton("Driver1", "R1").whileHeld(new GyroAlign("Driver1"));
 
 				oiButton("Driver1", "L2").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, false, "Driver1", 0.7));
 				oiButton("Driver1", "R2").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, false, "Driver1", 0.7));
@@ -89,11 +89,11 @@ public class OI extends ButtonHelper {
 			} else if (joysticks.get("Driver1").getName().equals("Controller (XBOX 360 For Windows)")
 					|| joysticks.get("Driver1").getName().equals("Controller (Xbox One For Windows)")) {
 
-				oiButton("Driver1", "Y").whenPressed(new ChangeVelocity(0.6, 0.6, true));
-				oiButton("Driver1", "X").whenPressed(new ChangeVelocity(0.75, 0.9, false));
+				oiButton("Driver1", "Y").whenPressed(new ChangeVelocity(0.6, 0.6, true, "frontLeft", "frontRight"));
+				oiButton("Driver1", "X").whenPressed(new ChangeVelocity(0.75, 0.9, false, "frontLeft", "frontRight"));
 
 				oiButton("Driver1", "LBumper").whenPressed(new ToggleHatch());
-				oiButton("Driver1", "RBumper").whileHeld(new GyroAlign());
+				oiButton("Driver1", "RBumper").whileHeld(new GyroAlign("Driver1"));
 
 				oiButton("Driver1", "LTrigger").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, false, "Driver1", 0.7));
 				oiButton("Driver1", "RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, false, "Driver1", 0.7));
@@ -134,7 +134,7 @@ public class OI extends ButtonHelper {
 
 				oiButton("Driver2", "RStickBtn").whenPressed(new ToggleHatch());
 
-				oiButton("Driver2", "PS4Btn").whenPressed(new ResetEncoders());
+				oiButton("Driver2", "PS4Btn").whenPressed(new ResetEncoders("liftEncoder"));
 				oiButton("Driver2", "Touchpad")
 						.whileHeld(new MoveLiftPID(Target.CARGO, Height.FLOOR, "liftMain", "liftEncoder"));
 
@@ -172,7 +172,7 @@ public class OI extends ButtonHelper {
 
 				oiButton("Driver2", "RStickBtn").whenPressed(new ToggleHatch());
 
-				oiButton("Driver2", "Back").whenPressed(new ResetEncoders());
+				oiButton("Driver2", "Back").whenPressed(new ResetEncoders("liftEncoder"));
 				oiButton("Driver2", "Start")
 						.whileHeld(new MoveLiftPID(Target.CARGO, Height.FLOOR, "liftMain", "liftEncoder"));
 

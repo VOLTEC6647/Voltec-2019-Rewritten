@@ -25,6 +25,7 @@ public class MoveLiftManual extends Command {
 	 * Constructor for the command.
 	 * 
 	 * @param direction
+	 * @param talonName
 	 */
 	public MoveLiftManual(MoveDirection direction, String talonName) {
 		requires(Lift.getInstance());

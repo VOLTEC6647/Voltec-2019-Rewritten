@@ -27,6 +27,8 @@ public class MoveBall extends Command {
 	 * 
 	 * @param direction
 	 * @param speed
+	 * @param leftName
+	 * @param rightName
 	 */
 	public MoveBall(MoveDirection direction, double speed, String leftName, String rightName) {
 		requires(Intake.getInstance());
@@ -70,8 +72,8 @@ public class MoveBall extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Intake.getInstance().getTalon("intakeLeft").stopTalon();
-		Intake.getInstance().getTalon("intakeRight").stopTalon();
+		intakeLeft.stopTalon();
+		intakeRight.stopTalon();
 	}
 
 	// Called when another command which requires one or more of the same

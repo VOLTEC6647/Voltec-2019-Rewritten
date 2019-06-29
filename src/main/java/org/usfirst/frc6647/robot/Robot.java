@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		// Debug commands.
-		SmartDashboard.putData("ResetEncoders", new ResetEncoders());
+		SmartDashboard.putData("ResetEncoders", new ResetEncoders("liftEncoder"));
 		SmartDashboard.putData("ZeroYaw", new ZeroYaw());
 	}
 

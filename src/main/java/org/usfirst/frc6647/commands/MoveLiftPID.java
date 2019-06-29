@@ -43,6 +43,8 @@ public class MoveLiftPID extends Command {
 	 * 
 	 * @param target
 	 * @param height
+	 * @param talonName
+	 * @param encoderName
 	 */
 	public MoveLiftPID(Target target, Height height, String talonName, String encoderName) {
 		requires(Lift.getInstance());
@@ -96,6 +98,7 @@ public class MoveLiftPID extends Command {
 				break;
 			case FLOOR:
 				Lift.getInstance().setSetpoint(liftEncoder.get() - 20000);
+				break;
 			default:
 				end();
 				break;
