@@ -89,7 +89,7 @@ public class OI extends ButtonHelper {
 				oiButton("Driver1", "dPadDown").whileHeld(new GyroMove());
 
 			} else if (joysticks.get("Driver1").getName().equals("Controller (XBOX 360 For Windows)")
-					|| joysticks.get("Driver2").getName().equals("Controller (Xbox One For Windows)")) {
+					|| joysticks.get("Driver1").getName().equals("Controller (Xbox One For Windows)")) {
 
 				oiButton("Driver1", "Y").whenPressed(new ChangeVelocity(0.6, 0.6, true, "frontLeft", "frontRight"));
 				oiButton("Driver1", "X").whenPressed(new ChangeVelocity(0.75, 0.9, false, "frontLeft", "frontRight"));
@@ -128,8 +128,8 @@ public class OI extends ButtonHelper {
 				oiButton("Driver2", "Triangle")
 						.whileHeld(new MoveLiftPID(Target.CARGO, Height.HIGH, "liftMain", "liftEncoder"));
 
-				oiButton("Driver2", "L1").whileHeld(new MoveLiftManual(MoveDirection.UP, "liftMain", "lowLimitLift"));
-				oiButton("Driver2", "R1").whileHeld(new MoveLiftManual(MoveDirection.DOWN, "liftMain", "lowLimitLift"));
+				oiButton("Driver2", "L1").whileHeld(new MoveLiftManual(MoveDirection.UP, "liftMain"));
+				oiButton("Driver2", "R1").whileHeld(new MoveLiftManual(MoveDirection.DOWN, "liftMain"));
 
 				oiButton("Driver2", "L2").whileHeld(new TiltIntakeManual(MoveDirection.UP, "tiltIntake"));
 				oiButton("Driver2", "R2").whileHeld(new TiltIntakeManual(MoveDirection.DOWN, "tiltIntake"));
@@ -167,9 +167,9 @@ public class OI extends ButtonHelper {
 						.whileHeld(new MoveLiftPID(Target.CARGO, Height.HIGH, "liftMain", "liftEncoder"));
 
 				oiButton("Driver2", "LBumper")
-						.whileHeld(new MoveLiftManual(MoveDirection.UP, "liftMain", "lowLimitLift"));
+						.whileHeld(new MoveLiftManual(MoveDirection.UP, "liftMain"));
 				oiButton("Driver2", "RBumper")
-						.whileHeld(new MoveLiftManual(MoveDirection.DOWN, "liftMain", "lowLimitLift"));
+						.whileHeld(new MoveLiftManual(MoveDirection.DOWN, "liftMain"));
 
 				oiButton("Driver2", "LTrigger").whileHeld(new TiltIntakeManual(MoveDirection.UP, "tiltIntake"));
 				oiButton("Driver2", "RTrigger").whileHeld(new TiltIntakeManual(MoveDirection.DOWN, "tiltIntake"));

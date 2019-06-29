@@ -12,8 +12,8 @@ import org.usfirst.frc6647.subsystems.ChassisH;
 import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
 import org.usfirst.lib6647.util.MoveDirection;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -22,10 +22,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Slide extends Command {
 
 	private MoveDirection direction;
-	private double leftAxis, rightAxis;
 	private int leftAxisId, rightAxisId;
+	private double leftAxis, rightAxis;
 	private Joystick joystick;
 	private boolean useAxes, startsAtZero;
+	
 	private double speed;
 	private HyperTalon hWheel;
 

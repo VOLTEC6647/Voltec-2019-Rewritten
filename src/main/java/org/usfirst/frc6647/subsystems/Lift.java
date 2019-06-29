@@ -54,9 +54,6 @@ public class Lift extends PIDSuperSubsystem implements SuperVictor, SuperEncoder
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Lift Encoder Value", encoders.get("liftEncoder").get());
-		SmartDashboard.putBoolean("Encoder Limit Down", digitalInputs.get("lowLimitLift").get());
-		if (!digitalInputs.get("lowLimitLift").get())
-			encoders.get("liftEncoder").reset();
 	}
 
 	@Override

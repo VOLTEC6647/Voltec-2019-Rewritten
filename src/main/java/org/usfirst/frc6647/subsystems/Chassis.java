@@ -58,9 +58,9 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	}
 
 	/**
-	 * Lambda for joystick mapping.
+	 * Lambda for joystick tolerance.
 	 */
-	private Function<Double, Double> mapDoubleT = x -> Math.abs(x) < 0.15 ? 0
+	private Function<Double, Double> joyTolerance = x -> Math.abs(x) < 0.15 ? 0
 			: x < 0 ? (x + 0.15) / (1 - 0.15) : (x - 0.15) / (1 - 0.15);
 
 	/**
@@ -69,8 +69,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	@Override
 	public void periodic() {
 		if (!NavX.getInstance().getPIDController().isEnabled()) {
-			double leftStickY = mapDoubleT.apply(OI.getInstance().joysticks.get("Driver1").getLeftAxis()),
-					rightStickY = mapDoubleT.apply(OI.getInstance().joysticks.get("Driver1").getRightAxis());
+			double leftStickY = joyTolerance.apply(OI.getInstance().joysticks.get("Driver1").getLeftAxis()),
+					rightStickY = joyTolerance.apply(OI.getInstance().joysticks.get("Driver1").getRightAxis());
 			talons.get("frontLeft").setTalon(leftStickY, true);
 			talons.get("frontRight").setTalon(rightStickY, true);
 		}
