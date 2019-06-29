@@ -8,13 +8,18 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Lift;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Command for moving Lift with PID.
  */
 public class MoveLiftPID extends Command {
+
+	private Encoder liftEncoder;
+	private HyperTalon liftMain;
 
 	/**
 	 * Enum listing possible PID targets.
@@ -39,8 +44,11 @@ public class MoveLiftPID extends Command {
 	 * @param target
 	 * @param height
 	 */
-	public MoveLiftPID(Target target, Height height) {
+	public MoveLiftPID(Target target, Height height, String talonName, String encoderName) {
 		requires(Lift.getInstance());
+
+		liftMain = Lift.getInstance().getTalon(talonName);
+		liftEncoder = Lift.getInstance().getEncoder(encoderName);
 
 		this.target = target;
 		this.height = height;
@@ -87,7 +95,7 @@ public class MoveLiftPID extends Command {
 				Lift.getInstance().setSetpoint(350000);
 				break;
 			case FLOOR:
-				Lift.getInstance().setSetpoint(Lift.getInstance().getEncoderValue() - 20000);
+				Lift.getInstance().setSetpoint(liftEncoder.get() - 20000);
 			default:
 				end();
 				break;
@@ -117,7 +125,7 @@ public class MoveLiftPID extends Command {
 	@Override
 	protected void end() {
 		Lift.getInstance().disable();
-		Lift.getInstance().stopLift();
+		liftMain.stopTalon();
 	}
 
 	// Called when another command which requires one or more of the same

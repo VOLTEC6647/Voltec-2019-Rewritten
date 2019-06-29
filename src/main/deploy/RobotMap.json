@@ -104,13 +104,8 @@
 						}
 					}
 				}
-			],
-			"compressors": [
-				{
-					"name": "compressor",
-					"module": 0
-				}
 			]
+			
 		},
 		"chassisH": {
 			"talons": [
@@ -240,9 +235,15 @@
 					"initialValue": false
 				},
 				{
-					"name": "pushHatchForward",
+					"name": "pushHatchBackward",
 					"channel": 1,
 					"initialValue": false
+				}
+			],
+			"compressors": [
+				{
+					"name": "compressor",
+					"module": 0
 				}
 			]
 		},

@@ -1,9 +1,7 @@
 package org.usfirst.frc6647.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.components.SuperTalon;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperTalon;
 
 import edu.wpi.first.wpilibj.Filesystem;
 
@@ -42,21 +40,5 @@ public class TiltIntake extends SuperSubsystem implements SuperTalon {
 
 	@Override
 	protected void initDefaultCommand() {
-	}
-
-	/**
-	 * Set Intake tilt Talon speed.
-	 * 
-	 * @param speedTilt
-	 */
-	public void setTiltIntake(double speedTilt) {
-		talons.get("intakeTilt").set(ControlMode.PercentOutput, speedTilt);
-	}
-
-	/**
-	 * Stop Intake tilt Talon dead in its tracks.
-	 */
-	public void stopTiltIntake() {
-		setTiltIntake(0.0);
 	}
 }

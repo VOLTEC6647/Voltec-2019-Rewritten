@@ -1,20 +1,16 @@
 package org.usfirst.frc6647.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.components.SuperSolenoid;
-import org.usfirst.lib6647.subsystem.components.SuperTalon;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperCompressor;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperSolenoid;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperTalon;
 
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.Servo;
 
 /**
  * Subsystem for the Intake.
  */
-public class Intake extends SuperSubsystem implements SuperTalon, SuperSolenoid {
-
-	private Servo camServo;
+public class Intake extends SuperSubsystem implements SuperTalon, SuperSolenoid, SuperCompressor {
 
 	private static Intake m_instance = null;
 
@@ -43,6 +39,7 @@ public class Intake extends SuperSubsystem implements SuperTalon, SuperSolenoid 
 		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initTalons(robotMap, getName());
+		initCompressors(robotMap, getName());
 		initSolenoids(robotMap, getName());
 
 		finishedJSONInit();
@@ -52,40 +49,17 @@ public class Intake extends SuperSubsystem implements SuperTalon, SuperSolenoid 
 	protected void initDefaultCommand() {
 	}
 
-	/**
-	 * Sets both Intake Talons to the given speed, in PercentOutput.
-	 * 
-	 * @param speedLeft
-	 * @param speedRight
-	 */
-	public void setIntake(double speedLeft, double speedRight) {
-		talons.get("intakeLeft").set(ControlMode.PercentOutput, speedLeft);
-		talons.get("intakeRight").set(ControlMode.PercentOutput, speedRight);
-	}
-
-	/**
-	 * Stops both Intake Talons dead in their tracks.
-	 */
-	public void stopIntake() {
-		setIntake(0.0, 0.0);
-	}
-
-	/**
-	 * Sets value of pushHatch solenoids.
-	 * 
-	 * @param boolean
-	 */
 	public void setH(boolean value) {
 		solenoids.get("pushHatchForward").set(value);
 		solenoids.get("pushHatchBackward").set(!value);
 	}
 
-	/**
-	 * Gets camServo object.
-	 * 
-	 * @return camServo
-	 */
-	public Servo getCamServo() {
-		return camServo;
+	public void toggleH() {
+		setH(!solenoids.get("pushHatchForward").get());
+	}
+
+	public void stopH() {
+		solenoids.get("pushHatchForward").set(false);
+		solenoids.get("pushHatchBackward").set(false);
 	}
 }

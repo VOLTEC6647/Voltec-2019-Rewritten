@@ -43,11 +43,15 @@ def includeDesktopSupport = false
 // Maven central needed for JUnit
 repositories {
     mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
 }
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
+    // WPILib dependencies.
     compile wpi.deps.wpilib()
     compile wpi.deps.vendor.java()
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
@@ -55,6 +59,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+    // lib6647
+    implementation 'com.github.pacoito123:lib6647:0771e57540'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

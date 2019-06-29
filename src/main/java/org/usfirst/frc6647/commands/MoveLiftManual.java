@@ -8,7 +8,8 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Lift;
-import org.usfirst.lib6647.util.Direction;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
+import org.usfirst.lib6647.util.MoveDirection;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,15 +18,18 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveLiftManual extends Command {
 
-	private Direction direction;
+	private MoveDirection direction;
+	private HyperTalon liftMain;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
 	 */
-	public MoveLiftManual(Direction direction) {
+	public MoveLiftManual(MoveDirection direction, String talonName) {
 		requires(Lift.getInstance());
+
+		liftMain = Lift.getInstance().getTalon(talonName);
 
 		this.direction = direction;
 	}
@@ -40,10 +44,10 @@ public class MoveLiftManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			Lift.getInstance().setLift(0.6);
+			liftMain.setTalon(0.6, false);
 			break;
 		case DOWN:
-			Lift.getInstance().setLift(-0.3);
+			liftMain.setTalon(-0.3, false);
 			break;
 		default:
 			end();
@@ -60,7 +64,7 @@ public class MoveLiftManual extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Lift.getInstance().stopLift();
+		liftMain.stopTalon();
 	}
 
 	// Called when another command which requires one or more of the same

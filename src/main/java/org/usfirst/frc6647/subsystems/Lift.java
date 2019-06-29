@@ -1,11 +1,9 @@
 package org.usfirst.frc6647.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
-import org.usfirst.lib6647.subsystem.components.SuperDigitalInput;
-import org.usfirst.lib6647.subsystem.components.SuperEncoder;
-import org.usfirst.lib6647.subsystem.components.SuperTalon;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperDigitalInput;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperEncoder;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperTalon;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -77,38 +75,6 @@ public class Lift extends PIDSuperSubsystem implements SuperTalon, SuperEncoder,
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		setLift(output);
-	}
-
-	/**
-	 * Sets liftMain Talon to a specific speed, in PercentOutput.
-	 * 
-	 * @param speed
-	 */
-	public void setLift(double speed) {
-		talons.get("liftMain").set(ControlMode.PercentOutput, speed);
-	}
-
-	/**
-	 * Stops the liftMain Victor dead in its tracks.
-	 */
-	public void stopLift() {
-		setLift(0.0);
-	}
-
-	/**
-	 * Gets Lift Encoder value.
-	 * 
-	 * @return liftEncoder
-	 */
-	public int getEncoderValue() {
-		return encoders.get("liftEncoder").get();
-	}
-
-	/**
-	 * Resets Lift Encoder.
-	 */
-	public void resetEncoder() {
-		encoders.get("liftEncoder").reset();
+		talons.get("liftMain").set(output);
 	}
 }

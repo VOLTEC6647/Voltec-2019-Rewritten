@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * Command for toggling the H solenoid.
  */
 public class ToggleHatch extends Command {
+
 	/**
 	 * Constructor for the command.
 	 */
@@ -24,7 +25,9 @@ public class ToggleHatch extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Intake.getInstance().setH(true);
+		Intake.getInstance().toggleH();
+
+		setTimeout(1.0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -35,13 +38,13 @@ public class ToggleHatch extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return isTimedOut();
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Intake.getInstance().setH(false);
+		Intake.getInstance().stopH();
 	}
 
 	// Called when another command which requires one or more of the same

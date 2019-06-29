@@ -8,7 +8,7 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.NavX;
-import org.usfirst.lib6647.util.Direction;
+import org.usfirst.lib6647.util.MoveDirection;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,14 +17,14 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AlignNext extends Command {
 
-	private Direction direction;
+	private MoveDirection direction;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
 	 */
-	public AlignNext(Direction direction) {
+	public AlignNext(MoveDirection direction) {
 		this.direction = direction;
 	}
 
