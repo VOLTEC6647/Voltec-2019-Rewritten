@@ -9,6 +9,7 @@ package org.usfirst.frc6647.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import org.usfirst.frc6647.commands.GeneratePIDData;
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
 import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
@@ -55,6 +56,8 @@ public class NavX extends PIDSuperSubsystem {
 
 		ahrs = new AHRS(SPI.Port.kMXP);
 		ahrs.reset();
+
+		SmartDashboard.putData(getName() + "Generate", new GeneratePIDData(this));
 	}
 
 	/**
@@ -88,6 +91,7 @@ public class NavX extends PIDSuperSubsystem {
 	@Override
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber(getName() + "Output", output);
+		pidOutput = output;
 
 		HyperTalon frontLeft = Chassis.getInstance().getTalon("frontLeft"),
 				frontRight = Chassis.getInstance().getTalon("frontRight");
