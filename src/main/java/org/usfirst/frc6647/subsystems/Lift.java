@@ -1,5 +1,6 @@
 package org.usfirst.frc6647.subsystems;
 
+import org.usfirst.frc6647.commands.GeneratePIDData;
 import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperEncoder;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperTalon;
@@ -44,6 +45,8 @@ public class Lift extends PIDSuperSubsystem implements SuperEncoder, SuperTalon 
 		finishedJSONInit();
 
 		talons.get("liftFollower").follow(talons.get("liftMain"));
+
+		SmartDashboard.putData(getName() + "Generate", new GeneratePIDData(this));
 	}
 
 	/**
@@ -73,6 +76,7 @@ public class Lift extends PIDSuperSubsystem implements SuperEncoder, SuperTalon 
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
+		pidOutput = output;
 		talons.get("liftMain").set(output);
 	}
 }

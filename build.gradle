@@ -60,8 +60,11 @@ dependencies {
     // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
+    // opencsv
+    compile group: 'com.opencsv', name: 'opencsv', version: '4.1'
+    
     // lib6647
-    implementation 'com.github.pacoito123:lib6647:0771e57540'
+    implementation 'com.github.pacoito123:lib6647:3ce1454377'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

@@ -7,6 +7,7 @@
 
 package org.usfirst.frc6647.robot;
 
+import org.usfirst.frc6647.commands.ResetControllers;
 import org.usfirst.frc6647.commands.ResetEncoders;
 import org.usfirst.frc6647.commands.ZeroYaw;
 import org.usfirst.frc6647.subsystems.Chassis;
@@ -40,9 +41,9 @@ public class Robot extends TimedRobot {
 		Lift.createInstance();
 
 		OI.createInstance();
+		SmartDashboard.putData(new ResetControllers());
 
 		NavX.getInstance().zeroYaw();
-		
 	}
 
 	@Override

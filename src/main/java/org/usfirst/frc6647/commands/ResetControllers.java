@@ -7,51 +7,23 @@
 
 package org.usfirst.frc6647.commands;
 
-import org.usfirst.frc6647.subsystems.Chassis;
-import org.usfirst.frc6647.subsystems.NavX;
-import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
-import org.usfirst.lib6647.subsystem.hypercomponents.HyperVictor;
+import org.usfirst.frc6647.robot.OI;
+import org.usfirst.lib6647.oi.JController;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command to change Chassis velocity and acceleration.
+ * Creates a new {@link OI} instance, effectively refreshing {@link JController
+ * Controllers} without having to reset the entire robot.
  */
-public class ChangeVelocity extends Command {
-
-	private HyperVictor frontLeft;
-	private HyperTalon frontRight;
-	private double driveLimiter, padLimiter;
-	private boolean acceleration;
-
-	/**
-	 * Constructor for the command.
-	 * 
-	 * @param driveLimiter
-	 * @param padLimiter
-	 * @param acceleration
-	 * @param leftName
-	 * @param rightName
-	 */
-	public ChangeVelocity(double driveLimiter, double padLimiter, boolean acceleration, String leftName,
-			String rightName) {
-		this.driveLimiter = driveLimiter;
-		this.padLimiter = padLimiter;
-		this.acceleration = acceleration;
-
-		frontLeft = Chassis.getInstance().getVictor(leftName);
-		frontRight = Chassis.getInstance().getTalon(rightName);
+public class ResetControllers extends Command {
+	public ResetControllers() {
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		NavX.getInstance().resetAccel();
-
-		frontLeft.setLimiter(driveLimiter);
-		frontRight.setLimiter(driveLimiter);
-		
-		NavX.getInstance().setPadLimiter(padLimiter, acceleration);
+		OI.createInstance();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
