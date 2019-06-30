@@ -76,6 +76,7 @@ public class Lift extends PIDSuperSubsystem implements SuperEncoder, SuperVictor
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
+		pidOutput = output;
 		victors.get("liftMain").set(output);
 	}
 }

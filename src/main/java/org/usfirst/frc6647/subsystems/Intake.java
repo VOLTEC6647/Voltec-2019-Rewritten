@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Filesystem;
  * Subsystem for the Intake.
  */
 public class Intake extends SuperSubsystem implements SuperCompressor, SuperVictor, SuperSolenoid {
+	
 	private static Intake m_instance = null;
 
 	/**
