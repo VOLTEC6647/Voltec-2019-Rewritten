@@ -21,6 +21,7 @@ public class ChangeVelocity extends Command {
 
 	private HyperVictor frontLeft;
 	private HyperTalon frontRight;
+	private String leftName, rightName;
 	private double driveLimiter, padLimiter;
 	private boolean acceleration;
 
@@ -38,19 +39,21 @@ public class ChangeVelocity extends Command {
 		this.driveLimiter = driveLimiter;
 		this.padLimiter = padLimiter;
 		this.acceleration = acceleration;
-
-		frontLeft = Chassis.getInstance().getVictor(leftName);
-		frontRight = Chassis.getInstance().getTalon(rightName);
+		this.leftName = leftName;
+		this.rightName = rightName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		frontLeft = Chassis.getInstance().getVictor(leftName);
+		frontRight = Chassis.getInstance().getTalon(rightName);
+
 		NavX.getInstance().resetAccel();
 
 		frontLeft.setLimiter(driveLimiter);
 		frontRight.setLimiter(driveLimiter);
-		
+
 		NavX.getInstance().setPadLimiter(padLimiter, acceleration);
 	}
 

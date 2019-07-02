@@ -7,6 +7,7 @@
 
 package org.usfirst.frc6647.robot;
 
+import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.ChangeVelocity;
 import org.usfirst.frc6647.commands.GyroAlign;
 import org.usfirst.frc6647.commands.GyroMove;
@@ -81,11 +82,8 @@ public class OI extends ButtonHelper {
 				oiButton("Driver1", "PS4Btn").whenPressed(new ZeroYaw());
 
 				oiButton("Driver1", "dPadUp").whileHeld(new GyroMove());
-				/*
-				 * oiButton("Driver1", "dPadLeft").whenPressed(new
-				 * AlignNext(MoveDirection.LEFT)); oiButton("Driver1",
-				 * "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
-				 */
+				oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(MoveDirection.LEFT));
+				oiButton("Driver1", "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
 				oiButton("Driver1", "dPadDown").whileHeld(new GyroMove());
 
 			} else if (joysticks.get("Driver1").getName().equals("Controller (XBOX 360 For Windows)")
@@ -97,17 +95,14 @@ public class OI extends ButtonHelper {
 				oiButton("Driver1", "LBumper").whenPressed(new ToggleHatch());
 				oiButton("Driver1", "RBumper").whileHeld(new GyroAlign("Driver1"));
 
-				oiButton("Driver1", "LTrigger").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, false, "Driver1", 0.7));
-				oiButton("Driver1", "RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, false, "Driver1", 0.7));
+				oiButton("Driver1", "LTrigger").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, true, "Driver1", 0.7));
+				oiButton("Driver1", "RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, true, "Driver1", 0.7));
 
 				oiButton("Driver1", "B").whenPressed(new ZeroYaw());
 
 				oiButton("Driver1", "dPadUp").whileHeld(new GyroMove());
-				/*
-				 * oiButton("Driver1", "dPadLeft").whenPressed(new
-				 * AlignNext(MoveDirection.LEFT)); oiButton("Driver1",
-				 * "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
-				 */
+				oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(MoveDirection.LEFT));
+				oiButton("Driver1", "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
 				oiButton("Driver1", "dPadDown").whileHeld(new GyroMove());
 			}
 		}

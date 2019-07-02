@@ -42,8 +42,6 @@ public class Robot extends TimedRobot {
 
 		OI.createInstance();
 		SmartDashboard.putData(new ResetControllers());
-
-		NavX.getInstance().zeroYaw();
 	}
 
 	@Override

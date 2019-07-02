@@ -36,7 +36,7 @@ public class GeneratePIDData extends Command {
 					new File(Filesystem.getOperatingDirectory() + "/" + subsystem.getName() + "PIDData.csv")));
 
 			writer.writeNext(new String[] { "Time", "Input", "Output" });
-			start = (System.nanoTime() / 1000000);
+			start = (System.nanoTime() * 0.000000001);
 		} catch (IOException e) {
 			e.printStackTrace();
 			end();
@@ -46,7 +46,7 @@ public class GeneratePIDData extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		writer.writeNext(new String[] { ((System.nanoTime() / 1000000) - start) + "", subsystem.getSetpoint() + "",
+		writer.writeNext(new String[] { ((System.nanoTime() * 0.000000001) - start) + "", subsystem.getSetpoint() + "",
 				subsystem.getPIDOutput() + "" });
 	}
 

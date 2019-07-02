@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GyroAlign extends Command {
 
 	private JController joystick;
+	private String joystickName;
 
 	/**
 	 * Constructor for the command.
@@ -28,12 +29,13 @@ public class GyroAlign extends Command {
 	 * @param joystickName
 	 */
 	public GyroAlign(String joystickName) {
-		joystick = OI.getInstance().joysticks.get(joystickName);
+		this.joystickName = joystickName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		joystick = OI.getInstance().joysticks.get(joystickName);
 		double yaw = NavX.getInstance().getYaw();
 
 		if (-165.625 >= yaw)

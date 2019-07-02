@@ -13,6 +13,7 @@ import org.usfirst.frc6647.commands.GeneratePIDData;
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
 import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperVictor;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SerialPort.Port;
@@ -91,21 +92,22 @@ public class NavX extends PIDSuperSubsystem {
 	@Override
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber(getName() + "Output", output);
-		pidOutput = output;
 
-		HyperTalon frontLeft = Chassis.getInstance().getTalon("frontLeft"),
-				frontRight = Chassis.getInstance().getTalon("frontRight");
+		HyperTalon frontLeft = Chassis.getInstance().getTalon("frontLeft");
+		HyperVictor frontRight = Chassis.getInstance().getVictor("frontRight");
 
 		if (OI.getInstance().oiButton("Driver1", "dPadUp").get()) {
-			frontLeft.setTalon(((-0.5 - (accel * accelMult)) * padLimiter) + output, false);
-			frontRight.setTalon(((-0.45 - (accel * accelMult)) * padLimiter) - output, false);
+			frontLeft.setTalon(((-0.5 - (accel * accelMult)) * padLimiter) + output);
+			frontRight.setVictor(((-0.45 - (accel * accelMult)) * padLimiter) - output);
 		} else if (OI.getInstance().oiButton("Driver1", "dPadDown").get()) {
-			frontLeft.setTalon(((0.5 + (accel * accelMult)) * padLimiter) + output, false);
-			frontRight.setTalon(((0.45 + (accel * accelMult)) * padLimiter) - output, false);
+			frontLeft.setTalon(((0.5 + (accel * accelMult)) * padLimiter) + output);
+			frontRight.setVictor(((0.45 + (accel * accelMult)) * padLimiter) - output);
 		} else {
-			frontLeft.setTalon(output, false);
-			frontRight.setTalon(-output, false);
+			frontLeft.setTalon(output, true);
+			frontRight.setVictor(-output, true);
 		}
+		
+		pidOutput = Chassis.getInstance().getVictor("frontRight").getMotorOutputVoltage();
 	}
 
 	/**

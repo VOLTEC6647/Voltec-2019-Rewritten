@@ -27,7 +27,7 @@ public class ToggleHatch extends Command {
 	protected void initialize() {
 		Intake.getInstance().toggleH();
 
-		setTimeout(1.0);
+		setTimeout(2.0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

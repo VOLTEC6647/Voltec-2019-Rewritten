@@ -76,7 +76,8 @@ public class Lift extends PIDSuperSubsystem implements SuperEncoder, SuperTalon 
 	 */
 	@Override
 	protected void usePIDOutput(double output) {
-		pidOutput = output;
 		talons.get("liftMain").set(output);
+		
+		pidOutput = talons.get("liftMain").getMotorOutputVoltage();
 	}
 }

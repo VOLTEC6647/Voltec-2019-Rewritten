@@ -23,7 +23,7 @@ public class ResetControllers extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		OI.createInstance();
+		System.exit(1);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

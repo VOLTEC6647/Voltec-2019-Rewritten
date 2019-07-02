@@ -21,6 +21,7 @@ public class MoveBall extends Command {
 	private double speed;
 	private MoveDirection direction;
 	private HyperTalon intakeLeft, intakeRight;
+	private String leftName, rightName;
 
 	/**
 	 * Constructor for the command.
@@ -31,18 +32,17 @@ public class MoveBall extends Command {
 	 * @param rightName
 	 */
 	public MoveBall(MoveDirection direction, double speed, String leftName, String rightName) {
-		requires(Intake.getInstance());
-
-		intakeLeft = Intake.getInstance().getTalon(leftName);
-		intakeRight = Intake.getInstance().getTalon(rightName);
-
 		this.direction = direction;
 		this.speed = speed;
+		this.leftName = leftName;
+		this.rightName = rightName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		intakeLeft = Intake.getInstance().getTalon(leftName);
+		intakeRight = Intake.getInstance().getTalon(rightName);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
