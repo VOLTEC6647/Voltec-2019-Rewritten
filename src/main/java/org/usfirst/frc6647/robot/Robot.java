@@ -43,9 +43,6 @@ public class Robot extends TimedRobot {
 		Climb.createInstance();
 
 		OI.createInstance();
-
-		NavX.getInstance().zeroYaw();
-
 		SmartDashboard.putData(new ResetControllers());
 	}
 

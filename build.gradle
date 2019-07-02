@@ -57,7 +57,6 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
     testCompile 'junit:junit:4.12'
-
     // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
@@ -65,7 +64,7 @@ dependencies {
     compile group: 'com.opencsv', name: 'opencsv', version: '4.1'
     
     // lib6647
-    implementation 'com.github.pacoito123:lib6647:3ce1454377'
+    compile group: 'com.github.pacoito123', name: 'lib6647', version: '3ce1454377'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

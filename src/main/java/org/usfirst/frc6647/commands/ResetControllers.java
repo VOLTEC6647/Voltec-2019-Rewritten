@@ -17,13 +17,14 @@ import edu.wpi.first.wpilibj.command.Command;
  * Controllers} without having to reset the entire robot.
  */
 public class ResetControllers extends Command {
+	
 	public ResetControllers() {
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		OI.createInstance();
+		System.exit(1);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

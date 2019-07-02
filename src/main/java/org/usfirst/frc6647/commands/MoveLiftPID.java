@@ -20,6 +20,7 @@ public class MoveLiftPID extends Command {
 
 	private Encoder liftEncoder;
 	private HyperVictor liftMain;
+	private String encoderName, victorName;
 
 	/**
 	 * Enum listing possible PID targets.
@@ -49,16 +50,18 @@ public class MoveLiftPID extends Command {
 	public MoveLiftPID(Target target, Height height, String victorName, String encoderName) {
 		requires(Lift.getInstance());
 
-		liftMain = Lift.getInstance().getVictor(victorName);
-		liftEncoder = Lift.getInstance().getEncoder(encoderName);
-
 		this.target = target;
 		this.height = height;
+		this.victorName = victorName;
+		this.encoderName = encoderName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		liftEncoder = Lift.getInstance().getEncoder(encoderName);
+		liftMain = Lift.getInstance().getVictor(victorName);
+
 		switch (target) {
 		case CARGO:
 			switch (height) {

@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TiltIntakeManual extends Command {
 
 	private MoveDirection direction;
-	private HyperVictor victor;
+	private HyperVictor tiltIntake;
+	private String victorName;
 
 	/**
 	 * Constructor for the command.
@@ -29,15 +30,15 @@ public class TiltIntakeManual extends Command {
 	 */
 	public TiltIntakeManual(MoveDirection direction, String victorName) {
 		requires(TiltIntake.getInstance());
-
-		victor = TiltIntake.getInstance().getVictor(victorName);
-
+		
 		this.direction = direction;
+		this.victorName = victorName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		tiltIntake = TiltIntake.getInstance().getVictor(victorName);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -45,10 +46,10 @@ public class TiltIntakeManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			victor.setVictor(0.4);
+			tiltIntake.setVictor(0.4);
 			break;
 		case DOWN:
-			victor.setVictor(-0.4);
+			tiltIntake.setVictor(-0.4);
 			break;
 		default:
 			end();
@@ -65,7 +66,7 @@ public class TiltIntakeManual extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		victor.stopVictor();
+		tiltIntake.stopVictor();
 	}
 
 	// Called when another command which requires one or more of the same

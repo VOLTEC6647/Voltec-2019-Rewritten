@@ -25,8 +25,9 @@ public class Slide extends Command {
 	private int leftAxisId, rightAxisId;
 	private double leftAxis, rightAxis;
 	private Joystick joystick;
+	private String joystickName;
 	private boolean useAxes, startsAtZero;
-	
+
 	private double speed;
 	private HyperTalon hWheel;
 
@@ -42,9 +43,8 @@ public class Slide extends Command {
 		requires(ChassisH.getInstance());
 
 		this.direction = direction;
+		this.joystickName = joystickName;
 		this.speed = speed;
-
-		joystick = OI.getInstance().joysticks.get(joystickName);
 
 		useAxes = false;
 	}
@@ -66,9 +66,9 @@ public class Slide extends Command {
 
 		this.direction = direction;
 		this.startsAtZero = startsAtZero;
+		this.joystickName = joystickName;
 		this.speed = speed;
 
-		joystick = OI.getInstance().joysticks.get(joystickName);
 		leftAxisId = leftAxis;
 		rightAxisId = rightAxis;
 
@@ -78,6 +78,8 @@ public class Slide extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		joystick = OI.getInstance().joysticks.get(joystickName);
+
 		switch (direction) {
 		case LEFT:
 			joystick.setRumble(RumbleType.kLeftRumble, 1);

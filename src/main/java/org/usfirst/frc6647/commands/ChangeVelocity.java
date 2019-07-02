@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ChangeVelocity extends Command {
 
 	private HyperTalon frontLeft, frontRight;
+	private String leftName, rightName;
 	private double driveLimiter, padLimiter;
 	private boolean acceleration;
 
@@ -36,14 +37,16 @@ public class ChangeVelocity extends Command {
 		this.driveLimiter = driveLimiter;
 		this.padLimiter = padLimiter;
 		this.acceleration = acceleration;
-
-		frontLeft = Chassis.getInstance().getTalon(leftName);
-		frontRight = Chassis.getInstance().getTalon(rightName);
+		this.leftName = leftName;
+		this.rightName = rightName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		frontLeft = Chassis.getInstance().getTalon(leftName);
+		frontRight = Chassis.getInstance().getTalon(rightName);
+
 		NavX.getInstance().resetAccel();
 
 		frontLeft.setLimiter(driveLimiter);

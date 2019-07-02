@@ -91,7 +91,6 @@ public class NavX extends PIDSuperSubsystem {
 	@Override
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber(getName() + "Output", output);
-		pidOutput = output;
 
 		HyperTalon frontLeft = Chassis.getInstance().getTalon("frontLeft"),
 				frontRight = Chassis.getInstance().getTalon("frontRight");
@@ -106,6 +105,8 @@ public class NavX extends PIDSuperSubsystem {
 			frontLeft.setTalon(output, false);
 			frontRight.setTalon(-output, false);
 		}
+
+		pidOutput = Chassis.getInstance().getTalon("frontRight").getMotorOutputVoltage();
 	}
 
 	/**

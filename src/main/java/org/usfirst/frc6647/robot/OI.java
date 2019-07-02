@@ -7,6 +7,7 @@
 
 package org.usfirst.frc6647.robot;
 
+import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.ChangeVelocity;
 import org.usfirst.frc6647.commands.GyroAlign;
 import org.usfirst.frc6647.commands.GyroMove;
@@ -81,11 +82,8 @@ public class OI extends ButtonHelper {
 				oiButton("Driver1", "PS4Btn").whenPressed(new ZeroYaw());
 
 				oiButton("Driver1", "dPadUp").whileHeld(new GyroMove());
-				/*
-				 * oiButton("Driver1", "dPadLeft").whenPressed(new
-				 * AlignNext(MoveDirection.LEFT)); oiButton("Driver1",
-				 * "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
-				 */
+				oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(MoveDirection.LEFT));
+				oiButton("Driver1", "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
 				oiButton("Driver1", "dPadDown").whileHeld(new GyroMove());
 
 			} else if (joysticks.get("Driver1").getName().equals("Controller (XBOX 360 For Windows)")
@@ -103,10 +101,8 @@ public class OI extends ButtonHelper {
 				oiButton("Driver1", "B").whenPressed(new ZeroYaw());
 
 				oiButton("Driver1", "dPadUp").whileHeld(new GyroMove());
-				/*
-				 * oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(Direction.LEFT));
-				 * oiButton("Driver1", "dPadRight").whenPressed(new AlignNext(Direction.RIGHT));
-				 */
+				oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(MoveDirection.LEFT));
+				oiButton("Driver1", "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
 				oiButton("Driver1", "dPadDown").whileHeld(new GyroMove());
 			}
 		}

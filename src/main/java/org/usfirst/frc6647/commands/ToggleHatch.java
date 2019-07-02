@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ToggleHatch extends Command {
 
 	private Solenoid pushHatch;
+	private String solenoidName;
 
 	/**
 	 * Constructor for the command.
@@ -25,14 +26,14 @@ public class ToggleHatch extends Command {
 	 * @param solenoidName
 	 */
 	public ToggleHatch(String solenoidName) {
-		requires(Intake.getInstance());
-
-		pushHatch = Intake.getInstance().getSolenoid(solenoidName);
+		this.solenoidName = solenoidName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		pushHatch = Intake.getInstance().getSolenoid(solenoidName);
+		
 		pushHatch.set(!pushHatch.get());
 	}
 

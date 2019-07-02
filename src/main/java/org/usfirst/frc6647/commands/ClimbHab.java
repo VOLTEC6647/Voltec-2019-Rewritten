@@ -17,21 +17,29 @@ public class ClimbHab extends Command {
 
 	MoveDirection direction;
 	private Solenoid frontSolenoidForward, frontSolenoidBackward, backSolenoidForward, backSolenoidBackward;
+	private String frontSolenoidForwardName, frontSolenoidBackwardName, backSolenoidForwardName,
+			backSolenoidBackwardName;
 
 	public ClimbHab(MoveDirection direction, String frontSolenoidForward, String frontSolenoidBackward,
 			String backSolenoidForward, String backSolenoidBackward) {
 		this.direction = direction;
 
-		this.frontSolenoidForward = Climb.getInstance().getSolenoid(frontSolenoidForward);
-		this.frontSolenoidBackward = Climb.getInstance().getSolenoid(frontSolenoidBackward);
-		
-		this.backSolenoidForward = Climb.getInstance().getSolenoid(backSolenoidForward);
-		this.backSolenoidBackward = Climb.getInstance().getSolenoid(backSolenoidBackward);
+		this.frontSolenoidForwardName = frontSolenoidForward;
+		this.frontSolenoidBackwardName = frontSolenoidBackward;
+
+		this.backSolenoidForwardName = backSolenoidForward;
+		this.backSolenoidBackwardName = backSolenoidBackward;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		this.frontSolenoidForward = Climb.getInstance().getSolenoid(frontSolenoidForwardName);
+		this.frontSolenoidBackward = Climb.getInstance().getSolenoid(frontSolenoidBackwardName);
+
+		this.backSolenoidForward = Climb.getInstance().getSolenoid(backSolenoidForwardName);
+		this.backSolenoidBackward = Climb.getInstance().getSolenoid(backSolenoidBackwardName);
+
 		switch (direction) {
 		case FRONT:
 			frontSolenoidForward.set(true);

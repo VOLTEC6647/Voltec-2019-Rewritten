@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * Command for Zeroing the NavX's yaw.
  */
 public class ZeroYaw extends Command {
+	
 	/**
 	 * Constructor for the command.
 	 */
