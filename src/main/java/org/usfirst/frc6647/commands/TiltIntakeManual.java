@@ -46,7 +46,7 @@ public class TiltIntakeManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			tiltIntake.setVictor(0.4);
+			tiltIntake.setVictor(0.6);
 			break;
 		case DOWN:
 			tiltIntake.setVictor(-0.4);

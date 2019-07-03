@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 /**
  * Subsystem for the Intake.
  */
-public class Intake extends SuperSubsystem implements SuperCompressor, SuperVictor, SuperSolenoid {
+public class Intake extends SuperSubsystem implements SuperCompressor, SuperSolenoid, SuperVictor {
 	
 	private static Intake m_instance = null;
 
@@ -39,8 +39,8 @@ public class Intake extends SuperSubsystem implements SuperCompressor, SuperVict
 		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initCompressors(robotMap, getName());
-		initVictors(robotMap, getName());
 		initSolenoids(robotMap, getName());
+		initVictors(robotMap, getName());
 
 		finishedJSONInit();
 	}

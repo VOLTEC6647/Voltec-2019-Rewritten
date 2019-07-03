@@ -20,7 +20,6 @@ import org.usfirst.frc6647.commands.ResetEncoders;
 import org.usfirst.frc6647.commands.Slide;
 import org.usfirst.frc6647.commands.TiltIntakeManual;
 import org.usfirst.frc6647.commands.ToggleHatch;
-import org.usfirst.frc6647.commands.ZeroYaw;
 import org.usfirst.lib6647.oi.ButtonHelper;
 import org.usfirst.lib6647.oi.JController;
 import org.usfirst.lib6647.util.MoveDirection;
@@ -79,8 +78,6 @@ public class OI extends ButtonHelper {
 				oiButton("Driver1", "L2").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, false, "Driver1", 0.7));
 				oiButton("Driver1", "R2").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, false, "Driver1", 0.7));
 
-				oiButton("Driver1", "PS4Btn").whenPressed(new ZeroYaw());
-
 				oiButton("Driver1", "dPadUp").whileHeld(new GyroMove());
 				oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(MoveDirection.LEFT));
 				oiButton("Driver1", "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
@@ -97,8 +94,6 @@ public class OI extends ButtonHelper {
 
 				oiButton("Driver1", "LTrigger").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, false, "Driver1", 0.7));
 				oiButton("Driver1", "RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, false, "Driver1", 0.7));
-
-				oiButton("Driver1", "B").whenPressed(new ZeroYaw());
 
 				oiButton("Driver1", "dPadUp").whileHeld(new GyroMove());
 				oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(MoveDirection.LEFT));
