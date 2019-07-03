@@ -20,6 +20,7 @@ public class TiltIntakeManual extends Command {
 
 	private MoveDirection direction;
 	private HyperTalon tiltIntake;
+	private String talonName;
 
 	/**
 	 * Constructor for the command.
@@ -30,14 +31,14 @@ public class TiltIntakeManual extends Command {
 	public TiltIntakeManual(MoveDirection direction, String talonName) {
 		requires(TiltIntake.getInstance());
 
-		tiltIntake = TiltIntake.getInstance().getTalon(talonName);
-
 		this.direction = direction;
+		this.talonName = talonName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		tiltIntake = TiltIntake.getInstance().getTalon(talonName);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
