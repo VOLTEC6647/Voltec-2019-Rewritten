@@ -93,21 +93,21 @@ public class NavX extends PIDSuperSubsystem {
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber(getName() + "Output", output);
 
-		HyperTalon frontLeft = Chassis.getInstance().getTalon("frontLeft");
-		HyperVictor frontRight = Chassis.getInstance().getVictor("frontRight");
+		HyperVictor frontLeft = Chassis.getInstance().getVictor("frontLeft");
+		HyperTalon frontRight = Chassis.getInstance().getTalon("frontRight");
 
 		if (OI.getInstance().oiButton("Driver1", "dPadUp").get()) {
-			frontLeft.setTalon(((-0.5 - (accel * accelMult)) * padLimiter) + output);
-			frontRight.setVictor(((-0.45 - (accel * accelMult)) * padLimiter) - output);
+			frontLeft.setVictor(((-0.5 - (accel * accelMult)) * padLimiter) + output);
+			frontRight.setTalon(((-0.45 - (accel * accelMult)) * padLimiter) - output);
 		} else if (OI.getInstance().oiButton("Driver1", "dPadDown").get()) {
-			frontLeft.setTalon(((0.5 + (accel * accelMult)) * padLimiter) + output);
-			frontRight.setVictor(((0.45 + (accel * accelMult)) * padLimiter) - output);
+			frontLeft.setVictor(((0.5 + (accel * accelMult)) * padLimiter) + output);
+			frontRight.setTalon(((0.45 + (accel * accelMult)) * padLimiter) - output);
 		} else {
-			frontLeft.setTalon(output, true);
-			frontRight.setVictor(-output, true);
+			frontLeft.setVictor(output, true);
+			frontRight.setTalon(-output, true);
 		}
-		
-		pidOutput = Chassis.getInstance().getVictor("frontRight").getMotorOutputVoltage();
+
+		pidOutput = Chassis.getInstance().getTalon("frontRight").getMotorOutputVoltage();
 	}
 
 	/**
