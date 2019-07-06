@@ -109,42 +109,13 @@
 					}
 				}
 			]
-			
 		},
 		"chassisH": {
 			"talons": [
 				{
 					"name": "hWheel",
 					"port": 3,
-					"inverted": true,
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 1000
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 1000
-						}
-					},
-					"sensor": {
-						"feedback": {
-							"feedbackDevice": "QuadEncoder",
-							"pidIdx": 0,
-							"timeoutMs": 0
-						},
-						"phase": true,
-						"sensorPos": 0,
-						"pidIdx": 0,
-						"timeoutMs": 0
-					},
-					"pid": {
-						"slotIdx": 0,
-						"p": 0,
-						"i": 0,
-						"d": 0,
-						"f": 0
-					}
+					"inverted": true
 				}
 			]
 		},
@@ -155,141 +126,67 @@
 				"d": 0.007,
 				"inputMin": -180,
 				"inputMax": 180,
-				"outputMin": -0.75,
-				"outputMax": 0.75,
+				"outputMin": -1,
+				"outputMax": 1,
 				"absoluteTolerance": 0.5,
 				"continuous": true
 			}
 		},
 		"intake": {
-			"talons": [
-				{
-					"name": "intakeLeft",
-					"port": 13,
-					"inverted": true,
-					"neutralMode": "Brake",
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						}
-					},
-					"sensor": {
-						"feedback": {
-							"feedbackDevice": "QuadEncoder",
-							"pidIdx": 0,
-							"timeoutMs": 0
-						},
-						"phase": true,
-						"sensorPos": 0,
-						"pidIdx": 0,
-						"timeoutMs": 0
-					},
-					"pid": {
-						"slotIdx": 0,
-						"p": 0,
-						"i": 0,
-						"d": 0,
-						"f": 0
-					}
-				},
-				{
-					"name": "intakeRight",
-					"port": 11,
-					"inverted": false,
-					"neutralMode": "Brake",
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						}
-					},
-					"sensor": {
-						"feedback": {
-							"feedbackDevice": "QuadEncoder",
-							"pidIdx": 0,
-							"timeoutMs": 0
-						},
-						"phase": true,
-						"sensorPos": 0,
-						"pidIdx": 0,
-						"timeoutMs": 0
-					},
-					"pid": {
-						"slotIdx": 0,
-						"p": 0,
-						"i": 0,
-						"d": 0,
-						"f": 0
-					}
-				}
-			],
-			"solenoids": [
-				{
-					"name": "pushHatchForward",
-					"channel": 0,
-					"initialValue": false
-				},
-				{
-					"name": "pushHatchBackward",
-					"channel": 1,
-					"initialValue": false
-				}
-			],
 			"compressors": [
 				{
 					"name": "compressor",
 					"module": 0
+				}
+			],
+			"digitalInputs": [
+				{
+					"name": "cargoDetected",
+					"channel": 0
+				}
+			],
+			"doubleSolenoids": [
+				{
+					"name": "pushHatch",
+					"forwardChannel": 0,
+					"reverseChannel": 1
+				}
+			],
+			"talons": [
+				{
+					"name": "intakeLeft",
+					"port": 13,
+					"inverted": false,
+					"neutralMode": "Brake"
+				},
+				{
+					"name": "intakeRight",
+					"port": 11,
+					"inverted": true,
+					"neutralMode": "Brake"
 				}
 			]
 		},
 		"tiltIntake": {
 			"talons": [
 				{
-					"name": "intakeTilt",
+					"name": "tiltIntake",
 					"port": 12,
 					"inverted": true,
-					"neutralMode": "Brake",
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						}
-					},
-					"sensor": {
-						"feedback": {
-							"feedbackDevice": "QuadEncoder",
-							"pidIdx": 0,
-							"timeoutMs": 0
-						},
-						"phase": true,
-						"sensorPos": 0,
-						"pidIdx": 0,
-						"timeoutMs": 0
-					},
-					"pid": {
-						"slotIdx": 0,
-						"p": 0,
-						"i": 0,
-						"d": 0,
-						"f": 0
-					}
+					"neutralMode": "Brake"
 				}
 			]
 		},
 		"lift": {
+			"encoders": [
+				{
+					"name": "liftEncoder",
+					"channelA": 6,
+					"channelB": 7,
+					"reverse": false,
+					"encodingType": "k4X"
+				}
+			],
 			"pid": {
 				"p": 0.00004,
 				"i": 0.0000009015,
@@ -305,87 +202,12 @@
 				{
 					"name": "liftMain",
 					"port": 6,
-					"neutralMode": "Brake",
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						}
-					},
-					"sensor": {
-						"feedback": {
-							"feedbackDevice": "QuadEncoder",
-							"pidIdx": 0,
-							"timeoutMs": 0
-						},
-						"phase": true,
-						"sensorPos": 0,
-						"pidIdx": 0,
-						"timeoutMs": 0
-					},
-					"pid": {
-						"slotIdx": 0,
-						"p": 0,
-						"i": 0,
-						"d": 0,
-						"f": 0
-					}
+					"neutralMode": "Brake"
 				},
 				{
 					"name": "liftFollower",
 					"port": 7,
-					"neutralMode": "Brake",
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						}
-					},
-					"sensor": {
-						"feedback": {
-							"feedbackDevice": "QuadEncoder",
-							"pidIdx": 0,
-							"timeoutMs": 0
-						},
-						"phase": true,
-						"sensorPos": 0,
-						"pidIdx": 0,
-						"timeoutMs": 0
-					},
-					"pid": {
-						"slotIdx": 0,
-						"p": 0,
-						"i": 0,
-						"d": 0,
-						"f": 0
-					}
-				}
-			],
-			"encoders": [
-				{
-					"name": "liftEncoder",
-					"channelA": 6,
-					"channelB": 7,
-					"reverse": false,
-					"encodingType": "k4X"
-				}
-			],
-			"digitalInputs": [
-				{
-					"name": "lowLimitLift",
-					"channel": 1
-				},
-				{
-					"name": "topLimitLift",
-					"channel": 2
+					"neutralMode": "Brake"
 				}
 			]
 		}

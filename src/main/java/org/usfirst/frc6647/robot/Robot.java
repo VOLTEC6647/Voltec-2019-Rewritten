@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-		Intake.getInstance().stopH();
+		Intake.getInstance().getDoubleSolenoid("pushHatch").stop();
 	}
 
 	@Override

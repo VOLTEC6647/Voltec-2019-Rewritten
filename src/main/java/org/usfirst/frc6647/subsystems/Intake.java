@@ -2,7 +2,8 @@ package org.usfirst.frc6647.subsystems;
 
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperCompressor;
-import org.usfirst.lib6647.subsystem.supercomponents.SuperSolenoid;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperDigitalInput;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperDoubleSolenoid;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperTalon;
 
 import edu.wpi.first.wpilibj.Filesystem;
@@ -10,7 +11,8 @@ import edu.wpi.first.wpilibj.Filesystem;
 /**
  * Subsystem for the Intake.
  */
-public class Intake extends SuperSubsystem implements SuperCompressor, SuperSolenoid, SuperTalon {
+public class Intake extends SuperSubsystem
+		implements SuperCompressor, SuperDigitalInput, SuperDoubleSolenoid, SuperTalon {
 
 	private static Intake m_instance = null;
 
@@ -39,7 +41,8 @@ public class Intake extends SuperSubsystem implements SuperCompressor, SuperSole
 		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
 
 		initCompressors(robotMap, getName());
-		initSolenoids(robotMap, getName());
+		initDigitalInputs(robotMap, getName());
+		initDoubleSolenoids(robotMap, getName());
 		initTalons(robotMap, getName());
 
 		finishedJSONInit();
@@ -47,30 +50,5 @@ public class Intake extends SuperSubsystem implements SuperCompressor, SuperSole
 
 	@Override
 	protected void initDefaultCommand() {
-	}
-
-	/**
-	 * Set H to a specific value.
-	 * 
-	 * @param value
-	 */
-	public void setH(boolean value) {
-		solenoids.get("pushHatchForward").set(value);
-		solenoids.get("pushHatchBackward").set(!value);
-	}
-
-	/**
-	 * Toggle H.
-	 */
-	public void toggleH() {
-		setH(!solenoids.get("pushHatchForward").get());
-	}
-
-	/**
-	 * Stop H movement.
-	 */
-	public void stopH() {
-		solenoids.get("pushHatchForward").set(false);
-		solenoids.get("pushHatchBackward").set(false);
 	}
 }

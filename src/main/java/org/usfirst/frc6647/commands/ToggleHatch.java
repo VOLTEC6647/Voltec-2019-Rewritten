@@ -25,7 +25,7 @@ public class ToggleHatch extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Intake.getInstance().toggleH();
+		Intake.getInstance().getDoubleSolenoid("pushHatch").toggle();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
