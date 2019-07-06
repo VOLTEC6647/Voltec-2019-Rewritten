@@ -9,6 +9,8 @@ package org.usfirst.frc6647.robot;
 
 import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.ChangeVelocity;
+import org.usfirst.frc6647.commands.ClimbBack;
+import org.usfirst.frc6647.commands.ClimbFront;
 import org.usfirst.frc6647.commands.GyroAlign;
 import org.usfirst.frc6647.commands.GyroMove;
 import org.usfirst.frc6647.commands.MoveBall;
@@ -69,14 +71,16 @@ public class OI extends ButtonHelper {
 
 				oiButton("Driver1", "Square")
 						.whenPressed(new ChangeVelocity(0.6, 0.6, true, "frontLeft", "frontRight"));
+				oiButton("Driver1", "X").whileHeld(new ClimbBack("backSolenoid"));
+				oiButton("Driver1", "Circle").whileHeld(new ClimbFront("frontSolenoid"));
 				oiButton("Driver1", "Triangle")
 						.whenPressed(new ChangeVelocity(0.75, 0.9, false, "frontLeft", "frontRight"));
 
 				oiButton("Driver1", "L1").whenPressed(new ToggleHatch("pushHatch"));
 				oiButton("Driver1", "R1").whileHeld(new GyroAlign("Driver1"));
 
-				oiButton("Driver1", "L2").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, false, "Driver1", 0.7));
-				oiButton("Driver1", "R2").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, false, "Driver1", 0.7));
+				oiButton("Driver1", "L2").whileHeld(new Slide(MoveDirection.LEFT, "Driver1", 0.7));
+				oiButton("Driver1", "R2").whileHeld(new Slide(MoveDirection.RIGHT, "Driver1", 0.7));
 
 				oiButton("Driver1", "dPadUp").whileHeld(new GyroMove());
 				oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(MoveDirection.LEFT));
@@ -88,12 +92,14 @@ public class OI extends ButtonHelper {
 
 				oiButton("Driver1", "Y").whenPressed(new ChangeVelocity(0.6, 0.6, true, "frontLeft", "frontRight"));
 				oiButton("Driver1", "X").whenPressed(new ChangeVelocity(0.75, 0.9, false, "frontLeft", "frontRight"));
+				oiButton("Driver1", "B").whileHeld(new ClimbFront("frontSolenoid"));
+				oiButton("Driver1", "A").whileHeld(new ClimbBack("backSolenoid"));
 
 				oiButton("Driver1", "LBumper").whenPressed(new ToggleHatch("pushHatch"));
 				oiButton("Driver1", "RBumper").whileHeld(new GyroAlign("Driver1"));
 
-				oiButton("Driver1", "LTrigger").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, false, "Driver1", 0.7));
-				oiButton("Driver1", "RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, false, "Driver1", 0.7));
+				oiButton("Driver1", "LTrigger").whileHeld(new Slide(MoveDirection.LEFT, "Driver1", 0.7));
+				oiButton("Driver1", "RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, "Driver1", 0.7));
 
 				oiButton("Driver1", "dPadUp").whileHeld(new GyroMove());
 				oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(MoveDirection.LEFT));

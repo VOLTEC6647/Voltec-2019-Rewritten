@@ -50,6 +50,12 @@ public class Robot extends TimedRobot {
 	}
 
 	@Override
+	public void disabledInit() {
+		Climb.getInstance().getDoubleSolenoid("frontSolenoid").stop();
+		Climb.getInstance().getDoubleSolenoid("backSolenoid").stop();
+	}
+
+	@Override
 	public void autonomousInit() {
 		NavX.getInstance().zeroYaw();
 	}

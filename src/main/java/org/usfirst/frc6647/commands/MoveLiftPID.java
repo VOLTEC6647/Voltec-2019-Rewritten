@@ -59,8 +59,8 @@ public class MoveLiftPID extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		liftEncoder = Lift.getInstance().getEncoder(encoderName);
 		liftMain = Lift.getInstance().getVictor(victorName);
+		liftEncoder = Lift.getInstance().getEncoder(encoderName);
 
 		switch (target) {
 		case CARGO:

@@ -115,35 +115,7 @@
 				{
 					"name": "hWheel",
 					"port": 3,
-					"inverted": true,
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 1000
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 1000
-						}
-					},
-					"sensor": {
-						"feedback": {
-							"feedbackDevice": "QuadEncoder",
-							"pidIdx": 0,
-							"timeoutMs": 0
-						},
-						"phase": true,
-						"sensorPos": 0,
-						"pidIdx": 0,
-						"timeoutMs": 0
-					},
-					"pid": {
-						"slotIdx": 0,
-						"p": 0,
-						"i": 0,
-						"d": 0,
-						"f": 0
-					}
+					"inverted": true
 				}
 			]
 		},
@@ -161,40 +133,6 @@
 			}
 		},
 		"intake": {
-			"victors": [
-				{
-					"name": "intakeLeft",
-					"port": 5,
-					"inverted": true,
-					"neutralMode": "Brake",
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						}
-					}
-				},
-				{
-					"name": "intakeRight",
-					"port": 1,
-					"inverted": false,
-					"neutralMode": "Brake",
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						}
-					}
-				}
-			],
 			"compressors": [
 				{
 					"name": "compressor",
@@ -207,6 +145,18 @@
 					"channel": 3,
 					"initialValue": false
 				}
+			],
+			"victors": [
+				{
+					"name": "intakeLeft",
+					"port": 5,
+					"inverted": true
+				},
+				{
+					"name": "intakeRight",
+					"port": 1,
+					"inverted": false
+				}
 			]
 		},
 		"tiltIntake": {
@@ -214,18 +164,7 @@
 				{
 					"name": "intakeTilt",
 					"port": 12,
-					"inverted": true,
-					"neutralMode": "Brake",
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						}
-					}
+					"inverted": true
 				}
 			]
 		},
@@ -244,33 +183,11 @@
 			"victors": [
 				{
 					"name": "liftMain",
-					"port": 9,
-					"neutralMode": "Brake",
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						}
-					}
+					"port": 9
 				},
 				{
 					"name": "liftFollower",
-					"port": 10,
-					"neutralMode": "Brake",
-					"loopRamp": {
-						"closed": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						},
-						"open": {
-							"secondsFromNeutralToFull": 0.2,
-							"timeoutMs": 0
-						}
-					}
+					"port": 10
 				}
 			],
 			"encoders": [
@@ -284,26 +201,16 @@
 			]
 		},
 		"climb": {
-			"solenoids": [
+			"doubleSolenoids": [
 				{
-					"name": "frontSolenoidForward",
-					"channel": 6,
-					"initialValue": false
+					"name": "frontSolenoid",
+					"forwardChannel": 6,
+					"reverseChannel": 7
 				},
 				{
-					"name": "frontSolenoidBackward",
-					"channel": 7,
-					"initialValue": false
-				},
-				{
-					"name": "backSolenoidForward",
-					"channel": 5,
-					"initialValue": false
-				},
-				{
-					"name": "backSolenoidBackward",
-					"channel": 4,
-					"initialValue": false
+					"name": "backSolenoid",
+					"forwardChannel": 5,
+					"reverseChannel": 4
 				}
 			]
 		}

@@ -7,30 +7,22 @@
 
 package org.usfirst.frc6647.commands;
 
-import org.usfirst.frc6647.subsystems.Intake;
+import org.usfirst.frc6647.subsystems.Climb;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Command for toggling the H solenoid.
- */
-public class ToggleHatch extends Command {
+public class ClimbBack extends Command {
 
-	private String solenoidName;
+	private String backSolenoidName;
 
-	/**
-	 * Constructor for the command.
-	 * 
-	 * @param solenoidName
-	 */
-	public ToggleHatch(String solenoidName) {
-		this.solenoidName = solenoidName;
+	public ClimbBack(String backSolenoidName) {
+		this.backSolenoidName = backSolenoidName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Intake.getInstance().getSolenoid(solenoidName).toggle();
+		Climb.getInstance().getDoubleSolenoid(backSolenoidName).set(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -41,12 +33,13 @@ public class ToggleHatch extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Climb.getInstance().getDoubleSolenoid(backSolenoidName).set(false);
 	}
 
 	// Called when another command which requires one or more of the same

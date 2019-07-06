@@ -65,7 +65,7 @@ public class NavX extends PIDSuperSubsystem {
 	 */
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("NavXYaw", ahrs.getYaw());
+		SmartDashboard.putNumber("NavXYaw", getYaw());
 		SmartDashboard.putNumber("Goal", getPIDController().getSetpoint());
 	}
 
@@ -106,6 +106,7 @@ public class NavX extends PIDSuperSubsystem {
 			frontRight.setTalon(-output, true);
 		}
 
+		// TODO: Test output in ControlMode.Current.
 		pidOutput = Chassis.getInstance().getTalon("frontRight").getMotorOutputVoltage();
 	}
 
