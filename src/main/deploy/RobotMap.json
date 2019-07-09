@@ -115,7 +115,7 @@
 				{
 					"name": "hWheel",
 					"port": 3,
-					"inverted": true
+					"inverted": false
 				}
 			]
 		},
@@ -150,19 +150,19 @@
 				{
 					"name": "intakeLeft",
 					"port": 5,
-					"inverted": true
+					"inverted": false
 				},
 				{
 					"name": "intakeRight",
 					"port": 1,
-					"inverted": false
+					"inverted": true
 				}
 			]
 		},
 		"tiltIntake": {
 			"victors": [
 				{
-					"name": "intakeTilt",
+					"name": "tiltIntake",
 					"port": 12,
 					"inverted": true
 				}
