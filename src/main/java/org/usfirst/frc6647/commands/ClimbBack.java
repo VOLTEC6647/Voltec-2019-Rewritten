@@ -8,31 +8,21 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Climb;
-import org.usfirst.lib6647.util.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ClimbHab extends Command {
+public class ClimbBack extends Command {
 
-	Direction direction;
+	private String backSolenoidName;
 
-	public ClimbHab(Direction direction) {
-		this.direction = direction;
+	public ClimbBack(String backSolenoidName) {
+		this.backSolenoidName = backSolenoidName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		switch (direction) {
-		case FRONT:
-			Climb.getInstance().setFront(true);
-			break;
-		case BACK:
-			Climb.getInstance().setBack(true);
-			break;
-		default:
-			end();
-		}
+		Climb.getInstance().getDoubleSolenoid(backSolenoidName).set(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -49,16 +39,7 @@ public class ClimbHab extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		switch (direction) {
-		case FRONT:
-			Climb.getInstance().setFront(false);
-			break;
-		case BACK:
-			Climb.getInstance().setBack(false);
-			break;
-		default:
-			break;
-		}
+		Climb.getInstance().getDoubleSolenoid(backSolenoidName).set(false);
 	}
 
 	// Called when another command which requires one or more of the same

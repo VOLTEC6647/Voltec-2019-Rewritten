@@ -8,7 +8,7 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.NavX;
-import org.usfirst.lib6647.util.Direction;
+import org.usfirst.lib6647.util.MoveDirection;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,14 +17,14 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AlignNext extends Command {
 
-	private Direction direction;
+	private MoveDirection direction;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
 	 */
-	public AlignNext(Direction direction) {
+	public AlignNext(MoveDirection direction) {
 		this.direction = direction;
 	}
 
@@ -35,41 +35,41 @@ public class AlignNext extends Command {
 			end();
 
 		double yaw = NavX.getInstance().getSetpoint();
-		//TODO: Adjust PID values for sharp turns.
+		// TODO: Adjust PID values for sharp turns.
 		switch (direction) {
 		case LEFT:
 			if (yaw == -180 || yaw == 180)
 				NavX.getInstance().setSetpoint(-151.25);
-			else if (yaw == -151.25)
-				NavX.getInstance().setSetpoint(-90);
-			else if (yaw == -90)
-				NavX.getInstance().setSetpoint(-28.75);
+			/*
+			 * else if (yaw == -151.25) NavX.getInstance().setSetpoint(-90); else if (yaw ==
+			 * -90) NavX.getInstance().setSetpoint(-28.75);
+			 */
 			else if (yaw == -28.75)
 				NavX.getInstance().setSetpoint(0);
 			else if (yaw == 0)
 				NavX.getInstance().setSetpoint(28.75);
-			else if (yaw == 28.75)
-				NavX.getInstance().setSetpoint(90);
-			else if (yaw == 90)
-				NavX.getInstance().setSetpoint(151.25);
+			/*
+			 * else if (yaw == 28.75) NavX.getInstance().setSetpoint(90); else if (yaw ==
+			 * 90) NavX.getInstance().setSetpoint(151.25);
+			 */
 			else if (yaw == 151.25)
 				NavX.getInstance().setSetpoint(180);
 			break;
 		case RIGHT:
 			if (yaw == -180 || yaw == 180)
 				NavX.getInstance().setSetpoint(151.25);
-			else if (yaw == 151.25)
-				NavX.getInstance().setSetpoint(90);
-			else if (yaw == 90)
-				NavX.getInstance().setSetpoint(28.75);
+			/*
+			 * else if (yaw == 151.25) NavX.getInstance().setSetpoint(90); else if (yaw ==
+			 * 90) NavX.getInstance().setSetpoint(28.75);
+			 */
 			else if (yaw == 28.75)
 				NavX.getInstance().setSetpoint(0);
 			else if (yaw == 0)
 				NavX.getInstance().setSetpoint(-28.75);
-			else if (yaw == -28.75)
-				NavX.getInstance().setSetpoint(-90);
-			else if (yaw == -90)
-				NavX.getInstance().setSetpoint(-151.25);
+			/*
+			 * else if (yaw == -28.75) NavX.getInstance().setSetpoint(-90); else if (yaw ==
+			 * -90) NavX.getInstance().setSetpoint(-151.25);
+			 */
 			else if (yaw == -151.25)
 				NavX.getInstance().setSetpoint(180);
 			break;

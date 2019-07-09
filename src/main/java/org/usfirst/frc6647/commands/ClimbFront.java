@@ -7,25 +7,22 @@
 
 package org.usfirst.frc6647.commands;
 
-import org.usfirst.frc6647.subsystems.NavX;
+import org.usfirst.frc6647.subsystems.Climb;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Command for Zeroing the NavX's yaw.
- */
-public class ZeroYaw extends Command {
-	
-	/**
-	 * Constructor for the command.
-	 */
-	public ZeroYaw() {
+public class ClimbFront extends Command {
+
+	private String frontSolenoidName;
+
+	public ClimbFront(String frontSolenoidName) {
+		this.frontSolenoidName = frontSolenoidName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		NavX.getInstance().zeroYaw();
+		Climb.getInstance().getDoubleSolenoid(frontSolenoidName).set(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -36,17 +33,19 @@ public class ZeroYaw extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Climb.getInstance().getDoubleSolenoid(frontSolenoidName).set(false);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		end();
 	}
 }

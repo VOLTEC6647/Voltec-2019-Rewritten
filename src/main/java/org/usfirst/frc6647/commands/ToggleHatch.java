@@ -15,19 +15,22 @@ import edu.wpi.first.wpilibj.command.Command;
  * Command for toggling the H solenoid.
  */
 public class ToggleHatch extends Command {
+
+	private String solenoidName;
+
 	/**
 	 * Constructor for the command.
 	 * 
-	 * @param direction
+	 * @param solenoidName
 	 */
-	public ToggleHatch() {
-		requires(Intake.getInstance());
+	public ToggleHatch(String solenoidName) {
+		this.solenoidName = solenoidName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Intake.getInstance().toggleH();
+		Intake.getInstance().getSolenoid(solenoidName).toggle();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

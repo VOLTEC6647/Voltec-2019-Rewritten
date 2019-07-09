@@ -22,8 +22,8 @@ public class GyroMove extends Command {
 	@Override
 	protected void initialize() {
 		yaw = NavX.getInstance().getYaw();
-		NavX.getInstance().getPIDController().setSetpoint(yaw);
 
+		NavX.getInstance().getPIDController().setSetpoint(yaw);
 		NavX.getInstance().resetAccel();
 
 		if (!NavX.getInstance().getPIDController().isEnabled())

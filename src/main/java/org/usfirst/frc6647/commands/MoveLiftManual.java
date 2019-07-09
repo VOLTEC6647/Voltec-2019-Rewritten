@@ -8,7 +8,8 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Lift;
-import org.usfirst.lib6647.util.Direction;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperVictor;
+import org.usfirst.lib6647.util.MoveDirection;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,22 +18,27 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveLiftManual extends Command {
 
-	private Direction direction;
+	private MoveDirection direction;
+	private HyperVictor liftMain;
+	private String victorName;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
+	 * @param victorName
 	 */
-	public MoveLiftManual(Direction direction) {
+	public MoveLiftManual(MoveDirection direction, String victorName) {
 		requires(Lift.getInstance());
 
 		this.direction = direction;
+		this.victorName = victorName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		liftMain = Lift.getInstance().getVictor(victorName);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -40,13 +46,10 @@ public class MoveLiftManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			Lift.getInstance().setLift(0.6);
+			liftMain.setVictor(0.6);
 			break;
 		case DOWN:
-			if (!Lift.getInstance().getDownLimitValue())
-				end();
-			else
-				Lift.getInstance().setLift(-0.3);
+			liftMain.setVictor(-0.3);
 			break;
 		default:
 			end();
@@ -63,7 +66,7 @@ public class MoveLiftManual extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Lift.getInstance().stopLift();
+		liftMain.stopVictor();
 	}
 
 	// Called when another command which requires one or more of the same

@@ -9,23 +9,31 @@ package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Lift;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Command to reset Lift Encoder.
  */
 public class ResetEncoders extends Command {
+
+	private Encoder liftEncoder;
+
 	/**
 	 * Constructor for the command.
+	 * 
+	 * @param encoderName
 	 */
-	public ResetEncoders() {
+	public ResetEncoders(String encoderName) {
 		requires(Lift.getInstance());
+
+		liftEncoder = Lift.getInstance().getEncoder(encoderName);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Lift.getInstance().resetEncoder();
+		liftEncoder.reset();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

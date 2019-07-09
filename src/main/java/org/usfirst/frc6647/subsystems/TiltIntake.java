@@ -1,9 +1,7 @@
 package org.usfirst.frc6647.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.components.SuperVictor;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperVictor;
 
 import edu.wpi.first.wpilibj.Filesystem;
 
@@ -42,21 +40,5 @@ public class TiltIntake extends SuperSubsystem implements SuperVictor {
 
 	@Override
 	protected void initDefaultCommand() {
-	}
-
-	/**
-	 * Set Intake tilt Victor speed.
-	 * 
-	 * @param speedTilt
-	 */
-	public void setTiltIntake(double speedTilt) {
-		victors.get("intakeTilt").set(ControlMode.PercentOutput, speedTilt);
-	}
-
-	/**
-	 * Stop Intake tilt Victor dead in its tracks.
-	 */
-	public void stopTiltIntake() {
-		setTiltIntake(0.0);
 	}
 }

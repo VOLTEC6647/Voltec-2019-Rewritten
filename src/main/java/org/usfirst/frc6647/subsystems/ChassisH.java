@@ -7,10 +7,8 @@
 
 package org.usfirst.frc6647.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
-import org.usfirst.lib6647.subsystem.components.SuperTalon;
+import org.usfirst.lib6647.subsystem.supercomponents.SuperTalon;
 
 import edu.wpi.first.wpilibj.Filesystem;
 
@@ -52,21 +50,5 @@ public class ChassisH extends SuperSubsystem implements SuperTalon {
 
 	@Override
 	public void initDefaultCommand() {
-	}
-
-	/**
-	 * Sets the hWheel Talon to the given speed, in PercentOutput.
-	 * 
-	 * @param speed
-	 */
-	public void moveHWheel(double speed) {
-		talons.get("hWheel").set(ControlMode.PercentOutput, speed);
-	}
-
-	/**
-	 * Stops the hWheel Talon dead in its tracks.
-	 */
-	public void stopHWheel() {
-		moveHWheel(0);
 	}
 }

@@ -8,7 +8,8 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.TiltIntake;
-import org.usfirst.lib6647.util.Direction;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperVictor;
+import org.usfirst.lib6647.util.MoveDirection;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,22 +18,27 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TiltIntakeManual extends Command {
 
-	private Direction direction;
+	private MoveDirection direction;
+	private HyperVictor tiltIntake;
+	private String victorName;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
+	 * @param victorName
 	 */
-	public TiltIntakeManual(Direction direction) {
+	public TiltIntakeManual(MoveDirection direction, String victorName) {
 		requires(TiltIntake.getInstance());
-
+		
 		this.direction = direction;
+		this.victorName = victorName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		tiltIntake = TiltIntake.getInstance().getVictor(victorName);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -40,10 +46,10 @@ public class TiltIntakeManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			TiltIntake.getInstance().setTiltIntake(0.4);
+			tiltIntake.setVictor(0.6);
 			break;
 		case DOWN:
-			TiltIntake.getInstance().setTiltIntake(-0.4);
+			tiltIntake.setVictor(-0.4);
 			break;
 		default:
 			end();
@@ -60,7 +66,7 @@ public class TiltIntakeManual extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		TiltIntake.getInstance().stopTiltIntake();
+		tiltIntake.stopVictor();
 	}
 
 	// Called when another command which requires one or more of the same

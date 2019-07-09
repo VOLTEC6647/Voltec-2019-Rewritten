@@ -8,7 +8,8 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Intake;
-import org.usfirst.lib6647.util.Direction;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperVictor;
+import org.usfirst.lib6647.util.MoveDirection;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -18,24 +19,30 @@ import edu.wpi.first.wpilibj.command.Command;
 public class MoveBall extends Command {
 
 	private double speed;
-	private Direction direction;
+	private MoveDirection direction;
+	private HyperVictor intakeLeft, intakeRight;
+	private String leftName, rightName;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
 	 * @param speed
+	 * @param leftName
+	 * @param rightName
 	 */
-	public MoveBall(Direction direction, double speed) {
-		requires(Intake.getInstance());
-
+	public MoveBall(MoveDirection direction, double speed, String leftName, String rightName) {
 		this.direction = direction;
 		this.speed = speed;
+		this.leftName = leftName;
+		this.rightName = rightName;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		intakeLeft = Intake.getInstance().getVictor(leftName);
+		intakeRight = Intake.getInstance().getVictor(rightName);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -43,10 +50,12 @@ public class MoveBall extends Command {
 	protected void execute() {
 		switch (direction) {
 		case IN:
-			Intake.getInstance().setIntake(speed, speed);
+			intakeLeft.setVictor(speed);
+			intakeRight.setVictor(speed);
 			break;
 		case OUT:
-			Intake.getInstance().setIntake(-speed, -speed);
+			intakeLeft.setVictor(-speed);
+			intakeRight.setVictor(-speed);
 			break;
 		default:
 			end();
@@ -63,7 +72,8 @@ public class MoveBall extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Intake.getInstance().stopIntake();
+		intakeLeft.stopVictor();
+		intakeRight.stopVictor();
 	}
 
 	// Called when another command which requires one or more of the same

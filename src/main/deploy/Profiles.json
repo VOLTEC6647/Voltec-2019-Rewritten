@@ -65,7 +65,7 @@
 		"LStickUp": "Stick1_-1",
 		"LStickDown": "Stick1_1",
 		"LTrigger": "Stick2_1",
-		"RTrigger": "Stick2_-1"
+		"RTrigger": "Stick3_1"
 	},
 	"Controller (Xbox One For Windows)": {
 		"A": "Button1",
@@ -85,6 +85,6 @@
 		"LStickUp": "Stick1_-1",
 		"LStickDown": "Stick1_1",
 		"LTrigger": "Stick2_1",
-		"RTrigger": "Stick2_-1"
+		"RTrigger": "Stick3_1"
 	}
 }

@@ -9,9 +9,11 @@ package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.frc6647.subsystems.ChassisH;
-import org.usfirst.lib6647.util.Direction;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
+import org.usfirst.lib6647.util.MoveDirection;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -19,11 +21,15 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class Slide extends Command {
 
-	private Direction direction;
-	private int leftAxis, rightAxis;
+	private MoveDirection direction;
+	private int leftAxisId, rightAxisId;
+	private double leftAxis, rightAxis;
+	private Joystick joystick;
 	private String joystickName;
 	private boolean useAxes, startsAtZero;
+
 	private double speed;
+	private HyperTalon hWheel;
 
 	/**
 	 * Constructor for the command. You must specify the name of the joystick and
@@ -33,7 +39,7 @@ public class Slide extends Command {
 	 * @param joystickName
 	 * @param speed
 	 */
-	public Slide(Direction direction, String joystickName, double speed) {
+	public Slide(MoveDirection direction, String joystickName, double speed) {
 		requires(ChassisH.getInstance());
 
 		this.direction = direction;
@@ -50,20 +56,21 @@ public class Slide extends Command {
 	 * @param direction
 	 * @param leftAxis
 	 * @param rightAxis
-	 * @param startsAt
+	 * @param startsAtZero
 	 * @param joystickName
 	 * @param speed
 	 */
-	public Slide(Direction direction, int leftAxis, int rightAxis, boolean startsAtZero, String joystickName,
+	public Slide(MoveDirection direction, int leftAxis, int rightAxis, boolean startsAtZero, String joystickName,
 			double speed) {
 		requires(ChassisH.getInstance());
 
 		this.direction = direction;
-		this.leftAxis = leftAxis;
-		this.rightAxis = rightAxis;
 		this.startsAtZero = startsAtZero;
 		this.joystickName = joystickName;
 		this.speed = speed;
+
+		leftAxisId = leftAxis;
+		rightAxisId = rightAxis;
 
 		useAxes = true;
 	}
@@ -71,16 +78,25 @@ public class Slide extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		joystick = OI.getInstance().joysticks.get(joystickName);
+
 		switch (direction) {
 		case LEFT:
-			OI.getInstance().joysticks.get("Driver1").setRumble(RumbleType.kLeftRumble, 1);
+			joystick.setRumble(RumbleType.kLeftRumble, 1);
 			break;
 		case RIGHT:
-			OI.getInstance().joysticks.get("Driver1").setRumble(RumbleType.kRightRumble, 1);
+			joystick.setRumble(RumbleType.kRightRumble, 1);
 			break;
 		default:
 			end();
 			break;
+		}
+
+		hWheel = ChassisH.getInstance().getTalon("hWheel");
+
+		if (useAxes) {
+			leftAxis = joystick.getRawAxis(leftAxisId);
+			rightAxis = joystick.getRawAxis(rightAxisId);
 		}
 	}
 
@@ -90,26 +106,20 @@ public class Slide extends Command {
 
 		switch (direction) {
 		case LEFT:
-			if (!useAxes) {
-				ChassisH.getInstance().moveHWheel(speed);
-			} else if (!startsAtZero) {
-				ChassisH.getInstance().moveHWheel(
-						((OI.getInstance().joysticks.get(joystickName).getRawAxis(leftAxis) + 1) / 2) * speed);
-			} else {
-				ChassisH.getInstance()
-						.moveHWheel(OI.getInstance().joysticks.get(joystickName).getRawAxis(leftAxis) * speed);
-			}
+			if (!useAxes)
+				hWheel.setTalon(speed);
+			else if (!startsAtZero)
+				hWheel.setTalon(((leftAxis + 1) / 2) * speed);
+			else
+				hWheel.setTalon(leftAxis * speed);
 			break;
 		case RIGHT:
-			if (!useAxes) {
-				ChassisH.getInstance().moveHWheel(-speed);
-			} else if (!startsAtZero) {
-				ChassisH.getInstance().moveHWheel(
-						((OI.getInstance().joysticks.get(joystickName).getRawAxis(rightAxis) + 1) / 2) * -speed);
-			} else {
-				ChassisH.getInstance()
-						.moveHWheel(OI.getInstance().joysticks.get(joystickName).getRawAxis(rightAxis) * -speed);
-			}
+			if (!useAxes)
+				hWheel.setTalon(-speed);
+			else if (!startsAtZero)
+				hWheel.setTalon(((rightAxis + 1) / 2) * -speed);
+			else
+				hWheel.setTalon(rightAxis * -speed);
 			break;
 		default:
 			end();
@@ -126,9 +136,9 @@ public class Slide extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ChassisH.getInstance().stopHWheel();
-		OI.getInstance().joysticks.get("Driver1").setRumble(RumbleType.kLeftRumble, 0);
-		OI.getInstance().joysticks.get("Driver1").setRumble(RumbleType.kRightRumble, 0);
+		hWheel.stopTalon();
+		joystick.setRumble(RumbleType.kLeftRumble, 0);
+		joystick.setRumble(RumbleType.kRightRumble, 0);
 	}
 
 	// Called when another command which requires one or more of the same
