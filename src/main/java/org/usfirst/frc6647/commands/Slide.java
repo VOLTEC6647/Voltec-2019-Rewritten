@@ -25,7 +25,6 @@ public class Slide extends Command {
 	private int leftAxisId, rightAxisId;
 	private double leftAxis, rightAxis;
 	private Joystick joystick;
-	private String joystickName;
 	private boolean useAxes, startsAtZero;
 
 	private double speed;
@@ -39,11 +38,10 @@ public class Slide extends Command {
 	 * @param joystickName
 	 * @param speed
 	 */
-	public Slide(MoveDirection direction, String joystickName, double speed) {
+	public Slide(MoveDirection direction, double speed) {
 		requires(ChassisH.getInstance());
 
 		this.direction = direction;
-		this.joystickName = joystickName;
 		this.speed = speed;
 
 		useAxes = false;
@@ -60,15 +58,13 @@ public class Slide extends Command {
 	 * @param joystickName
 	 * @param speed
 	 */
-	public Slide(MoveDirection direction, int leftAxis, int rightAxis, boolean startsAtZero, String joystickName,
-			double speed) {
+	public Slide(MoveDirection direction, int leftAxis, int rightAxis, boolean startsAtZero, double speed) {
 		requires(ChassisH.getInstance());
 
 		this.direction = direction;
 		this.startsAtZero = startsAtZero;
-		this.joystickName = joystickName;
 		this.speed = speed;
-		
+
 		leftAxisId = leftAxis;
 		rightAxisId = rightAxis;
 
@@ -78,7 +74,7 @@ public class Slide extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		joystick = OI.getInstance().joysticks.get(joystickName);
+		joystick = OI.getInstance().getJoystick(0);
 
 		switch (direction) {
 		case LEFT:
@@ -91,7 +87,7 @@ public class Slide extends Command {
 			end();
 			break;
 		}
-		
+
 		hWheel = ChassisH.getInstance().getTalon("hWheel");
 
 		if (useAxes) {

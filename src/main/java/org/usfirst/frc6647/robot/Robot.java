@@ -40,6 +40,10 @@ public class Robot extends TimedRobot {
 		Lift.createInstance();
 
 		OI.createInstance();
+
+		// Debug commands.
+		SmartDashboard.putData("ResetEncoders", new ResetEncoders("liftEncoder"));
+		SmartDashboard.putData("ZeroYaw", new ZeroYaw());
 	}
 
 	@Override
@@ -49,7 +53,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-		Intake.getInstance().getDoubleSolenoid("pushHatch").stop();
 	}
 
 	@Override
@@ -63,9 +66,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		// Debug commands.
-		SmartDashboard.putData("ResetEncoders", new ResetEncoders("liftEncoder"));
-		SmartDashboard.putData("ZeroYaw", new ZeroYaw());
 	}
 
 	@Override
