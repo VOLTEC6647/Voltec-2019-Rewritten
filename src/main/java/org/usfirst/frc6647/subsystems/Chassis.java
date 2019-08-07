@@ -69,8 +69,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	@Override
 	public void periodic() {
 		if (!NavX.getInstance().getPIDController().isEnabled()) {
-			double leftStickY = joyTolerance.apply(OI.getInstance().joysticks.get("Driver1").getLeftAxis()),
-					rightStickY = joyTolerance.apply(OI.getInstance().joysticks.get("Driver1").getRightAxis());
+			double leftStickY = joyTolerance.apply(OI.getInstance().getJoystick(0).getLeftAxis()),
+					rightStickY = joyTolerance.apply(OI.getInstance().getJoystick(0).getRightAxis());
 			talons.get("frontLeft").setTalonWithRamp(leftStickY);
 			talons.get("frontRight").setTalonWithRamp(rightStickY);
 		}

@@ -42,6 +42,10 @@ public class Robot extends TimedRobot {
 		Climb.createInstance();
 
 		OI.createInstance();
+
+		// Debug commands.
+		SmartDashboard.putData("ResetEncoders", new ResetEncoders("liftEncoder"));
+		SmartDashboard.putData("ZeroYaw", new ZeroYaw());
 	}
 
 	@Override
@@ -58,6 +62,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		NavX.getInstance().zeroYaw();
+		Climb.getInstance().getDoubleSolenoid("frontSolenoid").set(false);
+		Climb.getInstance().getDoubleSolenoid("backSolenoid").set(false);
 	}
 
 	@Override
@@ -68,9 +74,6 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		Climb.getInstance().getDoubleSolenoid("frontSolenoid").set(false);
 		Climb.getInstance().getDoubleSolenoid("backSolenoid").set(false);
-		// Debug commands.
-		SmartDashboard.putData("ResetEncoders", new ResetEncoders("liftEncoder"));
-		SmartDashboard.putData("ZeroYaw", new ZeroYaw());
 	}
 
 	@Override

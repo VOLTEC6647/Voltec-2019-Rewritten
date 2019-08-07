@@ -25,7 +25,6 @@ public class Slide extends Command {
 	private int leftAxisId, rightAxisId;
 	private double leftAxis, rightAxis;
 	private Joystick joystick;
-	private String joystickName;
 	private boolean useAxes, startsAtZero;
 
 	private double speed;
@@ -36,14 +35,12 @@ public class Slide extends Command {
 	 * speed you wish to go.
 	 * 
 	 * @param direction
-	 * @param joystickName
 	 * @param speed
 	 */
-	public Slide(MoveDirection direction, String joystickName, double speed) {
+	public Slide(MoveDirection direction, double speed) {
 		requires(ChassisH.getInstance());
 
 		this.direction = direction;
-		this.joystickName = joystickName;
 		this.speed = speed;
 
 		useAxes = false;
@@ -51,22 +48,19 @@ public class Slide extends Command {
 
 	/**
 	 * Constructor for the command. You must specify left and right axes, the value
-	 * the axes start at, the name of the joystick, and the speed you wish to go.
+	 * the axes start at, and the speed you wish to go.
 	 * 
 	 * @param direction
 	 * @param leftAxis
 	 * @param rightAxis
 	 * @param startsAtZero
-	 * @param joystickName
 	 * @param speed
 	 */
-	public Slide(MoveDirection direction, int leftAxis, int rightAxis, boolean startsAtZero, String joystickName,
-			double speed) {
+	public Slide(MoveDirection direction, int leftAxis, int rightAxis, boolean startsAtZero, double speed) {
 		requires(ChassisH.getInstance());
 
 		this.direction = direction;
 		this.startsAtZero = startsAtZero;
-		this.joystickName = joystickName;
 		this.speed = speed;
 
 		leftAxisId = leftAxis;
@@ -78,7 +72,7 @@ public class Slide extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		joystick = OI.getInstance().joysticks.get(joystickName);
+		joystick = OI.getInstance().getJoystick(0);
 
 		switch (direction) {
 		case LEFT:

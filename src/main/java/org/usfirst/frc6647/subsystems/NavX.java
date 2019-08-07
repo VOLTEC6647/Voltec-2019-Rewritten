@@ -95,10 +95,10 @@ public class NavX extends PIDSuperSubsystem {
 		HyperTalon frontLeft = Chassis.getInstance().getTalon("frontLeft"),
 				frontRight = Chassis.getInstance().getTalon("frontRight");
 
-		if (OI.getInstance().oiButton("Driver1", "dPadUp").get()) {
+		if (OI.getInstance().getJoystick(0).get("dPadUp").get()) {
 			frontLeft.setTalon(((-0.5 - (accel * accelMult)) * padLimiter) + output);
 			frontRight.setTalon(((-0.45 - (accel * accelMult)) * padLimiter) - output);
-		} else if (OI.getInstance().oiButton("Driver1", "dPadDown").get()) {
+		} else if (OI.getInstance().getJoystick(0).get("dPadDown").get()) {
 			frontLeft.setTalon(((0.5 + (accel * accelMult)) * padLimiter) + output);
 			frontRight.setTalon(((0.45 + (accel * accelMult)) * padLimiter) - output);
 		} else {
@@ -106,8 +106,7 @@ public class NavX extends PIDSuperSubsystem {
 			frontRight.setTalon(-output, true);
 		}
 
-		// TODO: Test output in ControlMode.Current.
-		pidOutput = Chassis.getInstance().getTalon("frontRight").getMotorOutputVoltage();
+		pidOutput = output;
 	}
 
 	/**

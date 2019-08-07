@@ -7,6 +7,8 @@
 
 package org.usfirst.frc6647.robot;
 
+import java.util.ArrayList;
+
 import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.ChangeVelocity;
 import org.usfirst.frc6647.commands.ClimbBack;
@@ -22,7 +24,6 @@ import org.usfirst.frc6647.commands.ResetEncoders;
 import org.usfirst.frc6647.commands.Slide;
 import org.usfirst.frc6647.commands.TiltIntakeManual;
 import org.usfirst.frc6647.commands.ToggleHatch;
-import org.usfirst.lib6647.oi.ButtonHelper;
 import org.usfirst.lib6647.oi.JController;
 import org.usfirst.lib6647.util.MoveDirection;
 
@@ -31,7 +32,9 @@ import edu.wpi.first.wpilibj.Filesystem;
 /**
  * Class for registering driver input.
  */
-public class OI extends ButtonHelper {
+public class OI {
+	/** ArrayList holding initialized joysticks. */
+	ArrayList<JController> joysticks = new ArrayList<JController>();
 
 	private static OI m_instance = null;
 
@@ -60,134 +63,170 @@ public class OI extends ButtonHelper {
 	 * Add joysticks and button inputs here.
 	 */
 	public OI() {
-		super(Filesystem.getDeployDirectory() + "/Profiles.json");
+		/** JSON File for JController profiles. */
+		String filePath = Filesystem.getDeployDirectory() + "/Profiles.json";
 
-		joysticks.put("Driver1", new JController(0));
+		JController driver1 = new JController(0, filePath);
 
-		if (!joysticks.get("Driver1").getName().isEmpty()) {
-			System.out.println("[!] Controller 1 found!");
+		if (!driver1.getName().isEmpty()) {
+			System.out.println("[!] Driver1 found!\n" + "[!] " + driver1.getName());
 
-			if (joysticks.get("Driver1").getName().equals("Wireless Controller")) {
+			ChangeVelocity changeVelSlow = new ChangeVelocity(0.6, 0.6, true, "frontLeft", "frontRight");
+			ChangeVelocity changeVelFast = new ChangeVelocity(0.75, 0.9, false, "frontLeft", "frontRight");
 
-				oiButton("Driver1", "Square")
-						.whenPressed(new ChangeVelocity(0.6, 0.6, true, "frontLeft", "frontRight"));
-				oiButton("Driver1", "X").whileHeld(new ClimbBack("backSolenoid"));
-				oiButton("Driver1", "Circle").whileHeld(new ClimbFront("frontSolenoid"));
-				oiButton("Driver1", "Triangle")
-						.whenPressed(new ChangeVelocity(0.75, 0.9, false, "frontLeft", "frontRight"));
+			ToggleHatch toggleHatch = new ToggleHatch("pushHatch");
+			GyroAlign gyroAlign = new GyroAlign();
 
-				oiButton("Driver1", "L1").whenPressed(new ToggleHatch("pushHatch"));
-				oiButton("Driver1", "R1").whileHeld(new GyroAlign("Driver1"));
+			Slide slideLeft = new Slide(MoveDirection.LEFT, 0.7);
+			Slide slideRight = new Slide(MoveDirection.RIGHT, 0.7);
 
-				oiButton("Driver1", "L2").whileHeld(new Slide(MoveDirection.LEFT, "Driver1", 0.7));
-				oiButton("Driver1", "R2").whileHeld(new Slide(MoveDirection.RIGHT, "Driver1", 0.7));
+			GyroMove dPadGyro = new GyroMove();
+			AlignNext alignLeft = new AlignNext(MoveDirection.LEFT);
+			AlignNext alignRight = new AlignNext(MoveDirection.RIGHT);
 
-				oiButton("Driver1", "dPadUp").whileHeld(new GyroMove());
-				oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(MoveDirection.LEFT));
-				oiButton("Driver1", "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
-				oiButton("Driver1", "dPadDown").whileHeld(new GyroMove());
+			ClimbFront climbFront = new ClimbFront("frontSolenoid");
+			ClimbBack climbBack = new ClimbBack("backSolenoid");
 
-			} else if (joysticks.get("Driver1").getName().equals("Controller (XBOX 360 For Windows)")
-					|| joysticks.get("Driver1").getName().equals("Controller (Xbox One For Windows)")) {
+			System.out.println("[!] Commands successfully initialized for Driver1!");
 
-				oiButton("Driver1", "Y").whenPressed(new ChangeVelocity(0.6, 0.6, true, "frontLeft", "frontRight"));
-				oiButton("Driver1", "X").whenPressed(new ChangeVelocity(0.75, 0.9, false, "frontLeft", "frontRight"));
-				oiButton("Driver1", "B").whileHeld(new ClimbFront("frontSolenoid"));
-				oiButton("Driver1", "A").whileHeld(new ClimbBack("backSolenoid"));
+			if (driver1.getName().equals("Wireless Controller")) {
 
-				oiButton("Driver1", "LBumper").whenPressed(new ToggleHatch("pushHatch"));
-				oiButton("Driver1", "RBumper").whileHeld(new GyroAlign("Driver1"));
+				driver1.get("Square").whenPressed(changeVelSlow);
+				driver1.get("Triangle").whenPressed(changeVelFast);
+				driver1.get("Circle").whileHeld(climbFront);
+				driver1.get("X").whileHeld(climbBack);
 
-				oiButton("Driver1", "LTrigger").whileHeld(new Slide(MoveDirection.LEFT, "Driver1", 0.7));
-				oiButton("Driver1", "RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, "Driver1", 0.7));
+				driver1.get("L1").whenPressed(toggleHatch);
+				driver1.get("R1").whileHeld(gyroAlign);
 
-				oiButton("Driver1", "dPadUp").whileHeld(new GyroMove());
-				oiButton("Driver1", "dPadLeft").whenPressed(new AlignNext(MoveDirection.LEFT));
-				oiButton("Driver1", "dPadRight").whenPressed(new AlignNext(MoveDirection.RIGHT));
-				oiButton("Driver1", "dPadDown").whileHeld(new GyroMove());
+				driver1.get("L2").whileHeld(slideLeft);
+				driver1.get("R2").whileHeld(slideRight);
+
+				driver1.get("dPadUp").whileHeld(dPadGyro);
+				driver1.get("dPadLeft").whenPressed(alignLeft);
+				driver1.get("dPadRight").whenPressed(alignRight);
+				driver1.get("dPadDown").whileHeld(dPadGyro);
+
+				System.out.println("[!] Commands successfully registered for Driver1!");
+				joysticks.add(driver1);
+			} else if (driver1.getName().equals("Controller (XBOX 360 For Windows)")
+					|| driver1.getName().equals("Controller (Xbox One For Windows)")) {
+
+				driver1.get("Y").whenPressed(changeVelSlow);
+				driver1.get("X").whenPressed(changeVelFast);
+				driver1.get("B").whileHeld(climbFront);
+				driver1.get("A").whileHeld(climbBack);
+
+				driver1.get("LBumper").whenPressed(toggleHatch);
+				driver1.get("RBumper").whileHeld(gyroAlign);
+
+				driver1.get("LTrigger").whileHeld(slideLeft);
+				driver1.get("RTrigger").whileHeld(slideRight);
+
+				driver1.get("dPadUp").whileHeld(dPadGyro);
+				driver1.get("dPadLeft").whenPressed(alignLeft);
+				driver1.get("dPadRight").whenPressed(alignRight);
+				driver1.get("dPadDown").whileHeld(dPadGyro);
+
+				System.out.println("[!] Commands successfully registered for Driver1!");
+				joysticks.add(driver1);
 			}
 		}
 
-		joysticks.put("Driver2", new JController(1));
+		JController driver2 = new JController(1, filePath);
 
-		if (!joysticks.get("Driver2").getName().isEmpty()) {
-			System.out.println("[!] Controller 2 found!");
+		if (driver2.getName().isEmpty()) {
+			System.out.println("[!] Driver2 found!\n" + "[!] " + driver2.getName());
 
-			if (joysticks.get("Driver2").getName().equals("Wireless Controller")) {
+			MoveLiftPID liftCargoShip = new MoveLiftPID(Target.CARGO, Height.SHIP, "liftMain", "liftEncoder");
+			MoveLiftPID liftCargoLow = new MoveLiftPID(Target.CARGO, Height.LOW, "liftMain", "liftEncoder");
+			MoveLiftPID liftCargoMid = new MoveLiftPID(Target.CARGO, Height.MID, "liftMain", "liftEncoder");
+			MoveLiftPID liftCargoHigh = new MoveLiftPID(Target.CARGO, Height.HIGH, "liftMain", "liftEncoder");
 
-				oiButton("Driver2", "Square")
-						.whileHeld(new MoveLiftPID(Target.CARGO, Height.SHIP, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "X")
-						.whileHeld(new MoveLiftPID(Target.CARGO, Height.LOW, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "Circle")
-						.whileHeld(new MoveLiftPID(Target.CARGO, Height.MID, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "Triangle")
-						.whileHeld(new MoveLiftPID(Target.CARGO, Height.HIGH, "liftMain", "liftEncoder"));
+			MoveLiftManual moveLiftUp = new MoveLiftManual(MoveDirection.UP, "liftMain");
+			MoveLiftManual moveLiftDown = new MoveLiftManual(MoveDirection.DOWN, "liftMain");
 
-				oiButton("Driver2", "L1").whileHeld(new MoveLiftManual(MoveDirection.UP, "liftMain"));
-				oiButton("Driver2", "R1").whileHeld(new MoveLiftManual(MoveDirection.DOWN, "liftMain"));
+			TiltIntakeManual tiltIntakeUp = new TiltIntakeManual(MoveDirection.UP, "tiltIntake");
+			TiltIntakeManual tiltIntakeDown = new TiltIntakeManual(MoveDirection.DOWN, "tiltIntake");
 
-				oiButton("Driver2", "L2").whileHeld(new TiltIntakeManual(MoveDirection.UP, "tiltIntake"));
-				oiButton("Driver2", "R2").whileHeld(new TiltIntakeManual(MoveDirection.DOWN, "tiltIntake"));
+			ResetEncoders resetEncoders = new ResetEncoders("liftEncoder");
+			MoveLiftPID liftChaseCargo = new MoveLiftPID(Target.CARGO, Height.FLOOR, "liftMain", "liftEncoder");
 
-				oiButton("Driver2", "RStickBtn").whenPressed(new ToggleHatch("pushHatch"));
+			MoveLiftPID liftHatchShip = new MoveLiftPID(Target.HATCH, Height.SHIP, "liftMain", "liftEncoder");
+			MoveLiftPID liftHatchLow = new MoveLiftPID(Target.HATCH, Height.LOW, "liftMain", "liftEncoder");
+			MoveLiftPID liftHatchMid = new MoveLiftPID(Target.HATCH, Height.MID, "liftMain", "liftEncoder");
+			MoveLiftPID liftHatchHigh = new MoveLiftPID(Target.HATCH, Height.HIGH, "liftMain", "liftEncoder");
 
-				oiButton("Driver2", "PS4Btn").whenPressed(new ResetEncoders("liftEncoder"));
-				oiButton("Driver2", "Touchpad")
-						.whileHeld(new MoveLiftPID(Target.CARGO, Height.FLOOR, "liftMain", "liftEncoder"));
+			MoveBall ballOut = new MoveBall(MoveDirection.OUT, 0.7, "intakeLeft", "intakeRight");
+			MoveBall ballIn = new MoveBall(MoveDirection.IN, 0.7, "intakeLeft", "intakeRight");
 
-				oiButton("Driver2", "dPadUp")
-						.whileHeld(new MoveLiftPID(Target.HATCH, Height.HIGH, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "dPadLeft")
-						.whileHeld(new MoveLiftPID(Target.HATCH, Height.MID, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "dPadRight")
-						.whileHeld(new MoveLiftPID(Target.HATCH, Height.FLOOR, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "dPadDown")
-						.whileHeld(new MoveLiftPID(Target.HATCH, Height.LOW, "liftMain", "liftEncoder"));
+			System.out.println("[!] Commands successfully initialized for Driver2!");
 
-				oiButton("Driver2", "LStickUp")
-						.whileHeld(new MoveBall(MoveDirection.OUT, 0.7, "intakeLeft", "intakeRight"));
-				oiButton("Driver2", "LStickDown")
-						.whileHeld(new MoveBall(MoveDirection.IN, 0.7, "intakeLeft", "intakeRight"));
+			if (driver2.getName().equals("Wireless Controller")) {
 
-			} else if (joysticks.get("Driver2").getName().equals("Controller (XBOX 360 For Windows)")
-					|| joysticks.get("Driver2").getName().equals("Controller (Xbox One For Windows)")) {
+				driver2.get("Square").whileHeld(liftCargoShip);
+				driver2.get("X").whileHeld(liftCargoLow);
+				driver2.get("Circle").whileHeld(liftCargoMid);
+				driver2.get("Triangle").whileHeld(liftCargoHigh);
 
-				oiButton("Driver2", "X")
-						.whileHeld(new MoveLiftPID(Target.CARGO, Height.SHIP, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "A")
-						.whileHeld(new MoveLiftPID(Target.CARGO, Height.LOW, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "B")
-						.whileHeld(new MoveLiftPID(Target.CARGO, Height.MID, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "Y")
-						.whileHeld(new MoveLiftPID(Target.CARGO, Height.HIGH, "liftMain", "liftEncoder"));
+				driver2.get("L1").whileHeld(moveLiftUp);
+				driver2.get("R1").whileHeld(moveLiftDown);
 
-				oiButton("Driver2", "LBumper").whileHeld(new MoveLiftManual(MoveDirection.UP, "liftMain"));
-				oiButton("Driver2", "RBumper").whileHeld(new MoveLiftManual(MoveDirection.DOWN, "liftMain"));
+				driver2.get("L2").whileHeld(tiltIntakeUp);
+				driver2.get("R2").whileHeld(tiltIntakeDown);
 
-				oiButton("Driver2", "LTrigger").whileHeld(new TiltIntakeManual(MoveDirection.UP, "tiltIntake"));
-				oiButton("Driver2", "RTrigger").whileHeld(new TiltIntakeManual(MoveDirection.DOWN, "tiltIntake"));
+				driver2.get("PS4Btn").whenPressed(resetEncoders);
+				driver2.get("Touchpad").whileHeld(liftChaseCargo);
 
-				oiButton("Driver2", "RStickBtn").whenPressed(new ToggleHatch("pushHatch"));
+				driver2.get("dPadUp").whileHeld(liftHatchHigh);
+				driver2.get("dPadLeft").whileHeld(liftHatchMid);
+				driver2.get("dPadRight").whileHeld(liftHatchShip);
+				driver2.get("dPadDown").whileHeld(liftHatchLow);
 
-				oiButton("Driver2", "Back").whenPressed(new ResetEncoders("liftEncoder"));
-				oiButton("Driver2", "Start")
-						.whileHeld(new MoveLiftPID(Target.CARGO, Height.FLOOR, "liftMain", "liftEncoder"));
+				driver2.get("LStickUp").whileHeld(ballOut);
+				driver2.get("LStickDown").whileHeld(ballIn);
 
-				oiButton("Driver2", "dPadUp")
-						.whileHeld(new MoveLiftPID(Target.HATCH, Height.HIGH, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "dPadLeft")
-						.whileHeld(new MoveLiftPID(Target.HATCH, Height.MID, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "dPadRight")
-						.whileHeld(new MoveLiftPID(Target.HATCH, Height.FLOOR, "liftMain", "liftEncoder"));
-				oiButton("Driver2", "dPadDown")
-						.whileHeld(new MoveLiftPID(Target.HATCH, Height.LOW, "liftMain", "liftEncoder"));
+				System.out.println("[!] Commands successfully registered for Driver2!");
+				joysticks.add(driver2);
+			} else if (driver2.getName().equals("Controller (XBOX 360 For Windows)")
+					|| driver2.getName().equals("Controller (Xbox One For Windows)")) {
 
-				oiButton("Driver2", "LStickUp")
-						.whileHeld(new MoveBall(MoveDirection.OUT, 0.7, "intakeLeft", "intakeRight"));
-				oiButton("Driver2", "LStickDown")
-						.whileHeld(new MoveBall(MoveDirection.IN, 0.7, "intakeLeft", "intakeRight"));
+				driver2.get("X").whileHeld(liftCargoShip);
+				driver2.get("A").whileHeld(liftCargoLow);
+				driver2.get("B").whileHeld(liftCargoMid);
+				driver2.get("Y").whileHeld(liftCargoHigh);
+
+				driver2.get("LBumper").whileHeld(moveLiftUp);
+				driver2.get("RBumper").whileHeld(moveLiftDown);
+
+				driver2.get("LTrigger").whileHeld(tiltIntakeUp);
+				driver2.get("RTrigger").whileHeld(tiltIntakeDown);
+
+				driver2.get("Back").whenPressed(resetEncoders);
+				driver2.get("Start").whileHeld(liftChaseCargo);
+
+				driver2.get("dPadUp").whileHeld(liftHatchHigh);
+				driver2.get("dPadLeft").whileHeld(liftHatchMid);
+				driver2.get("dPadRight").whileHeld(liftHatchShip);
+				driver2.get("dPadDown").whileHeld(liftHatchLow);
+
+				driver2.get("LStickUp").whileHeld(ballOut);
+				driver2.get("LStickDown").whileHeld(ballIn);
+
+				System.out.println("[!] Commands successfully registered for Driver2!");
+				joysticks.add(driver2);
 			}
 		}
+	}
+
+	/**
+	 * Method to get a {@link JController} out of the {@link #joysticks HashMap}
+	 * using its name.
+	 * 
+	 * @param joystickName
+	 * @return JController
+	 */
+	public JController getJoystick(int joystick) {
+		return joysticks.get(joystick);
 	}
 }

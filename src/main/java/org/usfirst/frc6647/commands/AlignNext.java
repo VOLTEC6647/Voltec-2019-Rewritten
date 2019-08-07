@@ -40,36 +40,36 @@ public class AlignNext extends Command {
 		case LEFT:
 			if (yaw == -180 || yaw == 180)
 				NavX.getInstance().setSetpoint(-151.25);
-			/*
-			 * else if (yaw == -151.25) NavX.getInstance().setSetpoint(-90); else if (yaw ==
-			 * -90) NavX.getInstance().setSetpoint(-28.75);
-			 */
+			else if (yaw == -151.25)
+				NavX.getInstance().setSetpoint(-90);
+			else if (yaw == -90)
+				NavX.getInstance().setSetpoint(-28.75);
 			else if (yaw == -28.75)
 				NavX.getInstance().setSetpoint(0);
 			else if (yaw == 0)
 				NavX.getInstance().setSetpoint(28.75);
-			/*
-			 * else if (yaw == 28.75) NavX.getInstance().setSetpoint(90); else if (yaw ==
-			 * 90) NavX.getInstance().setSetpoint(151.25);
-			 */
+			else if (yaw == 28.75)
+				NavX.getInstance().setSetpoint(90);
+			else if (yaw == 90)
+				NavX.getInstance().setSetpoint(151.25);
 			else if (yaw == 151.25)
 				NavX.getInstance().setSetpoint(180);
 			break;
 		case RIGHT:
 			if (yaw == -180 || yaw == 180)
 				NavX.getInstance().setSetpoint(151.25);
-			/*
-			 * else if (yaw == 151.25) NavX.getInstance().setSetpoint(90); else if (yaw ==
-			 * 90) NavX.getInstance().setSetpoint(28.75);
-			 */
+			else if (yaw == 151.25)
+				NavX.getInstance().setSetpoint(90);
+			else if (yaw == 90)
+				NavX.getInstance().setSetpoint(28.75);
 			else if (yaw == 28.75)
 				NavX.getInstance().setSetpoint(0);
 			else if (yaw == 0)
 				NavX.getInstance().setSetpoint(-28.75);
-			/*
-			 * else if (yaw == -28.75) NavX.getInstance().setSetpoint(-90); else if (yaw ==
-			 * -90) NavX.getInstance().setSetpoint(-151.25);
-			 */
+			else if (yaw == -28.75)
+				NavX.getInstance().setSetpoint(-90);
+			else if (yaw == -90)
+				NavX.getInstance().setSetpoint(-151.25);
 			else if (yaw == -151.25)
 				NavX.getInstance().setSetpoint(180);
 			break;
