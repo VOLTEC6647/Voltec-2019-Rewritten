@@ -49,13 +49,12 @@ public class Slide extends Command {
 
 	/**
 	 * Constructor for the command. You must specify left and right axes, the value
-	 * the axes start at, the name of the joystick, and the speed you wish to go.
+	 * the axes start at, and the speed you wish to go.
 	 * 
 	 * @param direction
 	 * @param leftAxis
 	 * @param rightAxis
 	 * @param startsAtZero
-	 * @param joystickName
 	 * @param speed
 	 */
 	public Slide(MoveDirection direction, int leftAxis, int rightAxis, boolean startsAtZero, double speed) {
