@@ -126,7 +126,7 @@ public class OI {
 
 		JController driver2 = new JController(1, filePath);
 
-		if (driver2.getName().isEmpty()) {
+		if (!driver2.getName().isEmpty()) {
 			System.out.println("[!] Driver2 found!\n" + "[!] " + driver2.getName());
 
 			MoveLiftPID liftCargoShip = new MoveLiftPID(Target.CARGO, Height.SHIP, "liftMain", "liftEncoder");
