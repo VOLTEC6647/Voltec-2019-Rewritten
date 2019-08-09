@@ -7,7 +7,7 @@
 
 package org.usfirst.frc6647.subsystems;
 
-import java.util.function.Function;
+import java.util.function.DoubleFunction;
 
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
@@ -60,7 +60,7 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	/**
 	 * Lambda for joystick tolerance.
 	 */
-	private Function<Double, Double> joyTolerance = x -> Math.abs(x) < 0.15 ? 0
+	private DoubleFunction<Double> joyTolerance = x -> Math.abs(x) < 0.15 ? 0
 			: x < 0 ? (x + 0.15) / (1 - 0.15) : (x - 0.15) / (1 - 0.15);
 
 	/**

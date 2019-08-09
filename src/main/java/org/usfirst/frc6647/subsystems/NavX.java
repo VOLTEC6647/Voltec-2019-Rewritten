@@ -99,11 +99,11 @@ public class NavX extends PIDSuperSubsystem {
 		if (OI.getInstance().getJoystick(0).get("dPadUp").isPresent()
 				&& OI.getInstance().getJoystick(0).get("dPadUp").get().get()) {
 			frontLeft.setVictor(((-0.5 - (accel * accelMult)) * padLimiter) + output);
-			frontRight.setTalon(((-0.45 - (accel * accelMult)) * padLimiter) - output);
+			frontRight.setTalon(((-0.5 - (accel * accelMult)) * padLimiter) - output);
 		} else if (OI.getInstance().getJoystick(0).get("dPadDown").isPresent()
 				&& OI.getInstance().getJoystick(0).get("dPadDown").get().get()) {
 			frontLeft.setVictor(((0.5 + (accel * accelMult)) * padLimiter) + output);
-			frontRight.setTalon(((0.45 + (accel * accelMult)) * padLimiter) - output);
+			frontRight.setTalon(((0.5 + (accel * accelMult)) * padLimiter) - output);
 		} else {
 			frontLeft.setVictor(output, true);
 			frontRight.setTalon(-output, true);
