@@ -64,7 +64,7 @@ dependencies {
     compile group: 'com.opencsv', name: 'opencsv', version: '4.1'
     
     // lib6647
-    compile group: 'com.github.pacoito123', name: 'lib6647', version: 'f511c1c170'
+    compile group: 'com.github.pacoito123', name: 'lib6647', version: 'd8757f96cb'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

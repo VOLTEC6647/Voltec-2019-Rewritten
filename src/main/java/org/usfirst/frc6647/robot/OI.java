@@ -91,42 +91,42 @@ public class OI {
 
 			if (driver1.getName().equals("Wireless Controller")) {
 
-				driver1.get("Square").whenPressed(changeVelSlow);
-				driver1.get("Triangle").whenPressed(changeVelFast);
-				driver1.get("Circle").whileHeld(climbFront);
-				driver1.get("X").whileHeld(climbBack);
+				driver1.get("Square").ifPresent(b -> b.whenPressed(changeVelSlow));
+				driver1.get("Triangle").ifPresent(b -> b.whenPressed(changeVelFast));
+				driver1.get("Circle").ifPresent(b -> b.whileHeld(climbFront));
+				driver1.get("X").ifPresent(b -> b.whileHeld(climbBack));
 
-				driver1.get("L1").whenPressed(toggleHatch);
-				driver1.get("R1").whileHeld(gyroAlign);
+				driver1.get("L1").ifPresent(b -> b.whenPressed(toggleHatch));
+				driver1.get("R1").ifPresent(b -> b.whileHeld(gyroAlign));
 
-				driver1.get("L2").whileHeld(slideLeft);
-				driver1.get("R2").whileHeld(slideRight);
+				driver1.get("L2").ifPresent(b -> b.whileHeld(slideLeft));
+				driver1.get("R2").ifPresent(b -> b.whileHeld(slideRight));
 
-				driver1.get("dPadUp").whileHeld(dPadGyro);
-				driver1.get("dPadLeft").whenPressed(alignLeft);
-				driver1.get("dPadRight").whenPressed(alignRight);
-				driver1.get("dPadDown").whileHeld(dPadGyro);
+				driver1.get("dPadUp").ifPresent(b -> b.whileHeld(dPadGyro));
+				driver1.get("dPadLeft").ifPresent(b -> b.whenPressed(alignLeft));
+				driver1.get("dPadRight").ifPresent(b -> b.whenPressed(alignRight));
+				driver1.get("dPadDown").ifPresent(b -> b.whileHeld(dPadGyro));
 
 				System.out.println("[!] Commands successfully registered for Driver1!");
 				joysticks.add(driver1);
 			} else if (driver1.getName().equals("Controller (XBOX 360 For Windows)")
 					|| driver1.getName().equals("Controller (Xbox One For Windows)")) {
 
-				driver1.get("Y").whenPressed(changeVelSlow);
-				driver1.get("X").whenPressed(changeVelFast);
-				driver1.get("B").whileHeld(climbFront);
-				driver1.get("A").whileHeld(climbBack);
+				driver1.get("Y").ifPresent(b -> b.whenPressed(changeVelSlow));
+				driver1.get("X").ifPresent(b -> b.whenPressed(changeVelFast));
+				driver1.get("B").ifPresent(b -> b.whileHeld(climbFront));
+				driver1.get("A").ifPresent(b -> b.whileHeld(climbBack));
 
-				driver1.get("LBumper").whenPressed(toggleHatch);
-				driver1.get("RBumper").whileHeld(gyroAlign);
+				driver1.get("LBumper").ifPresent(b -> b.whenPressed(toggleHatch));
+				driver1.get("RBumper").ifPresent(b -> b.whileHeld(gyroAlign));
 
-				driver1.get("LTrigger").whileHeld(slideLeft);
-				driver1.get("RTrigger").whileHeld(slideRight);
+				driver1.get("LTrigger").ifPresent(b -> b.whileHeld(slideLeft));
+				driver1.get("RTrigger").ifPresent(b -> b.whileHeld(slideRight));
 
-				driver1.get("dPadUp").whileHeld(dPadGyro);
-				driver1.get("dPadLeft").whenPressed(alignLeft);
-				driver1.get("dPadRight").whenPressed(alignRight);
-				driver1.get("dPadDown").whileHeld(dPadGyro);
+				driver1.get("dPadUp").ifPresent(b -> b.whileHeld(dPadGyro));
+				driver1.get("dPadLeft").ifPresent(b -> b.whenPressed(alignLeft));
+				driver1.get("dPadRight").ifPresent(b -> b.whenPressed(alignRight));
+				driver1.get("dPadDown").ifPresent(b -> b.whileHeld(dPadGyro));
 
 				System.out.println("[!] Commands successfully registered for Driver1!");
 				joysticks.add(driver1);
@@ -164,54 +164,54 @@ public class OI {
 
 			if (driver2.getName().equals("Wireless Controller")) {
 
-				driver2.get("Square").whileHeld(liftCargoShip);
-				driver2.get("X").whileHeld(liftCargoLow);
-				driver2.get("Circle").whileHeld(liftCargoMid);
-				driver2.get("Triangle").whileHeld(liftCargoHigh);
+				driver2.get("Square").ifPresent(b -> b.whileHeld(liftCargoShip));
+				driver2.get("X").ifPresent(b -> b.whileHeld(liftCargoLow));
+				driver2.get("Circle").ifPresent(b -> b.whileHeld(liftCargoMid));
+				driver2.get("Triangle").ifPresent(b -> b.whileHeld(liftCargoHigh));
 
-				driver2.get("L1").whileHeld(moveLiftUp);
-				driver2.get("R1").whileHeld(moveLiftDown);
+				driver2.get("L1").ifPresent(b -> b.whileHeld(moveLiftUp));
+				driver2.get("R1").ifPresent(b -> b.whileHeld(moveLiftDown));
 
-				driver2.get("L2").whileHeld(tiltIntakeUp);
-				driver2.get("R2").whileHeld(tiltIntakeDown);
+				driver2.get("L2").ifPresent(b -> b.whileHeld(tiltIntakeUp));
+				driver2.get("R2").ifPresent(b -> b.whileHeld(tiltIntakeDown));
 
-				driver2.get("PS4Btn").whenPressed(resetEncoders);
-				driver2.get("Touchpad").whileHeld(liftChaseCargo);
+				driver2.get("PS4Btn").ifPresent(b -> b.whenPressed(resetEncoders));
+				driver2.get("Touchpad").ifPresent(b -> b.whileHeld(liftChaseCargo));
 
-				driver2.get("dPadUp").whileHeld(liftHatchHigh);
-				driver2.get("dPadLeft").whileHeld(liftHatchMid);
-				driver2.get("dPadRight").whileHeld(liftHatchShip);
-				driver2.get("dPadDown").whileHeld(liftHatchLow);
+				driver2.get("dPadUp").ifPresent(b -> b.whileHeld(liftHatchHigh));
+				driver2.get("dPadLeft").ifPresent(b -> b.whileHeld(liftHatchMid));
+				driver2.get("dPadRight").ifPresent(b -> b.whileHeld(liftHatchShip));
+				driver2.get("dPadDown").ifPresent(b -> b.whileHeld(liftHatchLow));
 
-				driver2.get("LStickUp").whileHeld(ballOut);
-				driver2.get("LStickDown").whileHeld(ballIn);
+				driver2.get("LStickUp").ifPresent(b -> b.whileHeld(ballOut));
+				driver2.get("LStickDown").ifPresent(b -> b.whileHeld(ballIn));
 
 				System.out.println("[!] Commands successfully registered for Driver2!");
 				joysticks.add(driver2);
 			} else if (driver2.getName().equals("Controller (XBOX 360 For Windows)")
 					|| driver2.getName().equals("Controller (Xbox One For Windows)")) {
 
-				driver2.get("X").whileHeld(liftCargoShip);
-				driver2.get("A").whileHeld(liftCargoLow);
-				driver2.get("B").whileHeld(liftCargoMid);
-				driver2.get("Y").whileHeld(liftCargoHigh);
+				driver2.get("X").ifPresent(b -> b.whileHeld(liftCargoShip));
+				driver2.get("A").ifPresent(b -> b.whileHeld(liftCargoLow));
+				driver2.get("B").ifPresent(b -> b.whileHeld(liftCargoMid));
+				driver2.get("Y").ifPresent(b -> b.whileHeld(liftCargoHigh));
 
-				driver2.get("LBumper").whileHeld(moveLiftUp);
-				driver2.get("RBumper").whileHeld(moveLiftDown);
+				driver2.get("LBumper").ifPresent(b -> b.whileHeld(moveLiftUp));
+				driver2.get("RBumper").ifPresent(b -> b.whileHeld(moveLiftDown));
 
-				driver2.get("LTrigger").whileHeld(tiltIntakeUp);
-				driver2.get("RTrigger").whileHeld(tiltIntakeDown);
+				driver2.get("LTrigger").ifPresent(b -> b.whileHeld(tiltIntakeUp));
+				driver2.get("RTrigger").ifPresent(b -> b.whileHeld(tiltIntakeDown));
 
-				driver2.get("Back").whenPressed(resetEncoders);
-				driver2.get("Start").whileHeld(liftChaseCargo);
+				driver2.get("Back").ifPresent(b -> b.whenPressed(resetEncoders));
+				driver2.get("Start").ifPresent(b -> b.whileHeld(liftChaseCargo));
 
-				driver2.get("dPadUp").whileHeld(liftHatchHigh);
-				driver2.get("dPadLeft").whileHeld(liftHatchMid);
-				driver2.get("dPadRight").whileHeld(liftHatchShip);
-				driver2.get("dPadDown").whileHeld(liftHatchLow);
+				driver2.get("dPadUp").ifPresent(b -> b.whileHeld(liftHatchHigh));
+				driver2.get("dPadLeft").ifPresent(b -> b.whileHeld(liftHatchMid));
+				driver2.get("dPadRight").ifPresent(b -> b.whileHeld(liftHatchShip));
+				driver2.get("dPadDown").ifPresent(b -> b.whileHeld(liftHatchLow));
 
-				driver2.get("LStickUp").whileHeld(ballOut);
-				driver2.get("LStickDown").whileHeld(ballIn);
+				driver2.get("LStickUp").ifPresent(b -> b.whileHeld(ballOut));
+				driver2.get("LStickDown").ifPresent(b -> b.whileHeld(ballIn));
 
 				System.out.println("[!] Commands successfully registered for Driver2!");
 				joysticks.add(driver2);
