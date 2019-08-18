@@ -14,7 +14,10 @@ import org.usfirst.frc6647.subsystems.ChassisH;
 import org.usfirst.frc6647.subsystems.Intake;
 import org.usfirst.frc6647.subsystems.Lift;
 import org.usfirst.frc6647.subsystems.NavX;
+import org.usfirst.lib6647.oi.ControllerProfiles;
+import org.usfirst.lib6647.subsystem.RobotMap;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,6 +36,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		RobotMap.createInstance(Filesystem.getDeployDirectory() + "/RobotMap.json");
+		ControllerProfiles.createInstance(Filesystem.getDeployDirectory() + "/Profiles.json");
+
 		Chassis.createInstance();
 		ChassisH.createInstance();
 		NavX.createInstance();

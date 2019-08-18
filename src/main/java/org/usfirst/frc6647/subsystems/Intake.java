@@ -6,8 +6,6 @@ import org.usfirst.lib6647.subsystem.supercomponents.SuperDigitalInput;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperDoubleSolenoid;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperTalon;
 
-import edu.wpi.first.wpilibj.Filesystem;
-
 /**
  * Subsystem for the Intake.
  */
@@ -38,14 +36,12 @@ public class Intake extends SuperSubsystem
 	 * Constructor for the subsystem.
 	 */
 	public Intake() {
-		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
+		super("intake");
 
 		initCompressors(robotMap, getName());
 		initDigitalInputs(robotMap, getName());
 		initDoubleSolenoids(robotMap, getName());
 		initTalons(robotMap, getName());
-
-		finishedJSONInit();
 	}
 
 	@Override

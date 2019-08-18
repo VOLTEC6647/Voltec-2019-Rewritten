@@ -14,8 +14,6 @@ import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperTalon;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperVictor;
 
-import edu.wpi.first.wpilibj.Filesystem;
-
 /**
  * Subsystem for the Chassis.
  */
@@ -46,12 +44,10 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 * latter to follow its respective Talon.
 	 */
 	public Chassis() {
-		super("chassis", Filesystem.getDeployDirectory() + "/RobotMap.json");
+		super("chassis");
 
 		initTalons(robotMap, getName());
 		initVictors(robotMap, getName());
-
-		finishedJSONInit();
 
 		talons.get("backLeft").follow(victors.get("frontLeft"));
 		victors.get("backRight").follow(talons.get("frontRight"));
@@ -71,8 +67,8 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 		if (!NavX.getInstance().getPIDController().isEnabled()) {
 			double leftStickY = joyTolerance.apply(OI.getInstance().getJoystick(0).getLeftAxis()),
 					rightStickY = joyTolerance.apply(OI.getInstance().getJoystick(0).getRightAxis());
-			victors.get("frontLeft").setVictorWithRamp(leftStickY);
-			talons.get("frontRight").setTalonWithRamp(rightStickY);
+			victors.get("frontLeft").setWithRamp(leftStickY);
+			talons.get("frontRight").setWithRamp(rightStickY);
 		}
 	}
 

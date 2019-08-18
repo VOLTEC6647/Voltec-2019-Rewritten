@@ -50,12 +50,12 @@ public class MoveBall extends Command {
 	protected void execute() {
 		switch (direction) {
 		case IN:
-			intakeLeft.setTalon(speed);
-			intakeRight.setTalon(speed);
+			intakeLeft.set(speed);
+			intakeRight.set(speed);
 			break;
 		case OUT:
-			intakeLeft.setTalon(-speed);
-			intakeRight.setTalon(-speed);
+			intakeLeft.set(-speed);
+			intakeRight.set(-speed);
 			break;
 		default:
 			end();
@@ -77,8 +77,8 @@ public class MoveBall extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		intakeLeft.stopTalon();
-		intakeRight.stopTalon();
+		intakeLeft.stopMotor();
+		intakeRight.stopMotor();
 	}
 
 	// Called when another command which requires one or more of the same

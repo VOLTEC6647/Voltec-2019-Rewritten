@@ -3,8 +3,6 @@ package org.usfirst.frc6647.subsystems;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperTalon;
 
-import edu.wpi.first.wpilibj.Filesystem;
-
 public class TiltIntake extends SuperSubsystem implements SuperTalon {
 
 	private static TiltIntake m_instance = null;
@@ -31,11 +29,9 @@ public class TiltIntake extends SuperSubsystem implements SuperTalon {
 	 * Constructor for the subsystem.
 	 */
 	public TiltIntake() {
-		super("tiltIntake", Filesystem.getDeployDirectory() + "/RobotMap.json");
+		super("tiltIntake");
 
 		initTalons(robotMap, getName());
-
-		finishedJSONInit();
 	}
 
 	@Override

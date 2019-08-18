@@ -46,10 +46,10 @@ public class TiltIntakeManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			tiltIntake.setTalon(0.6);
+			tiltIntake.set(0.6);
 			break;
 		case DOWN:
-			tiltIntake.setTalon(-0.4);
+			tiltIntake.set(-0.4);
 			break;
 		default:
 			end();
@@ -66,7 +66,7 @@ public class TiltIntakeManual extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		tiltIntake.stopTalon();
+		tiltIntake.stopMotor();
 	}
 
 	// Called when another command which requires one or more of the same
