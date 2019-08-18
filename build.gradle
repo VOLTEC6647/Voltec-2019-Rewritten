@@ -57,14 +57,18 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
     testCompile 'junit:junit:4.12'
-    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
-    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.0.pr1'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.0.pr1'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.0.pr1'
 
     // opencsv
     compile group: 'com.opencsv', name: 'opencsv', version: '4.1'
     
     // lib6647
-    compile group: 'com.github.pacoito123', name: 'lib6647', version: 'd8757f96cb'
+    compile group: 'com.github.pacoito123', name: 'lib6647', version: 'untested-SNAPSHOT'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

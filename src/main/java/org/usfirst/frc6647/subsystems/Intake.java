@@ -5,8 +5,6 @@ import org.usfirst.lib6647.subsystem.supercomponents.SuperCompressor;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperSolenoid;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperVictor;
 
-import edu.wpi.first.wpilibj.Filesystem;
-
 /**
  * Subsystem for the Intake.
  */
@@ -36,13 +34,11 @@ public class Intake extends SuperSubsystem implements SuperCompressor, SuperSole
 	 * Constructor for the subsystem.
 	 */
 	public Intake() {
-		super("intake", Filesystem.getDeployDirectory() + "/RobotMap.json");
+		super("intake");
 
 		initCompressors(robotMap, getName());
 		initSolenoids(robotMap, getName());
 		initVictors(robotMap, getName());
-
-		finishedJSONInit();
 	}
 
 	@Override

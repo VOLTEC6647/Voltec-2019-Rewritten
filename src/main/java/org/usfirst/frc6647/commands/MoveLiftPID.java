@@ -131,7 +131,7 @@ public class MoveLiftPID extends Command {
 	@Override
 	protected void end() {
 		Lift.getInstance().disable();
-		liftMain.stopVictor();
+		liftMain.stopMotor();
 	}
 
 	// Called when another command which requires one or more of the same
