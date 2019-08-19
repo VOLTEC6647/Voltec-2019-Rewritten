@@ -7,8 +7,8 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 ## To do (for now)
 
 - [ ] Improve OI class.
-	- [X] Simplify Button initialization and calling.
-	- [X] Allow config file for controls through JSON.
+	- [x] Simplify Button initialization and calling.
+	- [x] Allow config file for controls through JSON.
 	- [ ] Add different functionality for non-PS4 controllers.
 		- [ ] Add Joycon support (now easily done thanks to JSON functionality).
 		- [ ] Add Guitar Hero controller support.
@@ -38,11 +38,11 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 		 - [ ] Merge Climb commands into one.
 		 - [ ] Remove need of arcade thingy.
 	- [ ] Vision (RIP).
-- [ ] Overall code optimization.
-	- [X] Restrict PID update loops to run only when enabled.
-	- [X] Remove any and all instances of memory leaks.
-	- [ ] Do proper Exception handling.
-- [X] Add comments.
+- [x] Overall code optimization.
+	- [x] Restrict PID update loops to run only when enabled.
+	- [x] Remove any and all instances of memory leaks.
+	- [x] Do proper Exception handling.
+- [x] Add comments.
 - [ ] Test everything.
 
 ## License
