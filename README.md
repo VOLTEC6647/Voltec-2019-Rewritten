@@ -39,10 +39,10 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 		 - [ ] Merge Climb commands into one.
 		 - [x] Remove need of arcade thingy.
 	 - [ ] Vision (RIP).
- - [ ] Overall code optimization.
+ - [x] Overall code optimization.
 	 - [x] Restrict PID update loops to run only when enabled.
 	 - [x] Remove any and all instances of memory leaks.
-	 - [ ] Do proper Exception handling.
+	 - [x] Do proper Exception handling.
  - [x] Add comments.
  - [ ] Test everything.
 
