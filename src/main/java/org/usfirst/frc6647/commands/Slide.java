@@ -102,19 +102,19 @@ public class Slide extends Command {
 		switch (direction) {
 		case LEFT:
 			if (!useAxes)
-				hWheel.setTalon(speed);
+				hWheel.set(speed);
 			else if (!startsAtZero)
-				hWheel.setTalon(((leftAxis + 1) / 2) * speed);
+				hWheel.set(((leftAxis + 1) / 2) * speed);
 			else
-				hWheel.setTalon(leftAxis * speed);
+				hWheel.set(leftAxis * speed);
 			break;
 		case RIGHT:
 			if (!useAxes)
-				hWheel.setTalon(-speed);
+				hWheel.set(-speed);
 			else if (!startsAtZero)
-				hWheel.setTalon(((rightAxis + 1) / 2) * -speed);
+				hWheel.set(((rightAxis + 1) / 2) * -speed);
 			else
-				hWheel.setTalon(rightAxis * -speed);
+				hWheel.set(rightAxis * -speed);
 			break;
 		default:
 			end();
@@ -131,7 +131,7 @@ public class Slide extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		hWheel.stopTalon();
+		hWheel.stopMotor();
 		joystick.setRumble(RumbleType.kLeftRumble, 0);
 		joystick.setRumble(RumbleType.kRightRumble, 0);
 	}

@@ -15,7 +15,6 @@ import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
 import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
 import org.usfirst.lib6647.subsystem.hypercomponents.HyperVictor;
 
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -52,8 +51,7 @@ public class NavX extends PIDSuperSubsystem {
 	 * Initializes PID subsystem and resets NavX sensor.
 	 */
 	public NavX() {
-		super("navX", Filesystem.getDeployDirectory() + "/RobotMap.json");
-		finishedJSONInit();
+		super("navX");
 
 		ahrs = new AHRS(Port.kUSB);
 		ahrs.reset();
@@ -96,17 +94,15 @@ public class NavX extends PIDSuperSubsystem {
 		HyperVictor frontLeft = Chassis.getInstance().getVictor("frontLeft");
 		HyperTalon frontRight = Chassis.getInstance().getTalon("frontRight");
 
-		if (OI.getInstance().getJoystick(0).get("dPadUp").isPresent()
-				&& OI.getInstance().getJoystick(0).get("dPadUp").get().get()) {
-			frontLeft.setVictor(((-0.5 - (accel * accelMult)) * padLimiter) + output);
-			frontRight.setTalon(((-0.5 - (accel * accelMult)) * padLimiter) - output);
-		} else if (OI.getInstance().getJoystick(0).get("dPadDown").isPresent()
-				&& OI.getInstance().getJoystick(0).get("dPadDown").get().get()) {
-			frontLeft.setVictor(((0.5 + (accel * accelMult)) * padLimiter) + output);
-			frontRight.setTalon(((0.5 + (accel * accelMult)) * padLimiter) - output);
+		if (OI.getInstance().getJoystick(0).get("dPadUp").get()) {
+			frontLeft.set(((-0.5 - (accel * accelMult)) * padLimiter) + output);
+			frontRight.set(((-0.5 - (accel * accelMult)) * padLimiter) - output);
+		} else if (OI.getInstance().getJoystick(0).get("dPadDown").get()) {
+			frontLeft.set(((0.5 + (accel * accelMult)) * padLimiter) + output);
+			frontRight.set(((0.5 + (accel * accelMult)) * padLimiter) - output);
 		} else {
-			frontLeft.setVictor(output, true);
-			frontRight.setTalon(-output, true);
+			frontLeft.set(output, true);
+			frontRight.set(-output, true);
 		}
 
 		pidOutput = output;
