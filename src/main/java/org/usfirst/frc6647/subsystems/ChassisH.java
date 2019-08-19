@@ -10,8 +10,6 @@ package org.usfirst.frc6647.subsystems;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperTalon;
 
-import edu.wpi.first.wpilibj.Filesystem;
-
 /**
  * Subsystem for the hWheel.
  */
@@ -41,11 +39,9 @@ public class ChassisH extends SuperSubsystem implements SuperTalon {
 	 * Constructor for the subsystem.
 	 */
 	public ChassisH() {
-		super("chassisH", Filesystem.getDeployDirectory() + "/RobotMap.json");
+		super("chassisH");
 
 		initTalons(robotMap, getName());
-
-		finishedJSONInit();
 	}
 
 	@Override

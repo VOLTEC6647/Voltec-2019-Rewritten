@@ -46,10 +46,10 @@ public class MoveLiftManual extends Command {
 	protected void execute() {
 		switch (direction) {
 		case UP:
-			liftMain.setVictor(0.6);
+			liftMain.set(0.6);
 			break;
 		case DOWN:
-			liftMain.setVictor(-0.3);
+			liftMain.set(-0.3);
 			break;
 		default:
 			end();
@@ -66,7 +66,7 @@ public class MoveLiftManual extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		liftMain.stopVictor();
+		liftMain.stopMotor();
 	}
 
 	// Called when another command which requires one or more of the same

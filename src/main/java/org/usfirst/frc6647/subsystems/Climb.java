@@ -3,8 +3,6 @@ package org.usfirst.frc6647.subsystems;
 import org.usfirst.lib6647.subsystem.SuperSubsystem;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperDoubleSolenoid;
 
-import edu.wpi.first.wpilibj.Filesystem;
-
 public class Climb extends SuperSubsystem implements SuperDoubleSolenoid {
 
 	private static Climb m_instance = null;
@@ -31,11 +29,9 @@ public class Climb extends SuperSubsystem implements SuperDoubleSolenoid {
 	 * Constructor for the command.
 	 */
 	public Climb() {
-		super("climb", Filesystem.getDeployDirectory() + "/RobotMap.json");
+		super("climb");
 
 		initDoubleSolenoids(robotMap, getName());
-
-		finishedJSONInit();
 	}
 
 	@Override

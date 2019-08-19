@@ -5,7 +5,6 @@ import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperEncoder;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperVictor;
 
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -37,12 +36,10 @@ public class Lift extends PIDSuperSubsystem implements SuperEncoder, SuperVictor
 	 * Constructor for the subsystem.
 	 */
 	public Lift() {
-		super("lift", Filesystem.getDeployDirectory() + "/RobotMap.json");
+		super("lift");
 
 		initEncoders(robotMap, getName());
 		initVictors(robotMap, getName());
-
-		finishedJSONInit();
 
 		victors.get("liftFollower").follow(victors.get("liftMain"));
 
