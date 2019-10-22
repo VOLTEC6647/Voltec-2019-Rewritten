@@ -94,10 +94,10 @@ public class NavX extends PIDSuperSubsystem {
 		HyperVictor frontLeft = Chassis.getInstance().getVictor("frontLeft");
 		HyperTalon frontRight = Chassis.getInstance().getTalon("frontRight");
 
-		if (OI.getInstance().getJoystick(0).get("dPadUp").get()) {
+		if (OI.getInstance().getJoystick("driver1").get("dPadUp").get()) {
 			frontLeft.set(((-0.5 - (accel * accelMult)) * padLimiter) + output);
 			frontRight.set(((-0.5 - (accel * accelMult)) * padLimiter) - output);
-		} else if (OI.getInstance().getJoystick(0).get("dPadDown").get()) {
+		} else if (OI.getInstance().getJoystick("driver1").get("dPadDown").get()) {
 			frontLeft.set(((0.5 + (accel * accelMult)) * padLimiter) + output);
 			frontRight.set(((0.5 + (accel * accelMult)) * padLimiter) - output);
 		} else {

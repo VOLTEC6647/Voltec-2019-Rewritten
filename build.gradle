@@ -57,6 +57,7 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
     testCompile 'junit:junit:4.12'
+    
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.0.pr1'
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
