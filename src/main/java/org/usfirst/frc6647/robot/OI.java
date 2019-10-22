@@ -178,7 +178,7 @@ public class OI {
 				joysticks.put("driver2", driver2);
 			} else if (driver2.getName().equals("Controller (XBOX 360 For Windows)")
 					|| driver2.getName().equals("Controller (Xbox One For Windows)")
-					|| driver1.getName().equals("Controller (Gamepad F310)")) {
+					|| driver2.getName().equals("Controller (Gamepad F310)")) {
 
 				driver2.get("X").whileHeld(liftCargoShip);
 				driver2.get("A").whileHeld(liftCargoLow);
