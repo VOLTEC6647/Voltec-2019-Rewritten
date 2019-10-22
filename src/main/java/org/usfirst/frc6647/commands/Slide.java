@@ -72,7 +72,7 @@ public class Slide extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		joystick = OI.getInstance().getJoystick(0);
+		joystick = OI.getInstance().getJoystick("driver1");
 
 		switch (direction) {
 		case LEFT:
@@ -87,16 +87,15 @@ public class Slide extends Command {
 		}
 
 		hWheel = ChassisH.getInstance().getTalon("hWheel");
-
-		if (useAxes) {
-			leftAxis = joystick.getRawAxis(leftAxisId);
-			rightAxis = joystick.getRawAxis(rightAxisId);
-		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		if (useAxes) {
+			leftAxis = joystick.getRawAxis(leftAxisId);
+			rightAxis = joystick.getRawAxis(rightAxisId);
+		}
 
 		switch (direction) {
 		case LEFT:

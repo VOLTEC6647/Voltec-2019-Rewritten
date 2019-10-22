@@ -31,7 +31,7 @@ public class GyroAlign extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		joystick = OI.getInstance().getJoystick(0);
+		joystick = OI.getInstance().getJoystick("driver1");
 		double yaw = NavX.getInstance().getYaw();
 
 		if (-165.625 >= yaw)

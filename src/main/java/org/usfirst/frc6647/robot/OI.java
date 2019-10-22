@@ -7,7 +7,7 @@
 
 package org.usfirst.frc6647.robot;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.ChangeVelocity;
@@ -31,8 +31,8 @@ import org.usfirst.lib6647.util.MoveDirection;
  * Class for registering driver input.
  */
 public class OI {
-	/** ArrayList holding initialized joysticks. */
-	ArrayList<JController> joysticks = new ArrayList<JController>();
+	/** HashMap holding initialized joysticks. */
+	HashMap<String, JController> joysticks = new HashMap<String, JController>();
 
 	private static OI m_instance = null;
 
@@ -104,9 +104,10 @@ public class OI {
 				driver1.get("dPadDown").whileHeld(dPadGyro);
 
 				System.out.println("[!] Commands successfully registered for Driver1!");
-				joysticks.add(driver1);
+				joysticks.put("driver1", driver1);
 			} else if (driver1.getName().equals("Controller (XBOX 360 For Windows)")
-					|| driver1.getName().equals("Controller (Xbox One For Windows)")) {
+					|| driver1.getName().equals("Controller (Xbox One For Windows)")
+					|| driver1.getName().equals("Controller (Gamepad F310)")) {
 
 				driver1.get("Y").whenPressed(changeVelSlow);
 				driver1.get("X").whenPressed(changeVelFast);
@@ -116,8 +117,8 @@ public class OI {
 				driver1.get("LBumper").whenPressed(toggleHatch);
 				driver1.get("RBumper").whileHeld(gyroAlign);
 
-				driver1.get("LTrigger").whileHeld(slideLeft);
-				driver1.get("RTrigger").whileHeld(slideRight);
+				driver1.get("LTrigger").whileHeld(new Slide(MoveDirection.LEFT, 2, 3, true, 0.7));
+				driver1.get("RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, 2, 3, true, 0.7));
 
 				driver1.get("dPadUp").whileHeld(dPadGyro);
 				driver1.get("dPadLeft").whenPressed(alignLeft);
@@ -125,7 +126,7 @@ public class OI {
 				driver1.get("dPadDown").whileHeld(dPadGyro);
 
 				System.out.println("[!] Commands successfully registered for Driver1!");
-				joysticks.add(driver1);
+				joysticks.put("driver1", driver1);
 			}
 		}
 
@@ -183,9 +184,10 @@ public class OI {
 				driver2.get("LStickDown").whileHeld(ballIn);
 
 				System.out.println("[!] Commands successfully registered for Driver2!");
-				joysticks.add(driver2);
+				joysticks.put("driver2", driver2);
 			} else if (driver2.getName().equals("Controller (XBOX 360 For Windows)")
-					|| driver2.getName().equals("Controller (Xbox One For Windows)")) {
+					|| driver2.getName().equals("Controller (Xbox One For Windows)")
+					|| driver2.getName().equals("Controller (Gamepad F310)")) {
 
 				driver2.get("X").whileHeld(liftCargoShip);
 				driver2.get("A").whileHeld(liftCargoLow);
@@ -210,7 +212,7 @@ public class OI {
 				driver2.get("LStickDown").whileHeld(ballIn);
 
 				System.out.println("[!] Commands successfully registered for Driver2!");
-				joysticks.add(driver2);
+				joysticks.put("driver2", driver2);
 			}
 		}
 	}
@@ -222,7 +224,7 @@ public class OI {
 	 * @param joystickName
 	 * @return JController
 	 */
-	public JController getJoystick(int joystick) {
-		return joysticks.get(joystick);
+	public JController getJoystick(String joystickName) {
+		return joysticks.get(joystickName);
 	}
 }
