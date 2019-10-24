@@ -1,6 +1,5 @@
 package org.usfirst.frc6647.subsystems;
 
-import org.usfirst.frc6647.commands.GeneratePIDData;
 import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperEncoder;
 import org.usfirst.lib6647.subsystem.supercomponents.SuperVictor;
@@ -42,8 +41,6 @@ public class Lift extends PIDSuperSubsystem implements SuperEncoder, SuperVictor
 		initVictors(robotMap, getName());
 
 		victors.get("liftFollower").follow(victors.get("liftMain"));
-
-		SmartDashboard.putData(getName() + "Generate", new GeneratePIDData(this));
 	}
 
 	/**

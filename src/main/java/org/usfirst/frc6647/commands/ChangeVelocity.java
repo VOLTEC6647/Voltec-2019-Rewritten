@@ -17,11 +17,10 @@ import edu.wpi.first.wpilibj.command.Command;
  * Command to change Chassis velocity and acceleration.
  */
 public class ChangeVelocity extends Command {
-
+	
 	private HyperTalon frontLeft, frontRight;
 	private String leftName, rightName;
 	private double driveLimiter, padLimiter;
-	private boolean acceleration;
 
 	/**
 	 * Constructor for the command.
@@ -32,11 +31,9 @@ public class ChangeVelocity extends Command {
 	 * @param leftName
 	 * @param rightName
 	 */
-	public ChangeVelocity(double driveLimiter, double padLimiter, boolean acceleration, String leftName,
-			String rightName) {
+	public ChangeVelocity(double driveLimiter, double padLimiter, String leftName, String rightName) {
 		this.driveLimiter = driveLimiter;
 		this.padLimiter = padLimiter;
-		this.acceleration = acceleration;
 		this.leftName = leftName;
 		this.rightName = rightName;
 	}
@@ -47,12 +44,10 @@ public class ChangeVelocity extends Command {
 		frontLeft = Chassis.getInstance().getTalon(leftName);
 		frontRight = Chassis.getInstance().getTalon(rightName);
 
-		NavX.getInstance().resetAccel();
-
 		frontLeft.setLimiter(driveLimiter);
 		frontRight.setLimiter(driveLimiter);
-		
-		NavX.getInstance().setPadLimiter(padLimiter, acceleration);
+
+		NavX.getInstance().setPadLimiter(padLimiter);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

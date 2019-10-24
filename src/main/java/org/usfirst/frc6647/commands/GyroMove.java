@@ -12,7 +12,7 @@ import org.usfirst.frc6647.subsystems.NavX;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GyroMove extends Command {
-
+	
 	private double yaw;
 
 	public GyroMove() {
@@ -24,7 +24,6 @@ public class GyroMove extends Command {
 		yaw = NavX.getInstance().getYaw();
 
 		NavX.getInstance().getPIDController().setSetpoint(yaw);
-		NavX.getInstance().resetAccel();
 
 		if (!NavX.getInstance().getPIDController().isEnabled())
 			NavX.getInstance().enable();
@@ -33,7 +32,6 @@ public class GyroMove extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		NavX.getInstance().increaseAccel(0.0035);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -45,7 +43,6 @@ public class GyroMove extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		NavX.getInstance().resetAccel();
 		NavX.getInstance().disable();
 	}
 

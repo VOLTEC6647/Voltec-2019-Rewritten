@@ -9,7 +9,6 @@ package org.usfirst.frc6647.robot;
 
 import java.util.HashMap;
 
-import org.usfirst.frc6647.commands.AlignNext;
 import org.usfirst.frc6647.commands.ChangeVelocity;
 import org.usfirst.frc6647.commands.ClimbBack;
 import org.usfirst.frc6647.commands.ClimbFront;
@@ -21,6 +20,7 @@ import org.usfirst.frc6647.commands.MoveLiftPID;
 import org.usfirst.frc6647.commands.MoveLiftPID.Height;
 import org.usfirst.frc6647.commands.MoveLiftPID.Target;
 import org.usfirst.frc6647.commands.ResetEncoders;
+import org.usfirst.frc6647.commands.Rotate;
 import org.usfirst.frc6647.commands.Slide;
 import org.usfirst.frc6647.commands.TiltIntakeManual;
 import org.usfirst.frc6647.commands.ToggleHatch;
@@ -67,18 +67,15 @@ public class OI {
 		if (!driver1.getName().isEmpty()) {
 			System.out.println("[!] Driver1 found!\n" + "[!] " + driver1.getName());
 
-			ChangeVelocity changeVelSlow = new ChangeVelocity(0.6, 0.6, true, "frontLeft", "frontRight");
-			ChangeVelocity changeVelFast = new ChangeVelocity(0.75, 0.9, false, "frontLeft", "frontRight");
+			ChangeVelocity changeVelSlow = new ChangeVelocity(0.6, 0.3, "frontLeft", "frontRight");
+			ChangeVelocity changeVelFast = new ChangeVelocity(0.75, 0.5, "frontLeft", "frontRight");
 
 			ToggleHatch toggleHatch = new ToggleHatch("pushHatch");
 			GyroAlign gyroAlign = new GyroAlign();
 
-			Slide slideLeft = new Slide(MoveDirection.LEFT, 0.7);
-			Slide slideRight = new Slide(MoveDirection.RIGHT, 0.7);
-
 			GyroMove dPadGyro = new GyroMove();
-			AlignNext alignLeft = new AlignNext(MoveDirection.LEFT);
-			AlignNext alignRight = new AlignNext(MoveDirection.RIGHT);
+			Rotate rotateLeft = new Rotate(MoveDirection.LEFT);
+			Rotate rotateRight = new Rotate(MoveDirection.RIGHT);
 
 			ClimbFront climbFront = new ClimbFront("frontSolenoid");
 			ClimbBack climbBack = new ClimbBack("backSolenoid");
@@ -95,13 +92,14 @@ public class OI {
 				driver1.get("L1").whenPressed(toggleHatch);
 				driver1.get("R1").whileHeld(gyroAlign);
 
-				driver1.get("L2").whileHeld(slideLeft);
-				driver1.get("R2").whileHeld(slideRight);
+				driver1.get("L2").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, false, 0.7));
+				driver1.get("R2").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, false, 0.7));
 
 				driver1.get("dPadUp").whileHeld(dPadGyro);
-				driver1.get("dPadLeft").whenPressed(alignLeft);
-				driver1.get("dPadRight").whenPressed(alignRight);
 				driver1.get("dPadDown").whileHeld(dPadGyro);
+
+				driver1.get("RStickLeft").whileHeld(rotateLeft);
+				driver1.get("RStickRight").whileHeld(rotateRight);
 
 				System.out.println("[!] Commands successfully registered for Driver1!");
 				joysticks.put("driver1", driver1);
@@ -121,9 +119,10 @@ public class OI {
 				driver1.get("RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, 2, 3, true, 0.7));
 
 				driver1.get("dPadUp").whileHeld(dPadGyro);
-				driver1.get("dPadLeft").whenPressed(alignLeft);
-				driver1.get("dPadRight").whenPressed(alignRight);
 				driver1.get("dPadDown").whileHeld(dPadGyro);
+				
+				driver1.get("RStickLeft").whileHeld(rotateLeft);
+				driver1.get("RStickRight").whileHeld(rotateRight);
 
 				System.out.println("[!] Commands successfully registered for Driver1!");
 				joysticks.put("driver1", driver1);

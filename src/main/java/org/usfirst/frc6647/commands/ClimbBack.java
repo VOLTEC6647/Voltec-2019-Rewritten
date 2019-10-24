@@ -12,7 +12,7 @@ import org.usfirst.frc6647.subsystems.Climb;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimbBack extends Command {
-
+	
 	private String backSolenoidName;
 
 	public ClimbBack(String backSolenoidName) {

@@ -9,7 +9,6 @@ package org.usfirst.frc6647.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import org.usfirst.frc6647.commands.GeneratePIDData;
 import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
 import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
@@ -22,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class NavX extends PIDSuperSubsystem {
 	private AHRS ahrs;
-	private double accel = 0.0, accelMult = 1.0, padLimiter = 0.6;
+	private double padLimiter = 0.4, rotate = 0;
 
 	private static NavX m_instance = null;
 
@@ -54,8 +53,6 @@ public class NavX extends PIDSuperSubsystem {
 
 		ahrs = new AHRS(SPI.Port.kMXP);
 		ahrs.reset();
-
-		SmartDashboard.putData(getName() + "Generate", new GeneratePIDData(this));
 	}
 
 	/**
@@ -94,14 +91,14 @@ public class NavX extends PIDSuperSubsystem {
 				frontRight = Chassis.getInstance().getTalon("frontRight");
 
 		if (OI.getInstance().getJoystick("driver1").get("dPadUp").get()) {
-			frontLeft.set(((-0.5 - (accel * accelMult)) * padLimiter) + output);
-			frontRight.set(((-0.5 - (accel * accelMult)) * padLimiter) - output);
+			frontLeft.set(-padLimiter + (rotate == 0 ? output : rotate));
+			frontRight.set(-padLimiter - (rotate == 0 ? output : rotate));
 		} else if (OI.getInstance().getJoystick("driver1").get("dPadDown").get()) {
-			frontLeft.set(((0.5 + (accel * accelMult)) * padLimiter) + output);
-			frontRight.set(((0.5 + (accel * accelMult)) * padLimiter) - output);
+			frontLeft.set(padLimiter + (rotate == 0 ? output : rotate));
+			frontRight.set(padLimiter - (rotate == 0 ? output : rotate));
 		} else {
-			frontLeft.set(output, true);
-			frontRight.set(-output, true);
+			frontLeft.set(rotate == 0 ? output : rotate);
+			frontRight.set(rotate == 0 ? -output : -rotate);
 		}
 
 		pidOutput = output;
@@ -124,32 +121,20 @@ public class NavX extends PIDSuperSubsystem {
 	}
 
 	/**
-	 * Sets padLimiter and acceleration.
+	 * Sets padLimiter value.
 	 * 
-	 * @param padLimiter
 	 * @param accel
 	 */
-	public void setPadLimiter(double padLimiter, boolean accel) {
-		if (accel)
-			accelMult = 1;
-		else
-			accelMult = 0;
+	public void setPadLimiter(double padLimiter) {
 		this.padLimiter = padLimiter;
 	}
 
 	/**
-	 * Increases Gyro acceleration by a specified amount.
+	 * Sets the speed at which the robot rotates.
 	 * 
-	 * @param accel
+	 * @param speed
 	 */
-	public void increaseAccel(double accel) {
-		this.accel += accel;
-	}
-
-	/**
-	 * Resets Gyro acceleration amount.
-	 */
-	public void resetAccel() {
-		this.accel = 0;
+	public void setRotation(double speed) {
+		this.rotate = speed;
 	}
 }
