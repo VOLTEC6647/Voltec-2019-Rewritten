@@ -18,6 +18,9 @@ public class GyroMove extends Command {
 
 	private double yaw;
 
+	/**
+	 * Constructor for the command.
+	 */
 	public GyroMove() {
 	}
 
