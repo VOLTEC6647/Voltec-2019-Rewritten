@@ -24,6 +24,7 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 	- [x] Gyro.
 		- [x] Add command to align to closest left or right angle.
 		- [ ] Add command to align to next closest left or right angle (Needs PID adjustments).
+		- [x] Implement straight-forward movement.
 	- [x] Elevator.
 		- [x] Merge Lift PID commands into one.
 		- [x] Merge Lift Manual commands into one.

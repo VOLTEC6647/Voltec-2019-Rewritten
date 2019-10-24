@@ -12,7 +12,7 @@ import org.usfirst.frc6647.subsystems.NavX;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command for Zeroing the NavX's yaw.
+ * Command for zeroing the NavX's yaw.
  */
 public class ZeroYaw extends Command {
 	

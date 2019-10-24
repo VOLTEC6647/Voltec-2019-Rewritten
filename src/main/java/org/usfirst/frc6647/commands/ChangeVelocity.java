@@ -15,7 +15,7 @@ import org.usfirst.lib6647.subsystem.hypercomponents.HyperVictor;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command to change Chassis velocity and acceleration.
+ * Command to change Chassis velocity limiters.
  */
 public class ChangeVelocity extends Command {
 
@@ -23,22 +23,18 @@ public class ChangeVelocity extends Command {
 	private HyperTalon frontRight;
 	private String leftName, rightName;
 	private double driveLimiter, padLimiter;
-	private boolean acceleration;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param driveLimiter
 	 * @param padLimiter
-	 * @param acceleration
 	 * @param leftName
 	 * @param rightName
 	 */
-	public ChangeVelocity(double driveLimiter, double padLimiter, boolean acceleration, String leftName,
-			String rightName) {
+	public ChangeVelocity(double driveLimiter, double padLimiter, String leftName, String rightName) {
 		this.driveLimiter = driveLimiter;
 		this.padLimiter = padLimiter;
-		this.acceleration = acceleration;
 		this.leftName = leftName;
 		this.rightName = rightName;
 	}
@@ -49,12 +45,10 @@ public class ChangeVelocity extends Command {
 		frontLeft = Chassis.getInstance().getVictor(leftName);
 		frontRight = Chassis.getInstance().getTalon(rightName);
 
-		NavX.getInstance().resetAccel();
-
 		frontLeft.setLimiter(driveLimiter);
 		frontRight.setLimiter(driveLimiter);
 
-		NavX.getInstance().setPadLimiter(padLimiter, acceleration);
+		NavX.getInstance().setPadLimiter(padLimiter);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
