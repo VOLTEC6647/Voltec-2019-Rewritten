@@ -14,7 +14,7 @@ import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command to change Chassis velocity and acceleration.
+ * Command to change Chassis velocity limiters.
  */
 public class ChangeVelocity extends Command {
 	
@@ -27,7 +27,6 @@ public class ChangeVelocity extends Command {
 	 * 
 	 * @param driveLimiter
 	 * @param padLimiter
-	 * @param acceleration
 	 * @param leftName
 	 * @param rightName
 	 */

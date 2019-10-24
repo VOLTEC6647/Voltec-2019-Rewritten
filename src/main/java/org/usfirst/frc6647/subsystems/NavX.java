@@ -123,7 +123,7 @@ public class NavX extends PIDSuperSubsystem {
 	/**
 	 * Sets padLimiter value.
 	 * 
-	 * @param accel
+	 * @param padLimiter
 	 */
 	public void setPadLimiter(double padLimiter) {
 		this.padLimiter = padLimiter;

@@ -11,10 +11,18 @@ import org.usfirst.frc6647.subsystems.Climb;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Command for extending/retracting the front piston.
+ */
 public class ClimbFront extends Command {
-	
+
 	private String frontSolenoidName;
 
+	/**
+	 * Constructor for the command.
+	 * 
+	 * @param frontSolenoidName
+	 */
 	public ClimbFront(String frontSolenoidName) {
 		this.frontSolenoidName = frontSolenoidName;
 	}

@@ -11,10 +11,16 @@ import org.usfirst.frc6647.subsystems.NavX;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Command for moving straight with the gyro.
+ */
 public class GyroMove extends Command {
 	
 	private double yaw;
 
+	/**
+	 * Constructor for the command.
+	 */
 	public GyroMove() {
 	}
 
