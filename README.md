@@ -13,7 +13,7 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 	 - [ ] Add different functionality for non-PS4 controllers.
 		 - [ ] Add support for Guitar Hero controller.
 		 - [x] Add mouse and keyboard support.
- - [ ] Implement and improve upon other robot subsystems.
+ - [x] Implement and improve upon other robot subsystems.
 	 - [x] Chassis.
 		 - [x] Improve Talon building functionality.
 		 - [x] Merge Drive velocity-changing commands into one.
@@ -36,10 +36,9 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 	 - [x] TiltIntake.
 		 - [x] Merge Tilt commands into one.
 		 - [x] Add Tilt functionality for non-PS4 controllers.
-	 - [ ] Climb.
-		 - [ ] Merge Climb commands into one.
+	 - [x] Climb.
+		 - [x] Merge Climb commands into one.
 		 - [x] Remove need of arcade thingy.
-	 - [ ] Vision (RIP).
  - [x] Overall code optimization.
 	 - [x] Restrict PID update loops to run only when enabled.
 	 - [x] Remove any and all instances of memory leaks.

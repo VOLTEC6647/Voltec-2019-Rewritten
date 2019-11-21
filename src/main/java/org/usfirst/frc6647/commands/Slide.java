@@ -37,13 +37,15 @@ public class Slide extends Command {
 	 * @param direction
 	 * @param speed
 	 */
-	public Slide(MoveDirection direction, double speed) {
+	public Slide(MoveDirection direction, double speed, String hWheelName) {
 		requires(ChassisH.getInstance());
 
 		this.direction = direction;
 		this.speed = speed;
 
 		useAxes = false;
+
+		hWheel = ChassisH.getInstance().getTalon(hWheelName);
 	}
 
 	/**
@@ -56,7 +58,8 @@ public class Slide extends Command {
 	 * @param startsAtZero
 	 * @param speed
 	 */
-	public Slide(MoveDirection direction, int leftAxis, int rightAxis, boolean startsAtZero, double speed) {
+	public Slide(MoveDirection direction, int leftAxis, int rightAxis, boolean startsAtZero, double speed,
+			String hWheelName) {
 		requires(ChassisH.getInstance());
 
 		this.direction = direction;
@@ -67,6 +70,8 @@ public class Slide extends Command {
 		rightAxisId = rightAxis;
 
 		useAxes = true;
+
+		hWheel = ChassisH.getInstance().getTalon(hWheelName);
 	}
 
 	// Called just before this Command runs the first time
@@ -85,8 +90,6 @@ public class Slide extends Command {
 			end();
 			break;
 		}
-
-		hWheel = ChassisH.getInstance().getTalon("hWheel");
 	}
 
 	// Called repeatedly when this Command is scheduled to run

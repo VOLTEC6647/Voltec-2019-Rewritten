@@ -8,29 +8,30 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Climb;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperDoubleSolenoid;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Command for extending/retracting the back piston.
  */
-public class ClimbBack extends Command {
-	
-	private String backSolenoidName;
+public class HabClimb extends Command {
+
+	private HyperDoubleSolenoid solenoid;
 
 	/**
 	 * Constructor for the command.
 	 * 
-	 * @param backSolenoidName
+	 * @param solenoidName
 	 */
-	public ClimbBack(String backSolenoidName) {
-		this.backSolenoidName = backSolenoidName;
+	public HabClimb(String solenoidName) {
+		solenoid = Climb.getInstance().getDoubleSolenoid(solenoidName);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Climb.getInstance().getDoubleSolenoid(backSolenoidName).set(true);
+		solenoid.set(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -47,7 +48,7 @@ public class ClimbBack extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Climb.getInstance().getDoubleSolenoid(backSolenoidName).set(false);
+		solenoid.set(false);
 	}
 
 	// Called when another command which requires one or more of the same

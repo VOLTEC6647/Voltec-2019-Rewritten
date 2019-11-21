@@ -20,7 +20,6 @@ public class TiltIntakeManual extends Command {
 
 	private MoveDirection direction;
 	private HyperVictor tiltIntake;
-	private String victorName;
 
 	/**
 	 * Constructor for the command.
@@ -32,13 +31,13 @@ public class TiltIntakeManual extends Command {
 		requires(TiltIntake.getInstance());
 
 		this.direction = direction;
-		this.victorName = victorName;
+		
+		tiltIntake = TiltIntake.getInstance().getVictor(victorName);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		tiltIntake = TiltIntake.getInstance().getVictor(victorName);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

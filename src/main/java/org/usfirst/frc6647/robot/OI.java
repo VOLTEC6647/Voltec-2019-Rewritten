@@ -10,10 +10,9 @@ package org.usfirst.frc6647.robot;
 import java.util.HashMap;
 
 import org.usfirst.frc6647.commands.ChangeVelocity;
-import org.usfirst.frc6647.commands.ClimbBack;
-import org.usfirst.frc6647.commands.ClimbFront;
 import org.usfirst.frc6647.commands.GyroAlign;
 import org.usfirst.frc6647.commands.GyroMove;
+import org.usfirst.frc6647.commands.HabClimb;
 import org.usfirst.frc6647.commands.MoveBall;
 import org.usfirst.frc6647.commands.MoveLiftManual;
 import org.usfirst.frc6647.commands.MoveLiftPID;
@@ -81,8 +80,8 @@ public class OI {
 			Rotate rotateLeft = new Rotate(MoveDirection.LEFT, 0.35);
 			Rotate rotateRight = new Rotate(MoveDirection.RIGHT, 0.35);
 
-			ClimbFront climbFront = new ClimbFront("frontSolenoid");
-			ClimbBack climbBack = new ClimbBack("backSolenoid");
+			HabClimb climbFront = new HabClimb("frontSolenoid");
+			HabClimb climbBack = new HabClimb("backSolenoid");
 
 			System.out.println("[!] Commands successfully initialized for Driver1!");
 
@@ -96,8 +95,8 @@ public class OI {
 				driver1.get("L1").whileHeld(pushHatch);
 				driver1.get("R1").whileHeld(gyroAlign);
 
-				driver1.get("L2").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, false, 0.7));
-				driver1.get("R2").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, false, 0.7));
+				driver1.get("L2").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, false, 0.7, "hWheel"));
+				driver1.get("R2").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, false, 0.7, "hWheel"));
 
 				driver1.get("dPadUp").whileHeld(dPadGyroFwd);
 				driver1.get("dPadDown").whileHeld(dPadGyroBwd);
@@ -118,8 +117,8 @@ public class OI {
 				driver1.get("LBumper").whileHeld(pushHatch);
 				driver1.get("RBumper").whileHeld(gyroAlign);
 
-				driver1.get("LTrigger").whileHeld(new Slide(MoveDirection.LEFT, 2, 3, true, 0.7));
-				driver1.get("RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, 2, 3, true, 0.7));
+				driver1.get("LTrigger").whileHeld(new Slide(MoveDirection.LEFT, 2, 3, true, 0.7, "hWheel"));
+				driver1.get("RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, 2, 3, true, 0.7, "hWheel"));
 
 				driver1.get("dPadUp").whileHeld(dPadGyroFwd);
 				driver1.get("dPadDown").whileHeld(dPadGyroBwd);
@@ -138,8 +137,8 @@ public class OI {
 				driver1.get("E").whenPressed(toggleHatch);
 				driver1.get("Shift").whileHeld(gyroAlign);
 
-				driver1.get("A").whileHeld(new Slide(MoveDirection.LEFT, 0.7));
-				driver1.get("D").whileHeld(new Slide(MoveDirection.RIGHT, 0.7));
+				driver1.get("A").whileHeld(new Slide(MoveDirection.LEFT, 0.7, "hWheel"));
+				driver1.get("D").whileHeld(new Slide(MoveDirection.RIGHT, 0.7, "hWheel"));
 
 				driver1.get("W").whileHeld(dPadGyroFwd);
 				driver1.get("S").whileHeld(dPadGyroBwd);

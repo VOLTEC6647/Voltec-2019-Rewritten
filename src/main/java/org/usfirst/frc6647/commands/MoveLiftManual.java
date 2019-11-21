@@ -20,7 +20,6 @@ public class MoveLiftManual extends Command {
 
 	private MoveDirection direction;
 	private HyperVictor liftMain;
-	private String victorName;
 
 	/**
 	 * Constructor for the command.
@@ -32,13 +31,12 @@ public class MoveLiftManual extends Command {
 		requires(Lift.getInstance());
 
 		this.direction = direction;
-		this.victorName = victorName;
+		liftMain = Lift.getInstance().getVictor(victorName);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		liftMain = Lift.getInstance().getVictor(victorName);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

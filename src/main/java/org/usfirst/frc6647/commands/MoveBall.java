@@ -18,10 +18,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveBall extends Command {
 
-	private double speed;
 	private MoveDirection direction;
+	private double speed;
 	private HyperVictor intakeLeft, intakeRight;
-	private String leftName, rightName;
 
 	/**
 	 * Constructor for the command.
@@ -34,15 +33,14 @@ public class MoveBall extends Command {
 	public MoveBall(MoveDirection direction, double speed, String leftName, String rightName) {
 		this.direction = direction;
 		this.speed = speed;
-		this.leftName = leftName;
-		this.rightName = rightName;
+
+		intakeLeft = Intake.getInstance().getVictor(leftName);
+		intakeRight = Intake.getInstance().getVictor(rightName);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		intakeLeft = Intake.getInstance().getVictor(leftName);
-		intakeRight = Intake.getInstance().getVictor(rightName);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
