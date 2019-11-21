@@ -19,6 +19,8 @@ import org.usfirst.lib6647.subsystem.supercomponents.SuperVictor;
  */
 public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 
+	private boolean tankDrive = true;
+
 	private static Chassis m_instance = null;
 
 	/**
@@ -64,7 +66,7 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 	 */
 	@Override
 	public void periodic() {
-		if (!NavX.getInstance().getPIDController().isEnabled()) {
+		if (tankDrive) {
 			double leftStickY = joyTolerance.apply(OI.getInstance().getJoystick("driver1").getLeftAxis()),
 					rightStickY = joyTolerance.apply(OI.getInstance().getJoystick("driver1").getRightAxis());
 			talons.get("frontLeft").setWithRamp(leftStickY);
@@ -74,5 +76,14 @@ public class Chassis extends SuperSubsystem implements SuperTalon, SuperVictor {
 
 	@Override
 	public void initDefaultCommand() {
+	}
+
+	/**
+	 * Set tankDrive value.
+	 * 
+	 * @param tankDrive
+	 */
+	public void setTankDrive(boolean tankDrive) {
+		this.tankDrive = tankDrive;
 	}
 }

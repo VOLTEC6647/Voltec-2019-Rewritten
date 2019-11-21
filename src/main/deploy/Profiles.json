@@ -88,5 +88,19 @@
 		"RTrigger": "Stick3_1",
 		"RStickLeft": "Stick4_-1",
 		"RStickRight": "Stick4_1"
+	},
+	"vJoy Device": {
+		"1": "Button1",
+		"2": "Button2",
+		"O": "Button3",
+		"P": "Button4",
+		"E": "Button5",
+		"Shift": "Button6",
+		"A": "Stick3_-1",
+		"D": "Stick3_1",
+		"W": "Stick4_1",
+		"S": "Stick4_-1",
+		"MouseLeft": "Stick0_-1",
+		"MouseRight": "Stick0_1"
 	}
 }

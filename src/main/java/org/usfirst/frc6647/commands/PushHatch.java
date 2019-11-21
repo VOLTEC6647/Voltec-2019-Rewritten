@@ -13,9 +13,9 @@ import org.usfirst.lib6647.subsystem.hypercomponents.HyperSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command for toggling the H solenoid.
+ * Command for pushing the H solenoid.
  */
-public class ToggleHatch extends Command {
+public class PushHatch extends Command {
 
 	private HyperSolenoid pushHatch;
 
@@ -24,14 +24,14 @@ public class ToggleHatch extends Command {
 	 * 
 	 * @param solenoidName
 	 */
-	public ToggleHatch(String solenoidName) {
+	public PushHatch(String solenoidName) {
 		pushHatch = Intake.getInstance().getSolenoid(solenoidName);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		pushHatch.toggle();
+		pushHatch.set(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -42,12 +42,13 @@ public class ToggleHatch extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		pushHatch.set(false);
 	}
 
 	// Called when another command which requires one or more of the same

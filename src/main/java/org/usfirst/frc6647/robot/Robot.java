@@ -18,6 +18,9 @@ import org.usfirst.frc6647.subsystems.NavX;
 import org.usfirst.lib6647.oi.ControllerProfiles;
 import org.usfirst.lib6647.subsystem.RobotMap;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -49,6 +52,10 @@ public class Robot extends TimedRobot {
 
 		OI.createInstance();
 
+		// Start Camera.
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+		camera.setVideoMode(VideoMode.PixelFormat.kYUYV, 320, 240, 30);
+
 		// Debug commands.
 		SmartDashboard.putData("ResetEncoders", new ResetEncoders("liftEncoder"));
 		SmartDashboard.putData("ZeroYaw", new ZeroYaw());
@@ -67,9 +74,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
-		NavX.getInstance().zeroYaw();
-		Climb.getInstance().getDoubleSolenoid("frontSolenoid").set(false);
-		Climb.getInstance().getDoubleSolenoid("backSolenoid").set(false);
 	}
 
 	@Override
@@ -80,6 +84,8 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		Climb.getInstance().getDoubleSolenoid("frontSolenoid").set(false);
 		Climb.getInstance().getDoubleSolenoid("backSolenoid").set(false);
+		NavX.getInstance().zeroYaw();
+		Lift.getInstance().getEncoder("liftEncoder").reset();
 	}
 
 	@Override

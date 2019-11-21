@@ -7,7 +7,10 @@
 
 package org.usfirst.frc6647.commands;
 
+import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.NavX;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
+import org.usfirst.lib6647.util.MoveDirection;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -15,20 +18,25 @@ import edu.wpi.first.wpilibj.command.Command;
  * Command for moving straight with the gyro.
  */
 public class GyroMove extends Command {
-	
+
 	private double yaw;
+	private MoveDirection direction;
+	private HyperTalon frontLeft, frontRight;
 
 	/**
 	 * Constructor for the command.
 	 */
-	public GyroMove() {
+	public GyroMove(MoveDirection direction) {
+		this.direction = direction;
+
+		frontLeft = Chassis.getInstance().getTalon("frontLeft");
+		frontRight = Chassis.getInstance().getTalon("frontRight");
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		yaw = NavX.getInstance().getYaw();
-
 		NavX.getInstance().getPIDController().setSetpoint(yaw);
 
 		if (!NavX.getInstance().getPIDController().isEnabled())
@@ -38,6 +46,19 @@ public class GyroMove extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		double padLimiter = NavX.getInstance().getPadLimiter(), pidOutput = NavX.getInstance().getPIDOutput();
+
+		switch (direction) {
+		case FORWARD:
+			frontLeft.set(-padLimiter + pidOutput);
+			frontRight.set(-padLimiter - pidOutput);
+			break;
+		case BACKWARD:
+			frontLeft.set(padLimiter + pidOutput);
+			frontRight.set(padLimiter - pidOutput);
+		default:
+			end();
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -50,6 +71,8 @@ public class GyroMove extends Command {
 	@Override
 	protected void end() {
 		NavX.getInstance().disable();
+		frontLeft.stopMotor();
+		frontRight.stopMotor();
 	}
 
 	// Called when another command which requires one or more of the same

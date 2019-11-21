@@ -75,7 +75,7 @@ public class MoveLiftPID extends Command {
 				Lift.getInstance().setSetpoint(260000);
 				break;
 			case SHIP:
-				Lift.getInstance().setSetpoint(310000);
+				Lift.getInstance().setSetpoint(320000);
 				break;
 			case HIGH:
 				Lift.getInstance().setSetpoint(385000);
@@ -91,7 +91,7 @@ public class MoveLiftPID extends Command {
 				Lift.getInstance().setSetpoint(20000);
 				break;
 			case MID:
-				Lift.getInstance().setSetpoint(230000);
+				Lift.getInstance().setSetpoint(185100);
 				break;
 			case SHIP:
 				Lift.getInstance().setSetpoint(310000);
@@ -104,12 +104,10 @@ public class MoveLiftPID extends Command {
 				break;
 			default:
 				end();
-				break;
 			}
 			break;
 		default:
 			end();
-			break;
 		}
 
 		Lift.getInstance().updatePIDValues();
