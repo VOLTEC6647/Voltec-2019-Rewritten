@@ -21,11 +21,9 @@ public class PushHatch extends Command {
 
 	/**
 	 * Constructor for the command.
-	 * 
-	 * @param solenoidName
 	 */
-	public PushHatch(String solenoidName) {
-		pushHatch = Intake.getInstance().getSolenoid(solenoidName);
+	public PushHatch() {
+		pushHatch = Intake.getInstance().getSolenoid("pushHatch");
 	}
 
 	// Called just before this Command runs the first time

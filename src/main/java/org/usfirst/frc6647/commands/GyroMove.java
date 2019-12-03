@@ -56,6 +56,7 @@ public class GyroMove extends Command {
 		case BACKWARD:
 			frontLeft.set(padLimiter + pidOutput);
 			frontRight.set(padLimiter - pidOutput);
+			break;
 		default:
 			end();
 		}

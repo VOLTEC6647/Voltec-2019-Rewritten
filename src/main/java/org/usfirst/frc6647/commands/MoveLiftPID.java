@@ -43,17 +43,15 @@ public class MoveLiftPID extends Command {
 	 * 
 	 * @param target
 	 * @param height
-	 * @param victorName
-	 * @param encoderName
 	 */
-	public MoveLiftPID(Target target, Height height, String victorName, String encoderName) {
+	public MoveLiftPID(Target target, Height height) {
 		requires(Lift.getInstance());
 
 		this.target = target;
 		this.height = height;
 
-		liftMain = Lift.getInstance().getVictor(victorName);
-		liftEncoder = Lift.getInstance().getEncoder(encoderName);
+		liftMain = Lift.getInstance().getVictor("liftMain");
+		liftEncoder = Lift.getInstance().getEncoder("liftEncoder");
 	}
 
 	// Called just before this Command runs the first time

@@ -27,15 +27,13 @@ public class MoveBall extends Command {
 	 * 
 	 * @param direction
 	 * @param speed
-	 * @param leftName
-	 * @param rightName
 	 */
-	public MoveBall(MoveDirection direction, double speed, String leftName, String rightName) {
+	public MoveBall(MoveDirection direction, double speed) {
 		this.direction = direction;
 		this.speed = speed;
 
-		intakeLeft = Intake.getInstance().getVictor(leftName);
-		intakeRight = Intake.getInstance().getVictor(rightName);
+		intakeLeft = Intake.getInstance().getVictor("intakeLeft");
+		intakeRight = Intake.getInstance().getVictor("intakeRight");
 	}
 
 	// Called just before this Command runs the first time

@@ -21,11 +21,9 @@ public class ToggleHatch extends Command {
 
 	/**
 	 * Constructor for the command.
-	 * 
-	 * @param solenoidName
 	 */
-	public ToggleHatch(String solenoidName) {
-		pushHatch = Intake.getInstance().getSolenoid(solenoidName);
+	public ToggleHatch() {
+		pushHatch = Intake.getInstance().getSolenoid("pushHatch");
 	}
 
 	// Called just before this Command runs the first time

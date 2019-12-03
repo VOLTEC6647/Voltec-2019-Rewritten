@@ -37,7 +37,7 @@ public class Slide extends Command {
 	 * @param direction
 	 * @param speed
 	 */
-	public Slide(MoveDirection direction, double speed, String hWheelName) {
+	public Slide(MoveDirection direction, double speed) {
 		requires(ChassisH.getInstance());
 
 		this.direction = direction;
@@ -45,7 +45,8 @@ public class Slide extends Command {
 
 		useAxes = false;
 
-		hWheel = ChassisH.getInstance().getTalon(hWheelName);
+		hWheel = ChassisH.getInstance().getTalon("hWheel");
+		joystick = OI.getInstance().getJoystick("driver1");
 	}
 
 	/**
@@ -58,8 +59,7 @@ public class Slide extends Command {
 	 * @param startsAtZero
 	 * @param speed
 	 */
-	public Slide(MoveDirection direction, int leftAxis, int rightAxis, boolean startsAtZero, double speed,
-			String hWheelName) {
+	public Slide(MoveDirection direction, int leftAxis, int rightAxis, boolean startsAtZero, double speed) {
 		requires(ChassisH.getInstance());
 
 		this.direction = direction;
@@ -71,14 +71,13 @@ public class Slide extends Command {
 
 		useAxes = true;
 
-		hWheel = ChassisH.getInstance().getTalon(hWheelName);
+		hWheel = ChassisH.getInstance().getTalon("hWheel");
+		joystick = OI.getInstance().getJoystick("driver1");
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		joystick = OI.getInstance().getJoystick("driver1");
-
 		switch (direction) {
 		case LEFT:
 			joystick.setRumble(RumbleType.kLeftRumble, 1);

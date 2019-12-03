@@ -25,13 +25,12 @@ public class MoveLiftManual extends Command {
 	 * Constructor for the command.
 	 * 
 	 * @param direction
-	 * @param victorName
 	 */
-	public MoveLiftManual(MoveDirection direction, String victorName) {
+	public MoveLiftManual(MoveDirection direction) {
 		requires(Lift.getInstance());
 
 		this.direction = direction;
-		liftMain = Lift.getInstance().getVictor(victorName);
+		liftMain = Lift.getInstance().getVictor("liftMain");
 	}
 
 	// Called just before this Command runs the first time

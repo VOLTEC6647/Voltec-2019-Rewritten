@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
 		camera.setVideoMode(VideoMode.PixelFormat.kYUYV, 320, 240, 30);
 
 		// Debug commands.
-		SmartDashboard.putData("ResetEncoders", new ResetEncoders("liftEncoder"));
+		SmartDashboard.putData("ResetEncoders", new ResetEncoders());
 		SmartDashboard.putData("ZeroYaw", new ZeroYaw());
 	}
 
