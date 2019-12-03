@@ -18,31 +18,27 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveBall extends Command {
 
-	private double speed;
 	private MoveDirection direction;
+	private double speed;
 	private HyperTalon intakeLeft, intakeRight;
-	private String leftName, rightName;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
 	 * @param speed
-	 * @param leftName
-	 * @param rightName
 	 */
-	public MoveBall(MoveDirection direction, double speed, String leftName, String rightName) {
+	public MoveBall(MoveDirection direction, double speed) {
 		this.direction = direction;
 		this.speed = speed;
-		this.leftName = leftName;
-		this.rightName = rightName;
+
+		intakeLeft = Intake.getInstance().getTalon("intakeLeft");
+		intakeRight = Intake.getInstance().getTalon("intakeRight");
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		intakeLeft = Intake.getInstance().getTalon(leftName);
-		intakeRight = Intake.getInstance().getTalon(rightName);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

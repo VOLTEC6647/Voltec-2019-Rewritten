@@ -8,6 +8,7 @@
 package org.usfirst.frc6647.commands;
 
 import org.usfirst.frc6647.subsystems.Intake;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperDoubleSolenoid;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,16 +17,19 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ToggleHatch extends Command {
 
+	private HyperDoubleSolenoid pushHatch;
+
 	/**
 	 * Constructor for the command.
 	 */
 	public ToggleHatch() {
+		pushHatch = Intake.getInstance().getDoubleSolenoid("pushHatch");
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Intake.getInstance().getDoubleSolenoid("pushHatch").toggle();
+		pushHatch.toggle();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

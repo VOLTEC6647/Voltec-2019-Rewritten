@@ -20,25 +20,22 @@ public class MoveLiftManual extends Command {
 
 	private MoveDirection direction;
 	private HyperTalon liftMain;
-	private String talonName;
 
 	/**
 	 * Constructor for the command.
 	 * 
 	 * @param direction
-	 * @param talonName
 	 */
-	public MoveLiftManual(MoveDirection direction, String talonName) {
+	public MoveLiftManual(MoveDirection direction) {
 		requires(Lift.getInstance());
 
 		this.direction = direction;
-		this.talonName = talonName;
+		liftMain = Lift.getInstance().getTalon("liftMain");
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		liftMain = Lift.getInstance().getTalon(talonName);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

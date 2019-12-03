@@ -120,13 +120,13 @@
 	},
 	"navX": {
 		"pid": {
-			"p": 0.015,
-			"i": 0.0003,
-			"d": 0.007,
+			"p": 0.02,
+			"i": 0.0,
+			"d": 0.0001,
 			"inputMin": -180,
 			"inputMax": 180,
-			"outputMin": -1,
-			"outputMax": 1,
+			"outputMin": -0.75,
+			"outputMax": 0.75,
 			"absoluteTolerance": 0.5,
 			"continuous": true
 		}

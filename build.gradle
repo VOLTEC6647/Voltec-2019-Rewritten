@@ -66,7 +66,7 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.0.pr1'
     
     // lib6647
-    compile group: 'com.github.pacoito123', name: 'lib6647', version: '5012d1d730'
+    compile group: 'com.github.pacoito123', name: 'lib6647', version: '62634f0'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

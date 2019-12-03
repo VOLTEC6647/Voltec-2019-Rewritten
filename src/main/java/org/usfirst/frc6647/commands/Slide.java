@@ -35,7 +35,6 @@ public class Slide extends Command {
 	 * speed you wish to go.
 	 * 
 	 * @param direction
-	 * @param joystickName
 	 * @param speed
 	 */
 	public Slide(MoveDirection direction, double speed) {
@@ -45,6 +44,9 @@ public class Slide extends Command {
 		this.speed = speed;
 
 		useAxes = false;
+
+		hWheel = ChassisH.getInstance().getTalon("hWheel");
+		joystick = OI.getInstance().getJoystick("driver1");
 	}
 
 	/**
@@ -68,13 +70,14 @@ public class Slide extends Command {
 		rightAxisId = rightAxis;
 
 		useAxes = true;
+
+		hWheel = ChassisH.getInstance().getTalon("hWheel");
+		joystick = OI.getInstance().getJoystick("driver1");
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		joystick = OI.getInstance().getJoystick("driver1");
-
 		switch (direction) {
 		case LEFT:
 			joystick.setRumble(RumbleType.kLeftRumble, 1);
@@ -86,8 +89,6 @@ public class Slide extends Command {
 			end();
 			break;
 		}
-
-		hWheel = ChassisH.getInstance().getTalon("hWheel");
 	}
 
 	// Called repeatedly when this Command is scheduled to run

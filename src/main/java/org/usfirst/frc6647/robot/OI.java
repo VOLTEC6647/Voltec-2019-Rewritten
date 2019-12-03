@@ -15,8 +15,10 @@ import org.usfirst.frc6647.commands.GyroMove;
 import org.usfirst.frc6647.commands.MoveBall;
 import org.usfirst.frc6647.commands.MoveLiftManual;
 import org.usfirst.frc6647.commands.MoveLiftPID;
+import org.usfirst.frc6647.commands.PushHatch;
 import org.usfirst.frc6647.commands.MoveLiftPID.Height;
 import org.usfirst.frc6647.commands.MoveLiftPID.Target;
+import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.commands.ResetEncoders;
 import org.usfirst.frc6647.commands.Rotate;
 import org.usfirst.frc6647.commands.Slide;
@@ -65,15 +67,17 @@ public class OI {
 		if (!driver1.getName().isEmpty()) {
 			System.out.println("[!] Driver1 found!\n" + "[!] " + driver1.getName());
 
-			ChangeVelocity changeVelSlow = new ChangeVelocity(0.6, 0.3, "frontLeft", "frontRight");
-			ChangeVelocity changeVelFast = new ChangeVelocity(0.75, 0.5, "frontLeft", "frontRight");
+			ChangeVelocity changeVelSlow = new ChangeVelocity(0.6, 0.3);
+			ChangeVelocity changeVelFast = new ChangeVelocity(0.75, 0.5);
 
+			PushHatch pushHatch = new PushHatch();
 			ToggleHatch toggleHatch = new ToggleHatch();
 			GyroAlign gyroAlign = new GyroAlign();
 
-			GyroMove dPadGyro = new GyroMove();
-			Rotate rotateLeft = new Rotate(MoveDirection.LEFT);
-			Rotate rotateRight = new Rotate(MoveDirection.RIGHT);
+			GyroMove dPadGyroFwd = new GyroMove(MoveDirection.FORWARD);
+			GyroMove dPadGyroBwd = new GyroMove(MoveDirection.BACKWARD);
+			Rotate rotateLeft = new Rotate(MoveDirection.LEFT, 0.35);
+			Rotate rotateRight = new Rotate(MoveDirection.RIGHT, 0.35);
 
 			System.out.println("[!] Commands successfully initialized for Driver1!");
 
@@ -82,38 +86,57 @@ public class OI {
 				driver1.get("Square").whenPressed(changeVelSlow);
 				driver1.get("Triangle").whenPressed(changeVelFast);
 
-				driver1.get("L1").whenPressed(toggleHatch);
+				driver1.get("L1").whileHeld(pushHatch);
 				driver1.get("R1").whileHeld(gyroAlign);
 
 				driver1.get("L2").whileHeld(new Slide(MoveDirection.LEFT, 3, 4, false, 0.7));
 				driver1.get("R2").whileHeld(new Slide(MoveDirection.RIGHT, 3, 4, false, 0.7));
 
-				driver1.get("dPadUp").whileHeld(dPadGyro);
-				driver1.get("dPadDown").whileHeld(dPadGyro);
+				driver1.get("dPadUp").whileHeld(dPadGyroFwd);
+				driver1.get("dPadDown").whileHeld(dPadGyroBwd);
 
 				driver1.get("RStickLeft").whileHeld(rotateLeft);
 				driver1.get("RStickRight").whileHeld(rotateRight);
 
 				System.out.println("[!] Commands successfully registered for Driver1!");
 				joysticks.put("driver1", driver1);
-			} else if (driver1.getName().equals("Controller (XBOX 360 For Windows)")
-					|| driver1.getName().equals("Controller (Xbox One For Windows)")
+			} else if (driver1.getName().toLowerCase().contains("xbox")
 					|| driver1.getName().equals("Controller (Gamepad F310)")) {
 
 				driver1.get("Y").whenPressed(changeVelSlow);
 				driver1.get("X").whenPressed(changeVelFast);
 
-				driver1.get("LBumper").whenPressed(toggleHatch);
+				driver1.get("LBumper").whileHeld(pushHatch);
 				driver1.get("RBumper").whileHeld(gyroAlign);
 
 				driver1.get("LTrigger").whileHeld(new Slide(MoveDirection.LEFT, 2, 3, true, 0.7));
 				driver1.get("RTrigger").whileHeld(new Slide(MoveDirection.RIGHT, 2, 3, true, 0.7));
 
-				driver1.get("dPadUp").whileHeld(dPadGyro);
-				driver1.get("dPadDown").whileHeld(dPadGyro);
+				driver1.get("dPadUp").whileHeld(dPadGyroFwd);
+				driver1.get("dPadDown").whileHeld(dPadGyroBwd);
 
 				driver1.get("RStickLeft").whileHeld(rotateLeft);
 				driver1.get("RStickRight").whileHeld(rotateRight);
+
+				System.out.println("[!] Commands successfully registered for Driver1!");
+				joysticks.put("driver1", driver1);
+			} else if (driver1.getName().equals("vJoy Device")) {
+				driver1.get("1").whenPressed(changeVelSlow);
+				driver1.get("2").whenPressed(changeVelFast);
+
+				driver1.get("E").whenPressed(toggleHatch);
+				driver1.get("Shift").whileHeld(gyroAlign);
+
+				driver1.get("A").whileHeld(new Slide(MoveDirection.LEFT, 0.7));
+				driver1.get("D").whileHeld(new Slide(MoveDirection.RIGHT, 0.7));
+
+				driver1.get("W").whileHeld(dPadGyroFwd);
+				driver1.get("S").whileHeld(dPadGyroBwd);
+
+				driver1.get("MouseLeft").whileHeld(rotateLeft);
+				driver1.get("MouseRight").whileHeld(rotateRight);
+
+				Chassis.getInstance().setTankDrive(false);
 
 				System.out.println("[!] Commands successfully registered for Driver1!");
 				joysticks.put("driver1", driver1);
@@ -125,27 +148,27 @@ public class OI {
 		if (!driver2.getName().isEmpty()) {
 			System.out.println("[!] Driver2 found!\n" + "[!] " + driver2.getName());
 
-			MoveLiftPID liftCargoShip = new MoveLiftPID(Target.CARGO, Height.SHIP, "liftMain", "liftEncoder");
-			MoveLiftPID liftCargoLow = new MoveLiftPID(Target.CARGO, Height.LOW, "liftMain", "liftEncoder");
-			MoveLiftPID liftCargoMid = new MoveLiftPID(Target.CARGO, Height.MID, "liftMain", "liftEncoder");
-			MoveLiftPID liftCargoHigh = new MoveLiftPID(Target.CARGO, Height.HIGH, "liftMain", "liftEncoder");
+			MoveLiftPID liftCargoShip = new MoveLiftPID(Target.CARGO, Height.SHIP);
+			MoveLiftPID liftCargoLow = new MoveLiftPID(Target.CARGO, Height.LOW);
+			MoveLiftPID liftCargoMid = new MoveLiftPID(Target.CARGO, Height.MID);
+			MoveLiftPID liftCargoHigh = new MoveLiftPID(Target.CARGO, Height.HIGH);
 
-			MoveLiftManual moveLiftUp = new MoveLiftManual(MoveDirection.UP, "liftMain");
-			MoveLiftManual moveLiftDown = new MoveLiftManual(MoveDirection.DOWN, "liftMain");
+			MoveLiftManual moveLiftUp = new MoveLiftManual(MoveDirection.UP);
+			MoveLiftManual moveLiftDown = new MoveLiftManual(MoveDirection.DOWN);
 
-			TiltIntakeManual tiltIntakeUp = new TiltIntakeManual(MoveDirection.UP, "tiltIntake");
-			TiltIntakeManual tiltIntakeDown = new TiltIntakeManual(MoveDirection.DOWN, "tiltIntake");
+			TiltIntakeManual tiltIntakeUp = new TiltIntakeManual(MoveDirection.UP);
+			TiltIntakeManual tiltIntakeDown = new TiltIntakeManual(MoveDirection.DOWN);
 
-			ResetEncoders resetEncoders = new ResetEncoders("liftEncoder");
-			MoveLiftPID liftChaseCargo = new MoveLiftPID(Target.CARGO, Height.FLOOR, "liftMain", "liftEncoder");
+			ResetEncoders resetEncoders = new ResetEncoders();
+			MoveLiftPID liftChaseCargo = new MoveLiftPID(Target.CARGO, Height.FLOOR);
 
-			MoveLiftPID liftHatchShip = new MoveLiftPID(Target.HATCH, Height.SHIP, "liftMain", "liftEncoder");
-			MoveLiftPID liftHatchLow = new MoveLiftPID(Target.HATCH, Height.LOW, "liftMain", "liftEncoder");
-			MoveLiftPID liftHatchMid = new MoveLiftPID(Target.HATCH, Height.MID, "liftMain", "liftEncoder");
-			MoveLiftPID liftHatchHigh = new MoveLiftPID(Target.HATCH, Height.HIGH, "liftMain", "liftEncoder");
+			MoveLiftPID liftHatchShip = new MoveLiftPID(Target.HATCH, Height.SHIP);
+			MoveLiftPID liftHatchLow = new MoveLiftPID(Target.HATCH, Height.LOW);
+			MoveLiftPID liftHatchMid = new MoveLiftPID(Target.HATCH, Height.MID);
+			MoveLiftPID liftHatchHigh = new MoveLiftPID(Target.HATCH, Height.HIGH);
 
-			MoveBall ballOut = new MoveBall(MoveDirection.OUT, 0.7, "intakeLeft", "intakeRight");
-			MoveBall ballIn = new MoveBall(MoveDirection.IN, 0.7, "intakeLeft", "intakeRight");
+			MoveBall ballOut = new MoveBall(MoveDirection.OUT, 0.7);
+			MoveBall ballIn = new MoveBall(MoveDirection.IN, 0.7);
 
 			System.out.println("[!] Commands successfully initialized for Driver2!");
 
@@ -175,8 +198,7 @@ public class OI {
 
 				System.out.println("[!] Commands successfully registered for Driver2!");
 				joysticks.put("driver2", driver2);
-			} else if (driver2.getName().equals("Controller (XBOX 360 For Windows)")
-					|| driver2.getName().equals("Controller (Xbox One For Windows)")
+			} else if (driver2.getName().toLowerCase().contains("xbox")
 					|| driver2.getName().equals("Controller (Gamepad F310)")) {
 
 				driver2.get("X").whileHeld(liftCargoShip);

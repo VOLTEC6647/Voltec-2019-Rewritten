@@ -20,59 +20,101 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class Rotate extends Command {
 
-    MoveDirection direction;
-    HyperVictor frontLeft;
-    HyperTalon frontRight;
+	private MoveDirection direction;
+	private HyperVictor frontLeft;
+	private HyperTalon frontRight;
+	private boolean wasEnabled;
+	private double speed;
 
-    /**
-     * Constructor for the command.
-     * 
-     * @param direction
-     */
-    public Rotate(MoveDirection direction) {
-        this.direction = direction;
+	/**
+	 * Constructor for the command.
+	 * 
+	 * @param direction
+	 * @param speed
+	 */
+	public Rotate(MoveDirection direction, double speed) {
+		this.direction = direction;
+		this.speed = speed;
 
-        frontLeft = Chassis.getInstance().getVictor("frontLeft");
-        frontRight = Chassis.getInstance().getTalon("frontRight");
-    }
+		frontLeft = Chassis.getInstance().getVictor("frontLeft");
+		frontRight = Chassis.getInstance().getTalon("frontRight");
+	}
 
-    // Called just before this Command runs the first time
-    @Override
-    protected void initialize() {
-    }
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize() {
+		wasEnabled = false;
 
-    // Called repeatedly when this Command is scheduled to run
-    @Override
-    protected void execute() {
-        switch (direction) {
-        case LEFT:
-            NavX.getInstance().setRotation(0.25);
-            break;
-        case RIGHT:
-            NavX.getInstance().setRotation(-0.25);
-            break;
-        default:
-            end();
-        }
-        NavX.getInstance().getPIDController().setSetpoint(NavX.getInstance().getYaw());
-    }
+		if (!NavX.getInstance().getPIDController().isEnabled())
+			cancel();
+		else {
+			NavX.getInstance().disable();
+			wasEnabled = true;
 
-    // Make this return true when this Command no longer needs to run execute()
-    @Override
-    protected boolean isFinished() {
-        return false;
-    }
+			switch (direction) {
+			case LEFT:
+				frontLeft.add(speed);
+				frontRight.add(-speed);
+				break;
+			case RIGHT:
+				frontLeft.add(-speed);
+				frontRight.add(speed);
+				break;
+			default:
+				end();
+			}
+		}
+	}
 
-    // Called once after isFinished returns true
-    @Override
-    protected void end() {
-        NavX.getInstance().setRotation(0);
-    }
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute() {
+		// Sets motors to their current value so that 'added' speed is actually applied.
+		frontLeft.set(frontLeft.get());
+		frontRight.set(frontRight.get());
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    @Override
-    protected void interrupted() {
-        end();
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	@Override
+	protected void end() {
+		// Subtract/add added speed.
+		if (wasEnabled) {
+			switch (direction) {
+			case LEFT:
+				frontLeft.add(-speed);
+				frontRight.add(speed);
+				break;
+			case RIGHT:
+				frontLeft.add(speed);
+				frontRight.add(-speed);
+				break;
+			default:
+			}
+
+			// Wait 1 second for robot to stabilize.
+			setTimeout(1);
+
+			// Set PID setpoint to new (current) yaw.
+			if (isTimedOut()) {
+				double yaw = NavX.getInstance().getYaw();
+				NavX.getInstance().getPIDController().setSetpoint(yaw);
+			}
+
+			frontLeft.stopMotor();
+			frontRight.stopMotor();
+		}
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	@Override
+	protected void interrupted() {
+		end();
+	}
 }

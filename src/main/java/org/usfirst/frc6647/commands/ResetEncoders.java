@@ -21,13 +21,11 @@ public class ResetEncoders extends Command {
 
 	/**
 	 * Constructor for the command.
-	 * 
-	 * @param encoderName
 	 */
-	public ResetEncoders(String encoderName) {
+	public ResetEncoders() {
 		requires(Lift.getInstance());
 
-		liftEncoder = Lift.getInstance().getEncoder(encoderName);
+		liftEncoder = Lift.getInstance().getEncoder("liftEncoder");
 	}
 
 	// Called just before this Command runs the first time

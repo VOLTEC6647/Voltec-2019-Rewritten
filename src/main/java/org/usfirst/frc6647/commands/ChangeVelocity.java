@@ -21,7 +21,6 @@ public class ChangeVelocity extends Command {
 
 	private HyperVictor frontLeft;
 	private HyperTalon frontRight;
-	private String leftName, rightName;
 	private double driveLimiter, padLimiter;
 
 	/**
@@ -29,22 +28,18 @@ public class ChangeVelocity extends Command {
 	 * 
 	 * @param driveLimiter
 	 * @param padLimiter
-	 * @param leftName
-	 * @param rightName
 	 */
-	public ChangeVelocity(double driveLimiter, double padLimiter, String leftName, String rightName) {
+	public ChangeVelocity(double driveLimiter, double padLimiter) {
 		this.driveLimiter = driveLimiter;
 		this.padLimiter = padLimiter;
-		this.leftName = leftName;
-		this.rightName = rightName;
+
+		frontLeft = Chassis.getInstance().getVictor("frontLeft");
+		frontRight = Chassis.getInstance().getTalon("frontRight");
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		frontLeft = Chassis.getInstance().getVictor(leftName);
-		frontRight = Chassis.getInstance().getTalon(rightName);
-
 		frontLeft.setLimiter(driveLimiter);
 		frontRight.setLimiter(driveLimiter);
 
@@ -65,6 +60,8 @@ public class ChangeVelocity extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		System.out.println("Changed driveLimiter to: " + driveLimiter);
+		System.out.println("Changed padLimiter to: " + padLimiter);
 	}
 
 	// Called when another command which requires one or more of the same

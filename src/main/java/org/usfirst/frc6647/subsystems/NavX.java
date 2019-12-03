@@ -9,10 +9,7 @@ package org.usfirst.frc6647.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import org.usfirst.frc6647.robot.OI;
 import org.usfirst.lib6647.subsystem.PIDSuperSubsystem;
-import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
-import org.usfirst.lib6647.subsystem.hypercomponents.HyperVictor;
 
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,8 +18,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Subsystem for the NavX sensor.
  */
 public class NavX extends PIDSuperSubsystem {
+
 	private AHRS ahrs;
-	private double padLimiter = 0.6, rotate = 0;
+	private double padLimiter = 0.4;
 
 	private static NavX m_instance = null;
 
@@ -63,6 +61,9 @@ public class NavX extends PIDSuperSubsystem {
 	public void periodic() {
 		SmartDashboard.putNumber("NavXYaw", getYaw());
 		SmartDashboard.putNumber("Goal", getPIDController().getSetpoint());
+
+		if (!getPIDController().isEnabled())
+			pidOutput = 0.0;
 	}
 
 	@Override
@@ -87,21 +88,6 @@ public class NavX extends PIDSuperSubsystem {
 	@Override
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber(getName() + "Output", output);
-
-		HyperVictor frontLeft = Chassis.getInstance().getVictor("frontLeft");
-		HyperTalon frontRight = Chassis.getInstance().getTalon("frontRight");
-
-		if (OI.getInstance().getJoystick("driver1").get("dPadUp").get()) {
-			frontLeft.set(-padLimiter + (rotate == 0 ? output : rotate));
-			frontRight.set(-padLimiter - (rotate == 0 ? output : rotate));
-		} else if (OI.getInstance().getJoystick("driver1").get("dPadDown").get()) {
-			frontLeft.set(padLimiter + (rotate == 0 ? output : rotate));
-			frontRight.set(padLimiter - (rotate == 0 ? output : rotate));
-		} else {
-			frontLeft.set(rotate == 0 ? output : rotate);
-			frontRight.set(rotate == 0 ? -output : -rotate);
-		}
-
 		pidOutput = output;
 	}
 
@@ -131,11 +117,11 @@ public class NavX extends PIDSuperSubsystem {
 	}
 
 	/**
-	 * Sets the speed at which the robot rotates.
+	 * Gets padLimiter value.
 	 * 
-	 * @param speed
+	 * @return
 	 */
-	public void setRotation(double speed) {
-		this.rotate = speed;
+	public double getPadLimiter() {
+		return padLimiter;
 	}
 }

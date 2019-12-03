@@ -20,7 +20,6 @@ public class MoveLiftPID extends Command {
 
 	private Encoder liftEncoder;
 	private HyperTalon liftMain;
-	private String encoderName, talonName;
 
 	/**
 	 * Enum listing possible PID targets.
@@ -44,24 +43,20 @@ public class MoveLiftPID extends Command {
 	 * 
 	 * @param target
 	 * @param height
-	 * @param talonName
-	 * @param encoderName
 	 */
-	public MoveLiftPID(Target target, Height height, String talonName, String encoderName) {
+	public MoveLiftPID(Target target, Height height) {
 		requires(Lift.getInstance());
 
 		this.target = target;
 		this.height = height;
-		this.talonName = talonName;
-		this.encoderName = encoderName;
+
+		liftMain = Lift.getInstance().getTalon("liftMain");
+		liftEncoder = Lift.getInstance().getEncoder("liftEncoder");
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		liftMain = Lift.getInstance().getTalon(talonName);
-		liftEncoder = Lift.getInstance().getEncoder(encoderName);
-		
 		switch (target) {
 		case CARGO:
 			switch (height) {
@@ -75,7 +70,7 @@ public class MoveLiftPID extends Command {
 				Lift.getInstance().setSetpoint(260000);
 				break;
 			case SHIP:
-				Lift.getInstance().setSetpoint(310000);
+				Lift.getInstance().setSetpoint(320000);
 				break;
 			case HIGH:
 				Lift.getInstance().setSetpoint(385000);
@@ -91,7 +86,7 @@ public class MoveLiftPID extends Command {
 				Lift.getInstance().setSetpoint(20000);
 				break;
 			case MID:
-				Lift.getInstance().setSetpoint(230000);
+				Lift.getInstance().setSetpoint(185100);
 				break;
 			case SHIP:
 				Lift.getInstance().setSetpoint(310000);

@@ -7,9 +7,10 @@
 
 package org.usfirst.frc6647.commands;
 
-import org.usfirst.frc6647.robot.OI;
+import org.usfirst.frc6647.subsystems.Chassis;
 import org.usfirst.frc6647.subsystems.NavX;
-import org.usfirst.lib6647.oi.JController;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperTalon;
+import org.usfirst.lib6647.subsystem.hypercomponents.HyperVictor;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -18,7 +19,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GyroAlign extends Command {
 
-	private JController joystick;
+	private HyperVictor frontLeft;
+	private HyperTalon frontRight;
 
 	/**
 	 * Constructor for the command.
@@ -26,12 +28,13 @@ public class GyroAlign extends Command {
 	 * Aligns the robot to the closest desired angle.
 	 */
 	public GyroAlign() {
+		frontLeft = Chassis.getInstance().getVictor("frontLeft");
+		frontRight = Chassis.getInstance().getTalon("frontRight");
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		joystick = OI.getInstance().getJoystick("driver1");
 		double yaw = NavX.getInstance().getYaw();
 
 		if (-165.625 >= yaw)
@@ -62,8 +65,10 @@ public class GyroAlign extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Math.abs(joystick.getLeftAxis()) > 0.1 && Math.abs(joystick.getRightAxis()) > 0.1)
-			end();
+		double pidOutput = NavX.getInstance().getPIDOutput();
+
+		frontLeft.set(pidOutput);
+		frontRight.set(pidOutput);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -76,6 +81,8 @@ public class GyroAlign extends Command {
 	@Override
 	protected void end() {
 		NavX.getInstance().disable();
+		frontLeft.stopMotor();
+		frontRight.stopMotor();
 	}
 
 	// Called when another command which requires one or more of the same

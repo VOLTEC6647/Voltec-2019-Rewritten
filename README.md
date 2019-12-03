@@ -10,9 +10,9 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 	- [x] Simplify Button initialization and calling.
 	- [x] Allow config file for controls through JSON.
 	- [ ] Add different functionality for non-PS4 controllers.
-		- [ ] Add Joycon support (now easily done thanks to JSON functionality).
-		- [ ] Add Guitar Hero controller support.
-- [ ] Implement and improve upon other robot subsystems.
+		- [ ] Add support for Guitar Hero controller.
+		- [x] Add mouse and keyboard support.
+- [x] Implement and improve upon other robot subsystems.
 	- [x] Chassis.
 		- [x] Improve Talon building functionality.
 		- [x] Merge Drive velocity-changing commands into one.
@@ -44,7 +44,7 @@ A complete rewrite of team 6647's FRC code from the ground up, implementing many
 	- [x] Remove any and all instances of memory leaks.
 	- [x] Do proper Exception handling.
 - [x] Add comments.
-- [ ] Test everything.
+- [x] Test everything.
 
 ## License
 
